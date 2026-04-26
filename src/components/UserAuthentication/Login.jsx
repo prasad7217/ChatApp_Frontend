@@ -1,31 +1,37 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const navigate = useNavigate();
+
     const reqLogin = async () => {
 
         const res = await axios.post("http://localhost:7777/api/login", {
             email,
             password
-        }, { withCredentials: true })
+        }, { withCredentials: true });
+
+        if(res?.data?.success){
+            navigate("/otp")
+        }
 
     }
 
     return (
         <div className="w-full bg-gray-700 flex items-center justify-center mt-12 py-8">
             <div className="flex items-center justify-center ">
-                <div className="w-[350px] max-w-md p-8 space-y-4 rounded-2xl shadow-2xl border border-slate-700/50">
+                <div className="w-[420px] max-w-md p-8 space-y-6 rounded-2xl shadow-2xl border border-slate-700/50 lg:my-20">
                     <div className="space-y-2 text-center">
                         <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
                         <p className="text-sm text-slate-400">Please enter your details to login</p>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-sm font-medium leading-none text-slate-200">Email Address</label>
                             <input

@@ -5,9 +5,10 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import MainBody from './components/MainBody'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from './components/Login'
+import Login from './components/UserAuthentication/Login'
 import Body from './components/Body'
-import SignUp from './components/Signup'
+import SignUp from './components/UserAuthentication/Signup'
+import EmailOtp from './components/UserAuthentication/EmailOtp'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/' element={<Body />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/otp' element={<EmailOtp />} />
         </Route>
       </Routes>
     </BrowserRouter>
