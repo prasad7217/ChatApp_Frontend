@@ -1,0 +1,1 @@
+export const backBanner = "https://res.cloudinary.com/dssabhgtb/image/upload/v1777289747/ChatGPT_Image_Apr_27_2026_05_04_07_PM_s2svst.png";

@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = () => {
 
     const [email, setEmail] = useState("durgaprasadkasa81@gmail.com");
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
 
     const navigate = useNavigate();
 
@@ -18,10 +20,14 @@ const Login = () => {
 
         console.log("res :", res)
 
-        if(res?.data?.success){
+        if (res?.data?.success) {
             navigate("/otp")
         }
 
+    }
+
+    const handleShowPass = () => {
+        setShowPass(!showPass);
     }
 
     return (
@@ -45,18 +51,21 @@ const Login = () => {
                             />
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-2 relative">
                             <div className="flex items-center justify-between">
                                 <label className="text-sm font-medium leading-none text-slate-200">Password</label>
                                 <a href="#" className="text-xs text-red-400 hover:underline">Forgot password?</a>
                             </div>
                             <input
-                                type="password"
+                                type={showPass ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="*****"
                                 className="flex h-12 w-full rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
+                            <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
+                                {showPass ? <BsEyeSlash /> : <BsEye /> }
+                            </div>
                         </div>
 
                         <button className="w-full h-12 rounded-lg bg-red-600 px-4 py-2 text-[16px] font-semibold text-white shadow transition-all hover:bg-red-600/80 active:scale-[0.98] cursor-pointer" onClick={() => reqLogin()}>
