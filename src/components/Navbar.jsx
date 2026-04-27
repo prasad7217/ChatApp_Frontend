@@ -12,7 +12,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="px-24 py-4 h-[10h] flex items-center justify-between navShadow bg-gray-800 fixed top-0 left-0 w-full">
+        <div className="xl:px-64 lg:px-24 md:px-24 px-8 py-4 xl:py-6 lg:py-6 md:py-6 h-[10h] flex items-center justify-between navShadow bg-gray-800 fixed top-0 left-0 w-full">
             <div className="relative cursor-pointer" onMouseEnter={() => seticonHover(true)} onMouseLeave={() => seticonHover(false)} onClick={() => navigate("/")}>
                 <BsChatSquareDotsFill className="text-[26px] text-[#DB2777]" />
                 {iconHover && <p className="absolute -top-4 -left-2.5 text-[14px] bg-gray-400 text-gray-100 px-1 py-0.5 font-semibold rounded-[5px]" >Home</p>}

@@ -25,8 +25,8 @@ const SignUp = () => {
     }
 
     return (
-        <div className="flex items-center justify-center bg-[#2d3748] p-4">
-            <div className="w-full max-w-lg p-10 space-y-2 bg-[#334155] rounded-3xl shadow-2xl my-8">
+        <div className="flex items-center justify-center bg-gray-700 p-4">
+            <div className="w-full max-w-lg p-8 space-y-2 bg-gray-800 rounded-3xl shadow-2xl my-8 xl:my-16">
                 {/* Header */}
                 <div className="space-y-2 text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-white">Create Account</h1>
@@ -97,7 +97,7 @@ const SignUp = () => {
                 </div>
 
                 <p className="text-center text-sm text-slate-400">
-                    Already have an account? <Link to={"/login"}><span className="text-red-500 text-[16px] hover:underline">Sign In</span></Link>
+                    Already have an account? <Link to={"/login"}><span className="text-red-400 text-[16px] hover:underline">Sign In</span></Link>
                 </p>
             </div>
         </div>

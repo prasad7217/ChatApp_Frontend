@@ -9,6 +9,7 @@ import Login from './components/UserAuthentication/Login'
 import Body from './components/Body'
 import SignUp from './components/UserAuthentication/Signup'
 import EmailOtp from './components/UserAuthentication/EmailOtp'
+import UserProfile from './components/User/UserProfile'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/otp' element={<EmailOtp />} />
+          <Route path='/profile' element={<UserProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>
