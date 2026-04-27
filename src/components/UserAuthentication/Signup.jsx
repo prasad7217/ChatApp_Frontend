@@ -95,7 +95,7 @@ const SignUp = () => {
                             placeholder="*****"
                             className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                         />
-                        <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
+                        <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] top-[36px] right-4 xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
                             {showPass ? <BsEyeSlash /> : <BsEye />}
                         </div>
                     </div>
