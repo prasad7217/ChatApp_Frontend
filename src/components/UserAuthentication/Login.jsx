@@ -32,8 +32,8 @@ const Login = () => {
 
     return (
         <div className="w-full bg-gray-700 flex items-center justify-center mt-12 py-8 xl:my-24">
-            <div className="flex items-center justify-center ">
-                <div className="w-[420px] max-w-md p-8 space-y-6 rounded-2xl bg-gray-800 shadow-2xl border border-slate-700/50 lg:my-20">
+            <div className="min-h-[77vh] xl:min-h-[55vh] flex items-center justify-center px-4">
+                <div className="xl:w-[420px] lg:w-[420px] md:w-[400px] w-[350px] max-w-md p-8 space-y-6 rounded-2xl bg-gray-800 shadow-2xl border border-slate-700/50 lg:my-20">
                     <div className="space-y-2 text-center">
                         <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
                         <p className="text-sm text-slate-400">Please enter your details to login</p>
@@ -63,7 +63,7 @@ const Login = () => {
                                 placeholder="*****"
                                 className="flex h-12 w-full rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
-                            <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
+                            <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] top-[36px] right-4 xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
                                 {showPass ? <BsEyeSlash /> : <BsEye /> }
                             </div>
                         </div>
