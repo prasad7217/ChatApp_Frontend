@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addUserProfile } from "../Redux/userSlice";
 
 const EmailOtp = () => {
 
@@ -9,6 +11,7 @@ const EmailOtp = () => {
   const [inputArr, setInputArr] = useState(new Array(OTP_DIGITCOUNT).fill(""));
   
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const inputRef = useRef([]);
 
@@ -52,8 +55,8 @@ const EmailOtp = () => {
       if(res?.data?.success){
         const res1 = await axios.get("http://localhost:7777/api/profile", {withCredentials: true});
         if(res1?.data?.success){
-          console.log("profile id", res1)
-          navigate(`/profile/${res1?.data?.data?._id}`)
+          dispatch(addUserProfile(res1?.data?.data))
+          navigate(`/profile`)
         }
       }
     } catch (error) {

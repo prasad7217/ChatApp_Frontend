@@ -13,32 +13,36 @@ import UserProfile from './components/User/UserProfile'
 import AdminLogin from './components/admin/authentication/AdminLogin.'
 import AdminDashboard from './components/admin/AdminDashboard'
 import ProtectedRoutes from './ProtectedRoutes'
+import { Provider } from 'react-redux'
+import appStore from './components/Redux/appStore'
 
 function App() {
 
   const [count, setCount] = useState(0)
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<MainBody />} >
-          <Route path='/' element={<Body />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/otp' element={<EmailOtp />} />
-          <Route element={<ProtectedRoutes role={"user"} />}>
-            <Route path='/profile/:id' element={<UserProfile />} />
+    <Provider store={appStore}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<MainBody />} >
+            <Route path='/' element={<Body />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/otp' element={<EmailOtp />} />
+            {/* <Route element={<ProtectedRoutes role={"user"} />}> */}
+              <Route path='/profile' element={<UserProfile />} />
+            {/* </Route> */}
           </Route>
-        </Route>
 
 
-        <Route path='/admin/login' element={<AdminLogin />} />
+          <Route path='/admin/login' element={<AdminLogin />} />
 
-        <Route element={<ProtectedRoutes role={"admin"} />}>
-          <Route path='/admin/dashboard/:id' element={<AdminDashboard />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route element={<ProtectedRoutes role={"admin"} />}>
+            <Route path='/admin/dashboard/:id' element={<AdminDashboard />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
