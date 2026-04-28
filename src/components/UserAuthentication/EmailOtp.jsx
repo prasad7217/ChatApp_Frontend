@@ -50,9 +50,10 @@ const EmailOtp = () => {
       }, {withCredentials: true});
 
       if(res?.data?.success){
-        const res = await axios.get("http://localhost:7777/api/profile", {withCredentials: true});
-        if(res?.data?.success){
-          navigate("/profile")
+        const res1 = await axios.get("http://localhost:7777/api/profile", {withCredentials: true});
+        if(res1?.data?.success){
+          console.log("profile id", res1)
+          navigate(`/profile/${res1?.data?.data?._id}`)
         }
       }
     } catch (error) {
