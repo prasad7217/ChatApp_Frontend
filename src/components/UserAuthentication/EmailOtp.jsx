@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addUserProfile } from "../Redux/userSlice";
+import { addUserProfile } from "../Redux/userSlices/userSlice";
 
 const EmailOtp = () => {
 

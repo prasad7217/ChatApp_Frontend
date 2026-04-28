@@ -38,7 +38,7 @@ function App() {
           <Route path='/admin/login' element={<AdminLogin />} />
 
           <Route element={<ProtectedRoutes role={"admin"} />}>
-            <Route path='/admin/dashboard/:id' element={<AdminDashboard />} />
+            <Route path='/admin/dashboard' element={<AdminDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

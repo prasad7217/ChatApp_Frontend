@@ -4,6 +4,8 @@ import { RiAdminFill } from "react-icons/ri";
 import { MdOutlineLockPerson } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addAdminProfile } from "../../Redux/adminSlices/adminSlices";
 
 const AdminLogin = () => {
 
@@ -11,6 +13,7 @@ const AdminLogin = () => {
     const [password, setPassword] = useState("Admin@123");
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async () => {
 
@@ -23,10 +26,10 @@ const AdminLogin = () => {
             const adminProfile = await axios.get("http://localhost:7777/api/admin/profile", { withCredentials: true })
 
             if (adminProfile?.data?.success) {
-                navigate(`/admin/dashboard/${adminProfile?.data?.data?._id}`);
+                dispatch(addAdminProfile(addAdminProfile?.data?.data))
+                navigate(`/admin/dashboard`);
             }
         }
-
     }
 
     return (

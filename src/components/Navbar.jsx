@@ -5,7 +5,7 @@ import { AiOutlineLogin } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { addUserProfile } from "./Redux/userSlice";
+import { addUserProfile } from "./Redux/userSlices/userSlice";
 import { MdMessage } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 
@@ -28,9 +28,7 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-
         !user && fetchUserProfile();
-
     }, [user])
 
     return (
