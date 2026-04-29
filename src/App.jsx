@@ -12,7 +12,7 @@ import EmailOtp from './components/UserAuthentication/EmailOtp'
 import UserProfile from './components/User/UserProfile'
 import AdminLogin from './components/admin/authentication/AdminLogin.'
 import AdminDashboard from './components/admin/AdminDashboard'
-import ProtectedRoutes from './ProtectedRoutes'
+// import ProtectedRoutes from './ProtectedRoutes'
 import { Provider } from 'react-redux'
 import appStore from './components/Redux/appStore'
 
@@ -37,12 +37,12 @@ function App() {
 
           <Route path='/admin/login' element={<AdminLogin />} />
 
-          <Route element={<ProtectedRoutes role={"admin"} />}>
+          {/* <Route element={<ProtectedRoutes role={"admin"} />}> */}
             <Route path='/admin/dashboard' element={<AdminDashboard />} />
-          </Route>
+          {/* </Route>  */}
         </Routes>
       </BrowserRouter>
-    </Provider>
+    </Provider>                                   
   )
 }
 

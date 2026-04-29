@@ -2,14 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 
 const Login = () => {
 
     const [email, setEmail] = useState("durgaprasadkasa81@gmail.com");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("Prasad@123");
     const [showPass, setShowPass] = useState(false);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const reqLogin = async () => {
 
@@ -17,11 +20,10 @@ const Login = () => {
             email,
             password
         }, { withCredentials: true });
-
-        console.log("res :", res)
-
+        // console.log("otp", res)
         if (res?.data?.success) {
-            navigate("/otp")
+            dispatch(addUserOtp(res?.data));
+            navigate("/otp");
         }
 
     }
@@ -64,7 +66,7 @@ const Login = () => {
                                 className="flex h-12 w-full rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
                             <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] top-[36px] right-4 xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
-                                {showPass ? <BsEyeSlash /> : <BsEye /> }
+                                {showPass ? <BsEyeSlash /> : <BsEye />}
                             </div>
                         </div>
 

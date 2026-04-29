@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
 
@@ -9,10 +9,13 @@ const EmailOtp = () => {
   const OTP_DIGITCOUNT = 6;
 
   const [inputArr, setInputArr] = useState(new Array(OTP_DIGITCOUNT).fill(""));
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const otpRes = useSelector((store) => store.otp.userOtp);
+  console.log("from", otpRes)
+  
   const inputRef = useRef([]);
 
   const handleInput = (value, index) => {
@@ -30,7 +33,7 @@ const EmailOtp = () => {
   }
 
   useEffect(() => {
-
+    !otpRes?.success && navigate("/login")
     inputRef.current[0]?.focus();
 
   }, [])
@@ -45,22 +48,22 @@ const EmailOtp = () => {
 
   const otpString = inputArr.join("");
 
-  const sentOtp = async () =>{
+  const sentOtp = async () => {
     try {
       const res = await axios.post("http://localhost:7777/api/otp_verify", {
         email: "durgaprasadkasa81@gmail.com",
         otp: otpString
-      }, {withCredentials: true});
+      }, { withCredentials: true });
 
-      if(res?.data?.success){
-        const res1 = await axios.get("http://localhost:7777/api/profile", {withCredentials: true});
-        if(res1?.data?.success){
+      if (res?.data?.success) {
+        const res1 = await axios.get("http://localhost:7777/api/profile", { withCredentials: true });
+        if (res1?.data?.success) {
           dispatch(addUserProfile(res1?.data?.data))
           navigate(`/profile`)
         }
       }
     } catch (error) {
-      
+
     }
   }
 
@@ -83,7 +86,7 @@ const EmailOtp = () => {
         <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8">
           {inputArr.map((value, index) => {
             return (
-              <input 
+              <input
                 key={index}
                 type="text"
                 value={value}
@@ -110,7 +113,6 @@ const EmailOtp = () => {
           </button>
         </div>
         <button onClick={sentOtp} className="w-full py-2 rounded-xl font-semibold cursor-pointer text-center bg-red-600 text-white text-[16px] hover:bg-red-600/80 transition-all duration-500 ease">Verify</button>
-
       </div>
     </div>
   );
