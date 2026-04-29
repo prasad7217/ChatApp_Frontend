@@ -29,7 +29,6 @@ const Navbar = () => {
         } catch (error) {
             console.log("Error :", error)
         }
-
     }
 
     useEffect(() => {
@@ -68,7 +67,6 @@ const Navbar = () => {
             </div>
         </div>
     )
-
 }
 
 export default Navbar;
