@@ -14,8 +14,7 @@ const EmailOtp = () => {
   const dispatch = useDispatch();
 
   const otpRes = useSelector((store) => store.otp.userOtp);
-  console.log("from", otpRes)
-  
+
   const inputRef = useRef([]);
 
   const handleInput = (value, index) => {
@@ -44,6 +43,9 @@ const EmailOtp = () => {
       !e.target.value && inputRef.current[index - 1]?.focus();
     }
 
+    if (e.key === "Enter") {
+      sentOtp();
+    }
   }
 
   const otpString = inputArr.join("");
