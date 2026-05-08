@@ -3,12 +3,10 @@ import { defaultSerializeQueryArgs } from "@reduxjs/toolkit/query";
 
 const userOtpSlice = createSlice({
     name: "otp",
-    initialState: {
-        userOtp: null
-    },
+    initialState: null,
     reducers: {
         addUserOtp: (state, action) => {
-            state.userOtp = action.payload;
+            return action.payload;
         }
     }
 })

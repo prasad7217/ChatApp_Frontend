@@ -20,7 +20,7 @@ const Login = () => {
             email,
             password
         }, { withCredentials: true });
-        // console.log("otp", res)
+        
         if (res?.data?.success) {
             dispatch(addUserOtp(res?.data));
             navigate("/otp");

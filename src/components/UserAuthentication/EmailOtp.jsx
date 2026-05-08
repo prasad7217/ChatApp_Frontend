@@ -3,17 +3,23 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
+import { formateTime, maskedEmail } from "../utils/helpers";
+import { FaRegClock } from "react-icons/fa6";
+import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 
 const EmailOtp = () => {
 
-  const OTP_DIGITCOUNT = 6;
+  const OTP_DIGITCOUNT = 4;
 
   const [inputArr, setInputArr] = useState(new Array(OTP_DIGITCOUNT).fill(""));
+  const [isReady, setIsReady] = useState();
+  const [timer, setTimer] = useState();
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const otpRes = useSelector((store) => store.otp.userOtp);
+  const otpRes = useSelector((store) => store?.otp);
 
   const inputRef = useRef([]);
 
@@ -30,12 +36,36 @@ const EmailOtp = () => {
     newValue && inputRef.current[index + 1]?.focus();
 
   }
-
   useEffect(() => {
-    !otpRes?.success && navigate("/login")
+
+    if (otpRes === null || otpRes === undefined) navigate("/login"); // wait for redux
+
+    setIsReady(true);
     inputRef.current[0]?.focus();
 
-  }, [])
+    if (!otpRes?.data?.otpExpiry) return;
+
+    const otpExpiryTime = otpRes?.data?.otpExpiry;
+
+    const reminigTime = Math.floor((otpExpiryTime - Date.now()) / 1000);
+    // const reminigTime = 10
+    setTimer(reminigTime);
+
+    const timerId = setInterval(() => {
+
+      setTimer((pre) => {
+        if (pre <= 1) {
+          clearInterval(timerId);
+          return 0;
+        }
+        return pre - 1;
+      });
+
+    }, 1000)
+
+    return () => clearInterval(timerId);
+
+  }, [otpRes?.data?.otpExpiry])
 
   const handleBackspace = (e, index) => {
 
@@ -53,7 +83,7 @@ const EmailOtp = () => {
   const sentOtp = async () => {
     try {
       const res = await axios.post("http://localhost:7777/api/otp_verify", {
-        email: "durgaprasadkasa81@gmail.com",
+        email: otpRes?.data?.email,
         otp: otpString
       }, { withCredentials: true });
 
@@ -65,9 +95,21 @@ const EmailOtp = () => {
         }
       }
     } catch (error) {
-
+      console.log("Email :", error)
     }
   }
+
+  const handleResendOtp = async () => {
+
+    const res = await axios.post("http://localhost:7777/api/resend/otp", { email: otpRes?.data?.email }, { withCredentials: true })
+
+    if (res?.data?.success) {
+      dispatch(addUserOtp(res?.data))
+    }
+
+  }
+
+  if (!isReady) return null;
 
   return (
     <div className="xl:min-h-[86vh] min-h-[85vh] lg:min-h-[85vh] w-full flex items-center justify-center px-6 bg-gray-700">
@@ -80,7 +122,7 @@ const EmailOtp = () => {
             OTP Validation
           </h1>
           <p className="text-gray-400 text-sm mt-1">
-            OTP has been sent to : { }
+            OTP has been sent to : <span className="text-red-400 text-[16px] font-semibold">{maskedEmail(otpRes?.data?.email)}</span>
           </p>
         </div>
 
@@ -108,12 +150,20 @@ const EmailOtp = () => {
           </p>
 
           <button
+            onClick={handleResendOtp}
+            disabled={timer > 0}
             className="
-          text-red-400 font-medium text-xs sm:text-sm hover:text-red-400/80 hover:underline transition duration-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+          text-red-400 font-medium text-xs sm:text-sm hover:text-red-400/90 hover:underline transition duration-200 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
           >
             Resend OTP
           </button>
         </div>
+        {timer > 0 && <div className="w-full flex items-center justify-center text-gray-400 text-[14px] gap-2">
+          <FaRegClock />
+          <div>
+            <span>Resend OTP in : </span><span className="text-[16px] text-red-400 font-semibold">{formateTime(timer)}</span>
+          </div>
+        </div>}
         <button onClick={sentOtp} className="w-full py-2 rounded-xl font-semibold cursor-pointer text-center bg-red-600 text-white text-[16px] hover:bg-red-600/80 transition-all duration-500 ease">Verify</button>
       </div>
     </div>
