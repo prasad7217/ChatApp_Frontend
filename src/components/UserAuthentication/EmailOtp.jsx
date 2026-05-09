@@ -41,7 +41,10 @@ const EmailOtp = () => {
     if (otpRes === null || otpRes === undefined) navigate("/login"); // wait for redux
 
     setIsReady(true);
-    inputRef.current[0]?.focus();
+
+    setTimeout(() => {
+      inputRef.current[0]?.focus(); // wait for re-render
+    }, 100);
 
     if (!otpRes?.data?.otpExpiry) return;
 
@@ -81,21 +84,38 @@ const EmailOtp = () => {
   const otpString = inputArr.join("");
 
   const sentOtp = async () => {
-    try {
-      const res = await axios.post("http://localhost:7777/api/otp_verify", {
-        email: otpRes?.data?.email,
-        otp: otpString
-      }, { withCredentials: true });
 
-      if (res?.data?.success) {
-        const res1 = await axios.get("http://localhost:7777/api/profile", { withCredentials: true });
-        if (res1?.data?.success) {
-          dispatch(addUserProfile(res1?.data?.data))
-          navigate(`/profile`)
-        }
+    if (otpRes?.data?.mode === "Reset-password") {
+
+      try {
+
+        const res = await axios.post("http://localhost:7777/api/reset-password/verify", { otp: otpString }, { withCredentials: true })
+        console.log("forgot :", res)
+      } catch (error) {
+
       }
-    } catch (error) {
-      console.log("Email :", error)
+
+    } else {
+
+      try {
+
+        const res = await axios.post("http://localhost:7777/api/otp_verify", {
+          email: otpRes?.data?.email,
+          otp: otpString
+        }, { withCredentials: true });
+
+        if (res?.data?.success) {
+          const res1 = await axios.get("http://localhost:7777/api/profile", { withCredentials: true });
+          if (res1?.data?.success) {
+            dispatch(addUserProfile(res1?.data?.data))
+            navigate(`/profile`)
+          }
+        }
+
+      } catch (error) {
+        console.log("Email :", error)
+      }
+
     }
   }
 

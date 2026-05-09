@@ -56,7 +56,7 @@ const Login = () => {
                         <div className="space-y-2 relative">
                             <div className="flex items-center justify-between">
                                 <label className="text-sm font-medium leading-none text-slate-200">Password</label>
-                                <Link to={""}><p className="text-xs text-red-400 hover:underline">Forgot password?</p></Link>
+                                <Link to={"/reset/password"}><p className="text-xs text-red-400 hover:underline" >Forgot password?</p></Link>
                             </div>
                             <input
                                 type={showPass ? "text" : "password"}

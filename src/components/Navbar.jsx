@@ -49,7 +49,7 @@ const Navbar = () => {
   }, [user]);
 
   return (
-    <div className="xl:px-40 lg:px-24 md:px-24 px-8 py-4 xl:py-4 lg:py-4 md:py-4 h-[10h] flex items-center justify-between navShadow bg-gray-800 fixed top-0 left-0 w-full">
+    <div className="xl:px-96 lg:px-24 md:px-24 px-8 py-4 xl:py-4 lg:py-4 md:py-4 h-[10h] flex items-center justify-between navShadow bg-gray-800 fixed top-0 left-0 w-full">
       <div
         className="relative cursor-pointer"
         onMouseEnter={() => seticonHover(true)}

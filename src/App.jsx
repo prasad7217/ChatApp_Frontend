@@ -15,6 +15,8 @@ import AdminDashboard from './components/admin/AdminDashboard'
 // import ProtectedRoutes from './ProtectedRoutes'
 import { Provider } from 'react-redux'
 import appStore from './components/Redux/appStore'
+import ResetViaEmail from './components/UserAuthentication/ResetViaEmail'
+import NewPassword from './components/UserAuthentication/NewPassword'
 
 function App() {
 
@@ -29,6 +31,8 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/otp' element={<EmailOtp />} />
+            <Route path='/reset/password' element={<ResetViaEmail />} />
+            <Route path='/reset/password/new' element={<NewPassword />} />
             {/* <Route element={<ProtectedRoutes role={"user"} />}> */}
               <Route path='/profile' element={<UserProfile />} />
             {/* </Route> */}

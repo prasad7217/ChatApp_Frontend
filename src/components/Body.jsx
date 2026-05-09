@@ -7,11 +7,11 @@ import { MdLockOpen } from "react-icons/md";
 
 const Body = () => {
     return (
-        <div className="w-full h-[88vh] xl:h-[86vh] lg:h-[80vh] xl:px-24 lg:px-24 overflow-auto">
-            <div className="w-full h-[70%] flex flex-col xl:flex-row lg:flex-row items-center justify-center gap-6 xl:gap-0 lg:gap-0 px-6 sm:px-8 xl:px-48 lg:px-48 md:px-44 py-8 xl:py-0 lg:py-0">
+        <div className="w-full h-[88vh] xl:h-[86vh] lg:h-[80vh] xl:px-96 lg:px-24 overflow-auto">
+            <div className="w-full h-[70%] flex flex-col xl:flex-row lg:flex-row items-center justify-center gap-6 xl:gap-0 lg:gap-0 px-6 sm:px-8 xl:px-0 lg:px-0 md:px-0 py-8 xl:py-0 lg:py-0">
 
                 {/* Left Section */}
-                <div className="w-full xl:w-[50%] lg:w-[50%] flex flex-col gap-5 items-center xl:items-start lg:items-start text-center xl:text-left lg:text-left">
+                <div className="w-full xl:w-[50%] lg:w-[50%] flex flex-col gap-8 items-center xl:items-start lg:items-start text-center xl:text-left lg:text-left">
 
                     {/* Badge */}
                     <div className="inline-flex items-center gap-1.5 bg-green-900 w-fit text-green-100 font-medium px-3 py-1.5 rounded-full">
@@ -67,7 +67,7 @@ const Body = () => {
                 </div>
 
                 {/* Right Section — Chat Mockup */}
-                <div className="w-full xl:w-[50%] lg:w-[50%] flex items-center justify-center p-4 sm:p-6">
+                <div className="w-full xl:w-[50%] lg:w-[50%] flex items-center justify-center p-4 sm:py-6 xl:ml-40 lg:ml-40 md:ml-40">
                     <div className="w-full max-w-[300px] sm:max-w-[320px] md:max-w-[340px] bg-white rounded-2xl border border-gray-200 overflow-hidden">
 
                         {/* Header */}
@@ -106,7 +106,7 @@ const Body = () => {
                 </div>
 
             </div>
-            <div className="w-full flex items-center justify-center flex-wrap gap-4 sm:gap-10 md:gap-16 lg:gap-20 xl:gap-20 px-6 sm:px-10 md:px-16 xl:px-32 py-6 sm:py-8">
+            <div className="w-full flex items-center justify-center flex-wrap gap-4 sm:gap-10 md:gap-16 lg:gap-20 xl:gap-28 px-6 sm:px-0 md:px-0 xl:px-0 py-6 sm:py-8">
 
                 {/* Card 1 */}
                 <div className="flex-1 min-w-[220px] max-w-[280px] px-5 py-5 bg-gray-800/60 border border-gray-700 rounded-2xl flex flex-col items-start gap-3 hover:border-blue-500/50 hover:bg-gray-800 hover:scale-[1.03] transform transition-all duration-300 cursor-pointer group">
