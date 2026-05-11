@@ -10,7 +10,7 @@ import {
     MdSecurity,
 } from "react-icons/md";
 import { MdLockPerson } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
 
@@ -32,7 +32,9 @@ const ResetPassword = () => {
 
         const res = await axios.post("http://localhost:7777/api/reset-password/new", { password: confirmPassword }, { withCredentials: true })
 
-        console.log("new :", res)
+        if (res?.data?.success) {
+            navigate("/login")
+        }
 
     }
 
@@ -196,14 +198,14 @@ const ResetPassword = () => {
                 </button>
 
                 {/* Back */}
-                <div
+                <Link to={ "/login" }><div
                     onClick={() => navigate("/login")}
                     className="flex items-center justify-center gap-2 text-[#94a3b8] hover:text-[#ff375f] mt-4 cursor-pointer transition-colors duration-200"
                 >
                     <MdArrowBack size={18} />
                     Back to Login
                 </div>
-
+                </Link>
             </div>
 
         </div>

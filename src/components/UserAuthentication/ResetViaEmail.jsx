@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { MdEmail, MdLockOpen, MdInfo, MdSend, MdArrowBack } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 
 const ForgotPassword = () => {
@@ -16,8 +16,8 @@ const ForgotPassword = () => {
         try {
 
             const res = await axios.post("http://localhost:7777/api/reset-password", { email }, { withCredentials: true });
-            
-            if(res?.data?.success){
+
+            if (res?.data?.success) {
                 dispatch(addUserOtp(res?.data));
                 navigate("/otp")
             }
@@ -79,14 +79,14 @@ const ForgotPassword = () => {
 
                 <hr className="border-t border-[#1e2840] my-6" />
 
-                <div
+                <Link to={ "/login" }><div
                     onClick={() => navigate("/login")}
                     className="flex items-center justify-center gap-1.5 text-[#7a8499] hover:text-[#e8344a] text-sm cursor-pointer transition-colors duration-200"
                 >
                     <MdArrowBack size={16} />
                     Back to Login
                 </div>
-
+                </Link>
             </div>
         </div>
     );

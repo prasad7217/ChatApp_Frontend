@@ -90,9 +90,13 @@ const EmailOtp = () => {
       try {
 
         const res = await axios.post("http://localhost:7777/api/reset-password/verify", { otp: otpString }, { withCredentials: true })
-        console.log("forgot :", res)
-      } catch (error) {
 
+        if (res?.data?.success) {
+          navigate('/reset/password/new')
+        }
+
+      } catch (error) {
+        console.log("NEW :", error)
       }
 
     } else {
