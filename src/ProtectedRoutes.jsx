@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const ProtectedRoutes = ({ role }) => {
 
-    const { id } = useParams();
+    // const { id } = useParams();
 
     const navigate = useNavigate();
 
