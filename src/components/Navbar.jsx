@@ -83,7 +83,7 @@ const Navbar = () => {
             </p>
           )}
           {user && loginHover && (
-            <div className="absolute top-10 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
+            <div className="absolute top-6 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
                 <li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">

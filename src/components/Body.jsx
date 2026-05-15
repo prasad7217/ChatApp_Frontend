@@ -9,10 +9,10 @@ const Body = () => {
     return (
         <div className="min-h-screen w-full bg-[#1a1f2b] overflow-x-hidden">
     {/* Main Container: Centered max-width wrapper */}
-    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-12 flex flex-col gap-16 md:gap-24">
+    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-32 flex flex-col gap-16 md:gap-24">
         
         {/* Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             
             {/* Left Content */}
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-8">
