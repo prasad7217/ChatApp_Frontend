@@ -23,12 +23,9 @@ const Body = () => {
                     observer.unobserve(element)
                 }
             })
-
-
         },
             { threshold: 0.6 }
         )
-
         if (element) observer.observe(element);
 
         const observer1 = new IntersectionObserver((entries) => {
@@ -39,7 +36,6 @@ const Body = () => {
                     entry.target.classList.add("show");
                     observer1.unobserve(entry.target)
                 }
-
             })
 
         }, { threshold: 0.6 })
@@ -114,7 +110,6 @@ const Body = () => {
                             </div>
                         </div>
                     </div>
-
                     {/* Right Content: Chat Mockup */}
                     <div className="relative flex justify-center lg:justify-end">
                         {/* Decorative background glow */}

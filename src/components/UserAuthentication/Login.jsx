@@ -33,9 +33,9 @@ const Login = () => {
     }
 
     return (
-        <div className="w-full bg-gray-700 flex items-center justify-center mt-12 py-8 xl:my-24">
+        <div className="w-full bg-gray-700 flex items-center justify-center mt-12 py-8 ">
             <div className="min-h-[77vh] xl:min-h-[55vh] flex items-center justify-center px-4">
-                <div className="xl:w-[420px] lg:w-[420px] md:w-[400px] w-[350px] max-w-md p-8 space-y-6 rounded-2xl bg-gray-800 shadow-2xl border border-slate-700/50 lg:my-20">
+                <div className="xl:w-[420px] lg:w-[420px] md:w-[400px] w-[350px] max-w-md p-8 space-y-6 rounded-2xl bg-gray-800 shadow-2xl border border-slate-700/50 lg:my-4">
                     <div className="space-y-2 text-center">
                         <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
                         <p className="text-sm text-slate-400">Please enter your details to login</p>
