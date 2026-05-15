@@ -49,7 +49,7 @@ const Login = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="name@company.com"
-                                className="flex h-12 w-full rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
+                                className="flex h-12 w-full rounded-3xl border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
                         </div>
 
@@ -63,14 +63,14 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="*****"
-                                className="flex h-12 w-full rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
+                                className="flex h-12 w-full rounded-3xl border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
                             <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] top-[36px] right-4 xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
                                 {showPass ? <BsEyeSlash /> : <BsEye />}
                             </div>
                         </div>
 
-                        <button className="w-full h-12 rounded-lg bg-red-600 px-4 py-2 text-[16px] font-semibold text-white shadow transition-all hover:bg-red-600/80 active:scale-[0.98] cursor-pointer" onClick={() => reqLogin()}>
+                        <button className="w-full h-12 rounded-3xl bg-red-600 px-4 py-2 text-[16px] font-semibold text-white shadow transition-all hover:bg-red-600/80 active:scale-[0.98] cursor-pointer" onClick={() => reqLogin()}>
                             Login
                         </button>
                     </div>
