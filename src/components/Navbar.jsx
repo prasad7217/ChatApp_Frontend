@@ -47,8 +47,6 @@ const Navbar = () => {
 
   };
 
-  console.log(window.innerWidth)
-
   useEffect(() => {
     !user && fetchUserProfile();
   }, [user]);

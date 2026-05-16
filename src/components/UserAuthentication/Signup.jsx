@@ -13,7 +13,8 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
-    const [profilePic, setProfilePic] = useState("");
+    const [profilePic, setProfilePic] = useState('');
+    const [profilePicPreview, setProfilePicPreview] = useState('');
     const [showPass, setShowPass] = useState(false);
 
     const sentSignup = async () => {
@@ -32,11 +33,23 @@ const SignUp = () => {
 
     const handleShowPass = () => {
         setShowPass(!showPass);
+        
+    }
+
+    const handleProfile = (e) =>{
+
+        const file = e.target.files[0];
+
+        if(file){
+            setProfilePic(file);
+            setProfilePicPreview(URL.createObjectURL(file))
+        }
+
     }
 
     return (
         <div className="flex items-center justify-center bg-gray-700 p-4 ">
-            <div className="w-full max-w-lg p-8 space-y-2 bg-gray-800 rounded-3xl shadow-2xl my-8 lg:my-4 md:my-4 xl:my-4 2xl:my-4">
+            <div className="w-full max-w-lg p-8 space-y-2 bg-gray-800 rounded-3xl shadow-2xl my-8 lg:my-4 md:my-4 xl:my-4 2xl:my-14">
                 {/* Header */}
                 <div className="space-y-2 text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-white">Create Account</h1>
@@ -48,7 +61,10 @@ const SignUp = () => {
                     <div className="flex flex-col items-center justify-center space-y-3">
                         <div className="relative w-24 h-24 rounded-full border-2 border-dashed border-slate-500 bg-slate-800/50 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-red-500 transition-colors">
                             <span className="text-slate-500 group-hover:text-red-400 text-xs text-center px-2">Upload Photo</span>
-                            <input type="file" value={profilePic} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={(e) => setProfilePic(e.target.value)} />
+                            <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={(e) => handleProfile(e)} />
+                        </div>
+                        <div>
+                            <img src={profilePicPreview} alt="" />
                         </div>
                     </div>
 
