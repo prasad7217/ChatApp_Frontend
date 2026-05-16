@@ -31,8 +31,8 @@ const Body = () => {
         const observer1 = new IntersectionObserver((entries) => {
 
             entries.forEach((entry) => {
-
-                if (entry.isIntersecting) {
+                // console.log("entry", entry)
+                if (!entry.isIntersecting) {
                     entry.target.classList.add("show");
                     observer1.unobserve(entry.target)
                 }
@@ -51,21 +51,21 @@ const Body = () => {
     }, [])
 
     return (
-        <div className="min-h-screen w-full bg-[#1a1f2b] overflow-x-hidden">
-    {/* Main Container: Centered max-width wrapper */}
-    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-40 flex flex-col gap-16 md:gap-24">
-        
-        {/* Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
-            {/* Left Content */}
-            <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-8">
-                
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 bg-green-900/30 border border-green-800/50 text-green-400 font-medium px-4 py-1.5 rounded-full">
-                    <IoCheckmarkCircleOutline size={18} className="shrink-0" />
-                    <span className="text-xs sm:text-sm tracking-wide">Real-time messaging</span>
-                </div>
+        <div className="min-h-screen w-full bg-gray-800/80 overflow-x-hidden">
+            {/* Main Container: Centered max-width wrapper */}
+            <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-40 2xl:px-10 flex flex-col gap-16 md:gap-24">
+
+                {/* Hero Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ">
+
+                    {/* Left Content */}
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-8 fadeUp" id="left">
+
+                        {/* Badge */}
+                        <div className="inline-flex items-center gap-2 bg-green-900/30 border border-green-800/50 text-green-400 font-medium px-4 py-1.5 rounded-full">
+                            <IoCheckmarkCircleOutline size={18} className="shrink-0" />
+                            <span className="text-xs sm:text-sm tracking-wide">Real-time messaging</span>
+                        </div>
 
                         {/* Heading */}
                         <div className="space-y-2">
@@ -149,7 +149,7 @@ const Body = () => {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 " id="cards">
                     {/* Feature Cards Refactored to use Grid */}
                     {[
                         { title: "Real-time chat", desc: "Instant messaging with live delivery status.", icon: <BsChatSquareText />, color: "blue" },
