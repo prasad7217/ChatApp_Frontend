@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addAdminProfile } from "../../Redux/adminSlices/adminSlices";
+import { BASE_URL } from "../../../Constants";
 
 const AdminLogin = () => {
 
@@ -17,13 +18,13 @@ const AdminLogin = () => {
 
     const handleLogin = async () => {
 
-        const res = await axios.post("http://localhost:7777/api/admin/login", {
+        const res = await axios.post(BASE_URL + "/admin/login", {
             email,
             password
         }, { withCredentials: true });
         // console.log(res)
         if (res?.data?.status === "success") {
-            const adminProfile = await axios.get("http://localhost:7777/api/admin/profile", { withCredentials: true })
+            const adminProfile = await axios.get(BASE_URL + "/admin/profile", { withCredentials: true })
 
             if (adminProfile?.data?.success) {
                 dispatch(addAdminProfile(addAdminProfile?.data?.data))

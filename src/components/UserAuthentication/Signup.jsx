@@ -6,6 +6,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
 import { backBanner } from "../../helper";
+import { BASE_URL } from "../../Constants";
 
 const SignUp = () => {
 
@@ -19,7 +20,7 @@ const SignUp = () => {
 
     const sentSignup = async () => {
 
-        const res = await axios.post("http://localhost:7777/api/signup", {
+        const res = await axios.post(BASE_URL + "/signup", {
             userName,
             email,
             password,

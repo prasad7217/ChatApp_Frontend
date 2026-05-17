@@ -6,6 +6,7 @@ import { addUserProfile } from "../Redux/userSlices/userSlice";
 import { formateTime, maskedEmail } from "../utils/helpers";
 import { FaRegClock } from "react-icons/fa6";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
+import { BASE_URL } from "../../Constants";
 
 const EmailOtp = () => {
 
@@ -89,7 +90,7 @@ const EmailOtp = () => {
 
       try {
 
-        const res = await axios.post("http://localhost:7777/api/reset-password/verify", { otp: otpString }, { withCredentials: true })
+        const res = await axios.post(BASE_URL + "/reset-password/verify", { otp: otpString }, { withCredentials: true })
 
         if (res?.data?.success) {
           navigate('/reset/password/new')
@@ -103,13 +104,13 @@ const EmailOtp = () => {
 
       try {
 
-        const res = await axios.post("http://localhost:7777/api/otp_verify", {
+        const res = await axios.post(BASE_URL + "/otp_verify", {
           email: otpRes?.data?.email,
           otp: otpString
         }, { withCredentials: true });
 
         if (res?.data?.success) {
-          const res1 = await axios.get("http://localhost:7777/api/profile", { withCredentials: true });
+          const res1 = await axios.get(BASE_URL + "/profile", { withCredentials: true });
           if (res1?.data?.success) {
             dispatch(addUserProfile(res1?.data?.data))
             navigate(`/profile`)
@@ -125,7 +126,7 @@ const EmailOtp = () => {
 
   const handleResendOtp = async () => {
 
-    const res = await axios.post("http://localhost:7777/api/resend/otp", { email: otpRes?.data?.email }, { withCredentials: true })
+    const res = await axios.post(BASE_URL + "/resend/otp", { email: otpRes?.data?.email }, { withCredentials: true })
 
     if (res?.data?.success) {
       dispatch(addUserOtp(res?.data))

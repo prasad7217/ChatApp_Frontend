@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "./Constants";
 
 const ProtectedRoutes = ({ role }) => {
 
@@ -10,7 +11,7 @@ const ProtectedRoutes = ({ role }) => {
     const navigate = useNavigate();
 
     const isUser = async () => {
-        const res = await axios.post("http://localhost:7777/api/role", {
+        const res = await axios.post(BASE_URL + "/role", {
             id,
             role
         }, { withCredentials: true });
@@ -23,7 +24,7 @@ const ProtectedRoutes = ({ role }) => {
     }
 
     const isAdmin = async () => {
-        const res = await axios.post("http://localhost:7777/api/adminrole", {
+        const res = await axios.post(BASE_URL + "/adminrole", {
             id,
             role
         }, { withCredentials: true });

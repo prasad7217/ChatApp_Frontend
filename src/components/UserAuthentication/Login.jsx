@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
+import { BASE_URL } from "../../Constants";
 
 const Login = () => {
 
@@ -16,7 +17,7 @@ const Login = () => {
 
     const reqLogin = async () => {
 
-        const res = await axios.post("http://localhost:7777/api/login", {
+        const res = await axios.post(BASE_URL + "/login", {
             email,
             password
         }, { withCredentials: true });

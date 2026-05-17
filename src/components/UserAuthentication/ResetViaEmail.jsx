@@ -4,6 +4,7 @@ import { MdEmail, MdLockOpen, MdInfo, MdSend, MdArrowBack } from "react-icons/md
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
+import { BASE_URL } from "../../Constants";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("durgaprasadkasa81@gmail.com");
@@ -15,7 +16,7 @@ const ForgotPassword = () => {
 
         try {
 
-            const res = await axios.post("http://localhost:7777/api/reset-password", { email }, { withCredentials: true });
+            const res = await axios.post(BASE_URL + "/reset-password", { email }, { withCredentials: true });
 
             if (res?.data?.success) {
                 dispatch(addUserOtp(res?.data));

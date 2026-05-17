@@ -11,6 +11,7 @@ import {
 } from "react-icons/md";
 import { MdLockPerson } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../Constants";
 
 const ResetPassword = () => {
 
@@ -30,7 +31,7 @@ const ResetPassword = () => {
             return;
         }
 
-        const res = await axios.post("http://localhost:7777/api/reset-password/new", { password: confirmPassword }, { withCredentials: true })
+        const res = await axios.post(BASE_URL + "/reset-password/new", { password: confirmPassword }, { withCredentials: true })
 
         if (res?.data?.success) {
             navigate("/login")

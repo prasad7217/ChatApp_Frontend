@@ -9,8 +9,7 @@ import { addUserProfile, clearUserProfile } from "./Redux/userSlices/userSlice";
 import { MdMessage } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import { IoChatboxEllipsesSharp } from "react-icons/io5";
-
-
+import { BASE_URL } from "../Constants";
 
 const Navbar = () => {
   const [loginHover, setLoginHover] = useState(false);
@@ -23,7 +22,7 @@ const Navbar = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const res1 = await axios.get("http://localhost:7777/api/profile", {
+      const res1 = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
       });
       if (res1?.data?.success) {
@@ -36,15 +35,15 @@ const Navbar = () => {
   };
 
   const userLogout = async () => {
-    const res = await axios.post("http://localhost:7777/api/logout", {}, {
-      withCredentials: true,
-    });
+    const res = await axios.post(BASE_URL + "/logout", {}, {
+        withCredentials: true,
+      },
+    );
 
     if (res?.data?.success) {
       dispatch(clearUserProfile());
-      navigate("/")
+      navigate("/");
     }
-
   };
 
   useEffect(() => {
@@ -60,7 +59,6 @@ const Navbar = () => {
         onClick={() => navigate("/")}
       >
         <div className="flex items-center gap-[10px] px-[18px] pl-[10px] py-[10px]">
-
           {/* Icon */}
           <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -77,15 +75,16 @@ const Navbar = () => {
 
           {/* Text */}
           <div className="flex flex-col leading-none">
-            <span className="font-extrabold text-[22px] tracking-tight text-white"
-              style={{ fontFamily: "'Syne', sans-serif" }}>
+            <span
+              className="font-extrabold text-[22px] tracking-tight text-white"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
               Nex<span className="text-red-600">chat</span>
             </span>
             <span className="text-[10px] tracking-[1.5px] uppercase text-white/30 mt-[3px]">
               Real-time messaging
             </span>
           </div>
-
         </div>
 
         {iconHover && (
