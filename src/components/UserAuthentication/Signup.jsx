@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
@@ -18,30 +18,41 @@ const SignUp = () => {
     const [profilePicPreview, setProfilePicPreview] = useState('');
     const [showPass, setShowPass] = useState(false);
 
+    const navigate = useNavigate()
+
     const sentSignup = async () => {
 
-        const res = await axios.post(BASE_URL + "/signup", {
-            userName,
-            email,
-            password,
-            bio,
-            profilePic,
-        }, { withCredentials: true })
+        const formData = new FormData();
 
-        console.log("res", res)
+        formData.append("userName", userName);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("bio", bio);
+        formData.append("profilePic", profilePic);
+
+        const res = await axios.post(BASE_URL + "/signup", formData, {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        
+        if(res?.data?.success){
+            navigate("/login")
+        }
 
     }
 
     const handleShowPass = () => {
         setShowPass(!showPass);
-        
+
     }
 
-    const handleProfile = (e) =>{
+    const handleProfile = (e) => {
 
         const file = e.target.files[0];
 
-        if(file){
+        if (file) {
             setProfilePic(file);
             setProfilePicPreview(URL.createObjectURL(file))
         }
@@ -59,14 +70,24 @@ const SignUp = () => {
 
                 <div className="space-y-3">
                     {/* Profile Pic Upload Section */}
-                    <div className="flex flex-col items-center justify-center space-y-3">
-                        <div className="relative w-24 h-24 rounded-full border-2 border-dashed border-slate-500 bg-slate-800/50 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-red-500 transition-colors">
-                            <span className="text-slate-500 group-hover:text-red-400 text-xs text-center px-2">Upload Photo</span>
-                            <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={(e) => handleProfile(e)} />
+                    {/* Profile Pic Upload Section */}
+                    <div className="flex items-center justify-center gap-4">
+                        <div className="flex flex-col items-center gap-1">
+                            <div className="relative w-24 h-24 rounded-full border-2 border-dashed border-slate-500 bg-slate-800/50 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-red-500 transition-colors">
+                                <span className="text-slate-500 group-hover:text-red-400 text-xs text-center px-2">Upload Photo</span>
+                                <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={(e) => handleProfile(e)} />
+                            </div>
+                            <span className="text-xs text-slate-500">Choose file</span>
                         </div>
-                        <div>
-                            <img src={profilePicPreview} alt="" />
-                        </div>
+
+                        {profilePicPreview && (
+                            <div className="flex flex-col items-center gap-1">
+                                <div className="w-24 h-24 rounded-full border-2 border-red-500 overflow-hidden">
+                                    <img src={profilePicPreview} alt="Preview" className="w-full h-full object-cover" />
+                                </div>
+                                <span className="text-xs text-slate-500">Preview</span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Grid for Name & Email */}

@@ -36,8 +36,8 @@ const Navbar = () => {
 
   const userLogout = async () => {
     const res = await axios.post(BASE_URL + "/logout", {}, {
-        withCredentials: true,
-      },
+      withCredentials: true,
+    },
     );
 
     if (res?.data?.success) {
@@ -101,9 +101,23 @@ const Navbar = () => {
           onClick={() => !user && navigate("/login")}
         >
           {user?.profilePic ? (
-            <img src={user?.profilePic} alt="" className="w-10 h-10" />
+            <div className="relative w-10 h-10">
+              <img
+                src={user?.profilePic}
+                alt={user?.userName || "User"}
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-red-500 ring-offset-2 ring-offset-gray-800"
+              />
+              {/* Online indicator */}
+              <span className="absolute bottom-0 -right-1.5 w-3.5 h-3.5 bg-green-400 border-2 border-gray-800 rounded-full"></span>
+            </div>
           ) : (
-            <FaUserAlt className="text-[20px] text-gray-400" />
+            <button
+              onClick={() => navigate("/login")}
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
+            >
+              Login
+              <AiOutlineLogin className="text-[18px]" />
+            </button>
           )}
           {!user && loginHover && (
             <p className="absolute -top-5 -left-3 text-[14px] bg-gray-600 text-gray-100 px-1 py-0.5 font-semibold rounded-[5px]">
@@ -111,7 +125,7 @@ const Navbar = () => {
             </p>
           )}
           {user && loginHover && (
-            <div className="absolute top-6 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
+            <div className="absolute 2xl:top-10 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
                 <li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">

@@ -32,7 +32,7 @@ const Body = () => {
 
             entries.forEach((entry) => {
                 // console.log("entry", entry)
-                if (!entry.isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add("show");
                     observer1.unobserve(entry.target)
                 }
