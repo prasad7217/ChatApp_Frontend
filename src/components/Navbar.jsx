@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BsChatSquareDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineLogin } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addUserProfile, clearUserProfile } from "./Redux/userSlices/userSlice";
@@ -98,7 +98,6 @@ const Navbar = () => {
           className="relative cursor-pointer "
           onMouseEnter={() => setLoginHover(true)}
           onMouseLeave={() => setLoginHover(false)}
-          onClick={() => !user && navigate("/login")}
         >
           {user?.profilePic ? (
             <div className="relative w-10 h-10">
@@ -111,13 +110,23 @@ const Navbar = () => {
               <span className="absolute bottom-0 -right-1 w-3.5 h-3.5 bg-green-400 border-2 border-gray-800 rounded-full"></span>
             </div>
           ) : (
-            <button
-              onClick={() => navigate("/login")}
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
-            >
-              Login
-              <AiOutlineLogin className="text-[18px]" />
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate("/login")}
+                className="flex items-center gap-2 border border-red-500 text-red-400 hover:bg-red-500 hover:text-white active:scale-95 transition-all text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
+              >
+                <AiOutlineLogin className="text-[18px]" />
+                Login
+              </button>
+
+              <Link to={"/signup"}><button
+                className="flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
+              >
+                <FaUserAlt className="text-[14px]" />
+                Sign Up
+              </button>
+              </Link>
+            </div>
           )}
           {!user && loginHover && (
             <p className="absolute -top-5 -left-3 text-[14px] bg-gray-600 text-gray-100 px-1 py-0.5 font-semibold rounded-[5px]">
