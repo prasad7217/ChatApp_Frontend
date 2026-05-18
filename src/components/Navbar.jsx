@@ -105,10 +105,10 @@ const Navbar = () => {
               <img
                 src={user?.profilePic}
                 alt={user?.userName || "User"}
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-red-500 ring-offset-2 ring-offset-gray-800"
+                className="w-10 h-10 rounded-full object-cover"
               />
               {/* Online indicator */}
-              <span className="absolute bottom-0 -right-1.5 w-3.5 h-3.5 bg-green-400 border-2 border-gray-800 rounded-full"></span>
+              <span className="absolute bottom-0 -right-1 w-3.5 h-3.5 bg-green-400 border-2 border-gray-800 rounded-full"></span>
             </div>
           ) : (
             <button

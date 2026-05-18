@@ -30,11 +30,16 @@ const ResetPassword = () => {
             setError("Confirm password should be same as the new password.");
             return;
         }
-
-        const res = await axios.post(BASE_URL + "/reset-password/new", { password: confirmPassword }, { withCredentials: true })
-
-        if (res?.data?.success) {
-            navigate("/login")
+        try {
+            const res = await axios.post(BASE_URL + "/reset-password/new", { password: confirmPassword }, { withCredentials: true })
+            console.log(newPassword)
+            console.log("response", res);
+            if (res?.data?.success) {
+                console.log(newPassword)
+                navigate("/login")
+            }
+        } catch (error) {
+            console.log("Error :", error)
         }
 
     }
@@ -199,7 +204,7 @@ const ResetPassword = () => {
                 </button>
 
                 {/* Back */}
-                <Link to={ "/login" }><div
+                <Link to={"/login"}><div
                     onClick={() => navigate("/login")}
                     className="flex items-center justify-center gap-2 text-[#94a3b8] hover:text-[#ff375f] mt-4 cursor-pointer transition-colors duration-200"
                 >

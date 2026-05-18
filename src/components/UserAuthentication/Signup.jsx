@@ -7,12 +7,14 @@ import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
 import { backBanner } from "../../helper";
 import { BASE_URL } from "../../Constants";
+import { BsBriefcaseFill } from "react-icons/bs";
 
 const SignUp = () => {
 
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [designation, setDesignation] = useState("");
     const [bio, setBio] = useState("");
     const [profilePic, setProfilePic] = useState('');
     const [profilePicPreview, setProfilePicPreview] = useState('');
@@ -28,6 +30,7 @@ const SignUp = () => {
         formData.append("email", email);
         formData.append("password", password);
         formData.append("bio", bio);
+        formData.append("designation", designation);
         formData.append("profilePic", profilePic);
 
         const res = await axios.post(BASE_URL + "/signup", formData, {
@@ -36,8 +39,8 @@ const SignUp = () => {
                 "Content-Type": "multipart/form-data",
             },
         })
-        
-        if(res?.data?.success){
+
+        if (res?.data?.success) {
             navigate("/login")
         }
 
@@ -105,21 +108,34 @@ const SignUp = () => {
                                 className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                             />
                         </div>
-                        <div className="space-y-1.5">
+                        <div className="space-y-1.5 ">
                             <div className="flex items-center gap-1 pl-1">
-                                <MdEmail className="text-slate-400 text-[16px]" />
-                                <label className="text-sm font-semibold text-slate-200 ml-1">Email</label>
+                                <BsBriefcaseFill className="text-slate-400 text-[12px]" />
+                                <label className="text-sm font-semibold text-slate-200 ml-1">Designation</label>
                             </div>
                             <input
-                                onChange={(e) => setEmail(e.target.value)}
-                                type="email"
-                                value={email}
-                                placeholder="name@company.com"
+                                onChange={(e) => setDesignation(e.target.value)}
+                                value={designation}
+                                type="text"
+                                placeholder="Developer"
                                 className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                             />
                         </div>
-                    </div>
 
+                    </div>
+                    <div className="space-y-1.5">
+                        <div className="flex items-center gap-1 pl-1">
+                            <MdEmail className="text-slate-400 text-[16px]" />
+                            <label className="text-sm font-semibold text-slate-200 ml-1">Email</label>
+                        </div>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            value={email}
+                            placeholder="name@company.com"
+                            className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                        />
+                    </div>
                     {/* Password */}
                     <div className="space-y-1.5 relative">
                         <div className="flex items-center gap-1 pl-1">
