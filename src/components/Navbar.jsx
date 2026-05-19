@@ -100,14 +100,14 @@ const Navbar = () => {
           onMouseLeave={() => setLoginHover(false)}
         >
           {user?.profilePic ? (
-            <div className="relative w-10 h-10">
+            <div className="relative w-10 h-10 2xl:w-14 2xl:h-14">
               <img
                 src={user?.profilePic}
                 alt={user?.userName || "User"}
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-full h-full rounded-full object-cover"
               />
               {/* Online indicator */}
-              <span className="absolute bottom-0 -right-1 w-3.5 h-3.5 bg-green-400 border-2 border-gray-800 rounded-full"></span>
+              <span className="absolute bottom-0 right-0 w-3.5 h-3.5 2xl:w-4 2xl:h-4 bg-green-400 border-2 border-gray-800 rounded-full"></span>
             </div>
           ) : (
             <div className="flex items-center gap-3">

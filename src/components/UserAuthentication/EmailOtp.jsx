@@ -7,6 +7,7 @@ import { formateTime, maskedEmail } from "../utils/helpers";
 import { FaRegClock } from "react-icons/fa6";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 import { BASE_URL } from "../../Constants";
+import { addAllUsers } from "../Redux/userSlices/allUserSlice";
 
 const EmailOtp = () => {
 
@@ -110,10 +111,16 @@ const EmailOtp = () => {
         }, { withCredentials: true });
 
         if (res?.data?.success) {
+
           const res1 = await axios.get(BASE_URL + "/profile", { withCredentials: true });
           if (res1?.data?.success) {
             dispatch(addUserProfile(res1?.data?.data))
-            navigate(`/profile`)
+
+            const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
+
+            dispatch(addAllUsers(allRes?.data?.data))
+
+            navigate(`/feed`)
           }
         }
 

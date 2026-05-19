@@ -17,6 +17,7 @@ import { Provider } from 'react-redux'
 import appStore from './components/Redux/appStore'
 import ResetViaEmail from './components/UserAuthentication/ResetViaEmail'
 import NewPassword from './components/UserAuthentication/NewPassword'
+import FeedPage from './components/FeedPage'
 
 function App() {
 
@@ -34,7 +35,8 @@ function App() {
             <Route path='/reset/password' element={<ResetViaEmail />} />
             <Route path='/reset/password/new' element={<NewPassword />} />
             {/* <Route element={<ProtectedRoutes role={"user"} />}> */}
-              <Route path='/profile' element={<UserProfile />} />
+            <Route path='/feed' element={<FeedPage />} />
+            {/* <Route path='/profile' element={<UserProfile />} /> */}
             {/* </Route> */}
           </Route>
 
@@ -42,11 +44,11 @@ function App() {
           <Route path='/admin/login' element={<AdminLogin />} />
 
           {/* <Route element={<ProtectedRoutes role={"admin"} />}> */}
-            <Route path='/admin/dashboard' element={<AdminDashboard />} />
+          <Route path='/admin/dashboard' element={<AdminDashboard />} />
           {/* </Route>  */}
         </Routes>
       </BrowserRouter>
-    </Provider>                                   
+    </Provider>
   )
 }
 

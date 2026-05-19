@@ -12,7 +12,7 @@ const Body = () => {
     const refElement = useRef([]);
 
     useEffect(() => {
-
+        console.log(window.innerHeight)
         const element = document.getElementById("left");
 
         const observer = new IntersectionObserver((entries) => {
@@ -32,10 +32,18 @@ const Body = () => {
 
             entries.forEach((entry) => {
                 // console.log("entry", entry)
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show");
-                    observer1.unobserve(entry.target)
+                if (window.innerHeight == 919) {
+                    if (!entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer1.unobserve(entry.target)
+                    }
+                } else {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer1.unobserve(entry.target)
+                    }
                 }
+
             })
 
         }, { threshold: 0.6 })
