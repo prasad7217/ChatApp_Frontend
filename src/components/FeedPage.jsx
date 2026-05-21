@@ -1,14 +1,15 @@
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { useSelector } from "react-redux";
+import UserCard from "./utils/UserCard";
 
 const FeedPage = () => {
 
     const allUsers = useSelector((store) => store.allUsers)
-console.log(allUsers)
+    console.log(allUsers)
     return (
         <div className="2xl:h-[86vh] 2xl:py-14 2xl:px-92">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between h-[10%]">
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 mt-1.5">
                         <h2 className="text-white font-bold text-4xl tracking-tight">
@@ -31,8 +32,10 @@ console.log(allUsers)
                     />
                 </div>
             </div>
-            <div className="2xl:py-10">
-                cards
+            <div className="h-[90%] flex items-center justify-center gap-4 overflow-x-auto pb-3 px-1 card_section">
+                {allUsers?.map((card) => (
+                    <UserCard key={card._id} card={card} />
+                ))}
             </div>
         </div>
     )

@@ -10,6 +10,7 @@ import { MdMessage } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import { IoChatboxEllipsesSharp } from "react-icons/io5";
 import { BASE_URL } from "../Constants";
+import { addAllUsers } from "./Redux/userSlices/allUserSlice";
 
 const Navbar = () => {
   const [loginHover, setLoginHover] = useState(false);
@@ -26,8 +27,12 @@ const Navbar = () => {
         withCredentials: true,
       });
       if (res1?.data?.success) {
-        dispatch(addUserProfile(res1?.data?.data));
-        // navigate(`/profile`)
+        dispatch(addUserProfile(res1?.data?.data))
+
+        const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
+
+        dispatch(addAllUsers(allRes?.data?.data))
+
       }
     } catch (error) {
       console.log("Error :", error);
