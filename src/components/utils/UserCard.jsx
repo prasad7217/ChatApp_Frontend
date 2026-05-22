@@ -4,7 +4,7 @@ export default function UserCard({ card }) {
   const [following, setFollowing] = useState(false);
 
   return (
-    <div className="flex-shrink-0 w-56 h-[40%] min-h-[360px] bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-white/[0.07] rounded-2xl p-6 flex flex-col items-center gap-3 shadow-sm">
+    <div className="w-56 h-[40%] min-h-[360px] bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-white/[0.07] rounded-2xl p-6 flex flex-col items-center gap-3 shadow-sm">
 
       <img
         src={card?.profilePic}

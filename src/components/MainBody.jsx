@@ -8,9 +8,9 @@ const MainBody = () => {
     return (
         <>
             <Navbar />
-            <div className="mt-14">
+            <main className="flex-1 overflow-y-auto mt-14">
                 <Outlet />
-            </div>
+            </main>
             <Footer />
         </>
     )

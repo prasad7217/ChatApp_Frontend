@@ -32,7 +32,7 @@ const FeedPage = () => {
                     />
                 </div>
             </div>
-            <div className="h-[90%] flex items-center justify-center gap-4 overflow-x-auto pb-3 px-1 card_section">
+            <div className="h-[90%] flex flex-wrap items-center gap-10 2xl:py-24 px-8 card_section">
                 {allUsers?.map((card) => (
                     <UserCard key={card._id} card={card} />
                 ))}
