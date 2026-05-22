@@ -8,7 +8,7 @@ const FeedPage = () => {
     const allUsers = useSelector((store) => store.allUsers)
     console.log(allUsers)
     return (
-        <div className="2xl:h-[86vh] 2xl:py-14 2xl:px-92">
+        <div className="2xl:h-[86vh] 2xl:py-14 2xl:px-44">
             <div className="flex items-center justify-between h-[10%]">
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 mt-1.5">
