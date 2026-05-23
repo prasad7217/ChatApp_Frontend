@@ -56,7 +56,7 @@ console.log("navbar", window.innerWidth)
   }, [user]);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-gray-800 navShadow z-50 px-4 sm:px-6 md:px-20 lg:px-16 xl:px-32 2xl:px-44 py-4 2xl:py-10 xl:py-8 lg:py-8 md:py-8 flex items-center justify-between h-16">
+    <div className="fixed top-0 left-0 w-full bg-gray-800 navShadow z-50 px-4 sm:px-6 md:px-20 lg:px-16 xl:px-32 2xl:px-44 3xl:px-80 py-4 2xl:py-10 xl:py-8 lg:py-8 md:py-8 flex items-center justify-between h-16">
       <div
         className="relative cursor-pointer"
         onMouseEnter={() => seticonHover(true)}

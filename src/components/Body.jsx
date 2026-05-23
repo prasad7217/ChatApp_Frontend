@@ -61,7 +61,7 @@ const Body = () => {
     return (
         <div className="min-h-screen w-full bg-gray-800/80 overflow-x-hidden">
             {/* Main Container: Centered max-width wrapper */}
-            <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-40 2xl:px-20 flex flex-col gap-16 md:gap-24">
+            <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-40 2xl:px-20 3xl:px-6 flex flex-col gap-16 md:gap-24">
 
                 {/* Hero Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ">

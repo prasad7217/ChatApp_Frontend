@@ -1,4 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --breakpoint-3xl: 120rem;
+}
+
 body{
     background-color: hsl(217, 21%, 27%);
 }
