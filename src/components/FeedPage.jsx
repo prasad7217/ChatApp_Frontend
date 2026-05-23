@@ -8,8 +8,8 @@ const FeedPage = () => {
     const allUsers = useSelector((store) => store.allUsers)
     console.log(allUsers)
     return (
-        <div className="2xl:h-[86vh] 2xl:py-14 2xl:px-44">
-            <div className="flex items-center justify-between h-[10%]">
+        <div className="2xl:h-[86vh] 2xl:pt-12 2xl:px-44 3xl:px-84">
+            <div className="flex items-center justify-between h-[10%] py-10 3xl:py-4">
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 mt-1.5">
                         <h2 className="text-white font-bold text-4xl tracking-tight">
@@ -32,7 +32,7 @@ const FeedPage = () => {
                     />
                 </div>
             </div>
-            <div className="h-[90%] flex flex-wrap items-center gap-10 2xl:py-24 px-8 card_section">
+            <div className="h-[90%] flex flex-wrap items-center gap-4 2xl:py- 3xl:py-8 px-8 card_section overflow-auto">
                 {allUsers?.map((card) => (
                     <UserCard key={card._id} card={card} />
                 ))}

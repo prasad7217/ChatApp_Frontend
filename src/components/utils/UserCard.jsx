@@ -4,36 +4,36 @@ export default function UserCard({ card }) {
   const [following, setFollowing] = useState(false);
 
   return (
-    <div className="w-56 min-h-[380px] bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-white/[0.07] rounded-2xl p-6 flex flex-col shadow-sm">
+    <div className="w-56 min-h-[380px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-6 flex flex-col shadow-sm">
       {/* Top Section */}
       <div className="flex flex-col items-center gap-3">
         <img
           src={card?.profilePic}
           alt={card?.userName}
-          className="w-20 h-20 rounded-full object-cover border-2 border-gray-200 dark:border-white/10"
+          className="w-20 h-20 rounded-full object-cover border-2 border-gray-500 dark:border-white/10"
           onError={(e) => {
             e.target.style.display = "none";
             e.target.nextSibling.style.display = "flex";
           }}
         />
 
-        <div className="hidden w-20 h-20 rounded-full bg-blue-100 items-center justify-center text-blue-600 text-2xl font-semibold">
+        <div className="hidden w-20 h-20 rounded-full bg-blue-100 items-center justify-center text-blue-200 text-2xl font-semibold">
           {card?.userName?.charAt(0)}
         </div>
 
         <div className="text-center">
-          <h3 className="text-gray-900 dark:text-white font-semibold text-base">
+          <h3 className="text-gray-200 dark:text-white font-semibold text-base">
             {card?.userName}
           </h3>
 
           {/* Fixed designation height */}
-          <p className="text-gray-500 text-sm mt-0.5 min-h-[20px]">
+          <p className="text-gray-300 text-sm mt-0.5 min-h-[20px]">
             {card?.designation}
           </p>
         </div>
 
         {/* Fixed bio height */}
-        <p className="text-gray-500 text-sm text-center leading-relaxed min-h-[72px] flex items-start">
+        <p className="text-gray-400 text-sm text-center leading-relaxed min-h-[55px] 3xl:min-h-[55px] flex items-start">
           {card?.bio}
         </p>
       </div>
