@@ -4,7 +4,7 @@ export default function UserCard({ card }) {
   const [following, setFollowing] = useState(false);
 
   return (
-    <div className="w-56 min-h-[380px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-6 flex flex-col shadow-sm">
+    <div className="2xl:w-52 3xl:w-56 min-h-[380px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-5 flex flex-col shadow-xl">
       {/* Top Section */}
       <div className="flex flex-col items-center gap-3">
         <img
@@ -33,7 +33,7 @@ export default function UserCard({ card }) {
         </div>
 
         {/* Fixed bio height */}
-        <p className="text-gray-400 text-sm text-center leading-relaxed min-h-[55px] 3xl:min-h-[55px] flex items-start">
+        <p className="text-gray-400 text-sm text-center leading-relaxed 2xl:min-h-[45px] 3xl:min-h-[45px] flex items-start">
           {card?.bio}
         </p>
       </div>
