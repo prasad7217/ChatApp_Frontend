@@ -19,6 +19,7 @@ import ResetViaEmail from './components/UserAuthentication/ResetViaEmail'
 import NewPassword from './components/UserAuthentication/NewPassword'
 import FeedPage from './components/FeedPage'
 import PendingRequests from './components/User/PendingRequests'
+import RecievedRequests from './components/User/RecievedRequests'
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
             <Route path='/feed' element={<FeedPage />} />
             <Route path='/profile' element={<UserProfile />} />
             <Route path='/pending/requests' element={<PendingRequests />} />
+            <Route path='/recieved/requests' element={<RecievedRequests/>} />
             {/* </Route> */}
           </Route>
 

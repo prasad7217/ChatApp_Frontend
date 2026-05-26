@@ -10,7 +10,8 @@ const appStore = configureStore({
         admin: adminProfileReducer,
         otp: userOtpReducer,
         allUsers: allUserReducer
-    }
+    },
+    devTools: true,
 });
 
 export default appStore;

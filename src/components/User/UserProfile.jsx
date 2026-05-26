@@ -45,7 +45,7 @@ const UserProfile = ({ user }) => {
     };
 
     return (
-        <div className="3xl:min-h-[86vh] 2xl:min-h-[78vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-gray-700 text-white flex items-start 3xl:px-84">
+        <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-gray-700 text-white flex items-start 2xl:px-48 3xl:px-84">
 
             {/* ── Main content ── */}
             <div className="w-full px-4 py-10 mt-10">

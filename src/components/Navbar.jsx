@@ -115,7 +115,7 @@ const Navbar = () => {
           <BsMessenger className="text-[22px] text-gray-300" />
           <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-1 rounded-full bg-red-600">9+</span>
         </div>
-          <div className="relative">
+          <div className="relative" onClick={() => navigate("/recieved/requests")}>
             <FaUserGroup className="text-[22px] text-gray-300" />
             {userProfile?.recievedRequests?.length > 0 && <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{userProfile?.recievedRequests?.length}</span>}
           </div></>}
