@@ -18,6 +18,7 @@ import appStore from './components/Redux/appStore'
 import ResetViaEmail from './components/UserAuthentication/ResetViaEmail'
 import NewPassword from './components/UserAuthentication/NewPassword'
 import FeedPage from './components/FeedPage'
+import PendingRequests from './components/User/PendingRequests'
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
             {/* <Route element={<ProtectedRoutes role={"user"} />}> */}
             <Route path='/feed' element={<FeedPage />} />
             <Route path='/profile' element={<UserProfile />} />
+            <Route path='/pending/requests' element={<PendingRequests />} />
             {/* </Route> */}
           </Route>
 

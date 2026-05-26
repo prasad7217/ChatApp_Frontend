@@ -13,6 +13,8 @@ import { BASE_URL } from "../Constants";
 import { addAllUsers } from "./Redux/userSlices/allUserSlice";
 import { FaUserGroup } from "react-icons/fa6";
 import { LiaFacebookMessenger } from "react-icons/lia";
+import { TbBrandFeedly } from "react-icons/tb";
+import { FaUserPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const [loginHover, setLoginHover] = useState(false);
@@ -70,7 +72,7 @@ const Navbar = () => {
         className="relative cursor-pointer"
         onMouseEnter={() => seticonHover(true)}
         onMouseLeave={() => seticonHover(false)}
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/feed")}
       >
         <div className="flex items-center gap-[10px] px-[18px] pl-[10px] py-[10px]">
           {/* Icon */}
@@ -109,14 +111,14 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center justify-center 3xl:gap-16 2xl:gap-16 xl:gap-16 lg:gap-16 md:gap-14 gap-4">
-        <div className="relative">
+        {user && <><div className="relative">
           <BsMessenger className="text-[22px] text-gray-300" />
           <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-1 rounded-full bg-red-600">9+</span>
         </div>
-        <div className="relative">
-          <FaUserGroup className="text-[22px] text-gray-300" />
-          <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{userProfile?.recievedRequests?.length}</span>
-        </div>
+          <div className="relative">
+            <FaUserGroup className="text-[22px] text-gray-300" />
+            {userProfile?.recievedRequests?.length > 0 && <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{userProfile?.recievedRequests?.length}</span>}
+          </div></>}
         <div
           className="relative cursor-pointer "
           onMouseEnter={() => setLoginHover(true)}
@@ -160,6 +162,16 @@ const Navbar = () => {
             <div className="absolute 2xl:top-10 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
+                <Link to={"/feed"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
+                  <TbBrandFeedly className="text-gray-100 text-lg" />
+                  <span className="text-sm">Feed</span>
+                </li>
+                </Link>
+                <Link to={"/pending/requests"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
+                  <FaUserPlus  className="text-gray-100 text-lg" />
+                  <span className="text-sm">Requested</span>
+                </li>
+                </Link>
                 <Link to={"/profile"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
                   <IoMdPerson className="text-gray-100 text-lg" />
                   <span className="text-sm">Profile</span>

@@ -5,6 +5,7 @@ import { GrLocationPin } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
 import { FaRegSquareCheck } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import { BiSolidMapPin } from "react-icons/bi";
 
 const UserProfile = ({ user }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -47,7 +48,7 @@ const UserProfile = ({ user }) => {
         <div className="3xl:min-h-[86vh] 2xl:min-h-[78vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-gray-700 text-white flex items-start 3xl:px-84">
 
             {/* ── Main content ── */}
-            <div className="w-full px-4 py-10 mt-16">
+            <div className="w-full px-4 py-10 mt-10">
 
                 {/* Cover */}
                 {/* <div className="h-32 rounded-t-xl bg-[#1e2a42] relative overflow-hidden">
@@ -137,7 +138,7 @@ const UserProfile = ({ user }) => {
                         </div>
                     </div>
                     {/* Divider */}
-                    <div className="border-t border-white/[0.07] my-4" />
+                    <div className="border-t border-white/[0.07] my-2" />
 
                     {/* Info rows */}
                     <p className="text-[11px] text-white/30 uppercase tracking-widest mb-3">
@@ -145,10 +146,10 @@ const UserProfile = ({ user }) => {
                     </p>
                     <div className="grid grid-cols-4 gap-2.5">
                         {[
-                            { icon: <TbMailFilled />, text: user?.email || "rahul@example.com" },
-                            { icon: <GrLocationPin />, text: "Hyderabad, India" },
+                            { icon: <TbMailFilled />, text: userProfile?.email || "rahul@example.com" },
+                            { icon: <BiSolidMapPin className="text-red-600"/>, text: "Hyderabad, India" },
                             { icon: <SlCalender />, text: "Joined March 2023" },
-                            { icon: <FaRegSquareCheck />, text: "Email verified" },
+                            { icon: <FaRegSquareCheck className="text-green-600 "/>, text: "Email verified" },
                         ].map(({ icon, text }) => (
                             <div
                                 key={text}
