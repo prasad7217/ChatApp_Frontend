@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsChatSquareDotsFill } from "react-icons/bs";
+import { BsChatSquareDotsFill, BsMessenger } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,20 +7,23 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addUserProfile, clearUserProfile } from "./Redux/userSlices/userSlice";
 import { MdMessage } from "react-icons/md";
-import { IoMdLogOut } from "react-icons/io";
+import { IoMdLogOut, IoMdPerson } from "react-icons/io";
 import { IoChatboxEllipsesSharp } from "react-icons/io5";
 import { BASE_URL } from "../Constants";
 import { addAllUsers } from "./Redux/userSlices/allUserSlice";
+import { FaUserGroup } from "react-icons/fa6";
+import { LiaFacebookMessenger } from "react-icons/lia";
 
 const Navbar = () => {
   const [loginHover, setLoginHover] = useState(false);
   const [iconHover, seticonHover] = useState(false);
+  const [userProfile, setUserProfile] = useState();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  // console.log("request", userProfile)
   const user = useSelector((store) => store.user.profile);
-console.log("navbar", window.innerWidth)
+  // console.log("navbar", window.innerWidth)
   const fetchUserProfile = async () => {
     try {
       const res1 = await axios.get(BASE_URL + "/profile", {
@@ -28,10 +31,11 @@ console.log("navbar", window.innerWidth)
       });
       if (res1?.data?.success) {
         dispatch(addUserProfile(res1?.data?.data))
+        setUserProfile(res1?.data?.data)
 
         const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
 
-        dispatch(addAllUsers(allRes?.data?.data))
+        dispatch(addAllUsers(allRes?.data?.suggestions))
 
       }
     } catch (error) {
@@ -53,6 +57,11 @@ console.log("navbar", window.innerWidth)
 
   useEffect(() => {
     !user && fetchUserProfile();
+    if (user) {
+      navigate("/feed")
+    } else {
+      navigate("/")
+    }
   }, [user]);
 
   return (
@@ -98,14 +107,23 @@ console.log("navbar", window.innerWidth)
           </p>
         )}
       </div>
-      <div className="flex items-center justify-center gap-6">
+
+      <div className="flex items-center justify-center 3xl:gap-16 2xl:gap-16 xl:gap-16 lg:gap-16 md:gap-14 gap-4">
+        <div className="relative">
+          <BsMessenger className="text-[22px] text-gray-300" />
+          <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-1 rounded-full bg-red-600">9+</span>
+        </div>
+        <div className="relative">
+          <FaUserGroup className="text-[22px] text-gray-300" />
+          <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{userProfile?.recievedRequests?.length}</span>
+        </div>
         <div
           className="relative cursor-pointer "
           onMouseEnter={() => setLoginHover(true)}
           onMouseLeave={() => setLoginHover(false)}
         >
           {user?.profilePic ? (
-            <div className="relative w-10 h-10 2xl:w-14 2xl:h-14">
+            <div className="relative w-10 h-10 2xl:w-14 2xl:h-14 3xl:w-10 3xl:h-10">
               <img
                 src={user?.profilePic}
                 alt={user?.userName || "User"}
@@ -142,11 +160,11 @@ console.log("navbar", window.innerWidth)
             <div className="absolute 2xl:top-10 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
-                <li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
-                  <MdMessage className="text-gray-100 text-lg" />
-                  <span className="text-sm">Chats</span>
+                <Link to={"/profile"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
+                  <IoMdPerson className="text-gray-100 text-lg" />
+                  <span className="text-sm">Profile</span>
                 </li>
-
+                </Link>
                 {/* Border separator before logout */}
                 <li className="my-1 border-t border-gray-100"></li>
 

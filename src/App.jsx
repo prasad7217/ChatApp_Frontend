@@ -36,7 +36,7 @@ function App() {
             <Route path='/reset/password/new' element={<NewPassword />} />
             {/* <Route element={<ProtectedRoutes role={"user"} />}> */}
             <Route path='/feed' element={<FeedPage />} />
-            {/* <Route path='/profile' element={<UserProfile />} /> */}
+            <Route path='/profile' element={<UserProfile />} />
             {/* </Route> */}
           </Route>
 

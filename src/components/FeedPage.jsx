@@ -8,7 +8,7 @@ const FeedPage = () => {
   const [users, setUsers] = useState([]);
   const allUsers = useSelector((store) => store.allUsers);
 
-  console.log(allUsers);
+  // console.log(allUsers);
 
   const handleUserSearch = (e) => {
     const filtered = allUsers?.filter((each) =>

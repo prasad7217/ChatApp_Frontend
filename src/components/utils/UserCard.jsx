@@ -1,7 +1,23 @@
+import axios from "axios";
 import { useState } from "react";
+import { BASE_URL } from "../../Constants";
 
 export default function UserCard({ card }) {
   const [following, setFollowing] = useState(false);
+
+  const handleFriendRequest = async (id, status) => {
+    try {
+      console.log(id)
+      const res = await axios.post(BASE_URL + "/request/sent/" + id, { status }, { withCredentials: true });
+      
+      if(res?.data?.success){
+        setFollowing(true)
+      }
+
+    } catch (error) {
+      console.log("Error :" + error)
+    }
+  }
 
   return (
     <div className="2xl:w-52 3xl:w-56 min-h-[380px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-5 flex flex-col shadow-xl">
@@ -59,14 +75,13 @@ export default function UserCard({ card }) {
 
       {/* Button always bottom */}
       <button
-        onClick={() => setFollowing(!following)}
-        className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-auto ${
-          following
-            ? "bg-transparent border border-red-500 text-red-500"
-            : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
-        }`}
+        onClick={() => handleFriendRequest(card._id, "requested")}
+        className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-auto ${following
+          ? "bg-transparent border border-red-500 text-red-500"
+          : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
+          }`}
       >
-        {following ? "✓ Following" : "+ Follow"}
+        {following ? "requested" : "+ Follow"}
       </button>
     </div>
   );

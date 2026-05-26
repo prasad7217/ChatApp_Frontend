@@ -118,7 +118,7 @@ const EmailOtp = () => {
 
             const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
 
-            dispatch(addAllUsers(allRes?.data?.data))
+            dispatch(addAllUsers(allRes?.data?.suggestions))
 
             navigate(`/feed`)
           }
