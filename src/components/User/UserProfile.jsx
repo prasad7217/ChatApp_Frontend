@@ -95,7 +95,7 @@ const UserProfile = ({ user }) => {
                                 </button> */}
                             </div>
 
-                            {/* Name + online */}
+                         
                             <div className="flex items-center gap-2 mb-1">
                                 <h1 className="text-xl font-medium text-white/90">
                                     {userProfile?.userName}
@@ -113,7 +113,7 @@ const UserProfile = ({ user }) => {
                                 {userProfile?.bio}
                             </p>
                         </div>
-                        {/* Stats */}
+                     
                         <div
                             className="w-full grid grid-cols-3 rounded-lg overflow-hidden mb-5"
                             style={{ gap: "1px", background: "rgba(255,255,255,0.06)" }}
@@ -137,10 +137,9 @@ const UserProfile = ({ user }) => {
                             ))}
                         </div>
                     </div>
-                    {/* Divider */}
+                    
                     <div className="border-t border-white/[0.07] my-2" />
 
-                    {/* Info rows */}
                     <p className="text-[11px] text-white/30 uppercase tracking-widest mb-3">
                         Profile info
                     </p>
@@ -239,6 +238,10 @@ const UserProfile = ({ user }) => {
             </div>
           </div> */}
                 {/* )} */}
+            </div>
+
+            <div>
+              <p>Name</p>
             </div>
         </div>
     );
