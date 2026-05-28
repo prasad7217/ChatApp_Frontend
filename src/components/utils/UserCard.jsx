@@ -1,17 +1,22 @@
 import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../../Constants";
+import { useDispatch } from "react-redux";
+import { addUserProfile } from "../Redux/userSlices/userSlice";
 
-export default function  UserCard({ card }) {
+export default function UserCard({ card }) {
   const [following, setFollowing] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleFriendRequest = async (id, status) => {
     try {
       console.log(id)
       const res = await axios.post(BASE_URL + "/request/sent/" + id, { status }, { withCredentials: true });
-
+      console.log("update :", res)
       if (res?.data?.success) {
         setFollowing(true)
+        dispatch(addUserProfile(res?.data?.data))
       }
 
     } catch (error) {
@@ -58,8 +63,8 @@ export default function  UserCard({ card }) {
       <button
         onClick={() => handleFriendRequest(card._id, "requested")}
         className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-4 ${following
-            ? "bg-transparent border border-red-500 text-red-500"
-            : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
+          ? "bg-transparent border border-red-500 text-red-500"
+          : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
           }`}
       >
         {following ? "requested" : "+ Follow"}
