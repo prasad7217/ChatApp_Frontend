@@ -68,7 +68,7 @@ const Navbar = () => {
   }, [user]);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-gray-800 navShadow z-50 px-4 sm:px-6 md:px-20 lg:px-16 xl:px-32 2xl:px-44 3xl:px-80 py-4 2xl:py-10 xl:py-8 lg:py-8 md:py-8 flex items-center justify-between h-16">
+    <div className="fixed top-0 left-0 w-full bg-[#1A1A1A] navShadow z-50 px-4 sm:px-6 md:px-20 lg:px-16 xl:px-32 2xl:px-44 3xl:px-80 py-4 2xl:py-10 xl:py-8 lg:py-8 md:py-8 flex items-center justify-between h-16">
       <div
         className="relative cursor-pointer"
         onMouseEnter={() => seticonHover(true)}
@@ -160,7 +160,7 @@ const Navbar = () => {
             </p>
           )}
           {user && loginHover && (
-            <div className="absolute top-10 -left-20 sm:top-10 sm:left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
+            <div className="absolute top-10 -left-20 sm:top-10 sm:left-0 w-32 bg-[#2A2A2A] rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
                 <Link to={"/feed"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">

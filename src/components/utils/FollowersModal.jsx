@@ -1,23 +1,40 @@
 // components/FollowersModal.jsx
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { FiSearch } from "react-icons/fi";
 
 export default function FollowersModal({ user, state, close }) {
-  console.log("user profiles :", user, close, state)
+  console.log("user profiles :", user, close, state);
   // const [activeTab, setActiveTab] = useState("followers");
 
   // const list = activeTab === "followers" ? followers : following;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-    >
-      <div className="bg-gray-800/75 rounded-2xl w-80 min-h-[400px] max-h-[480px] flex flex-col overflow-hidden"
-        onClick={(e) => e.stopPropagation()}>
-        <div className="w-full bg-gray-700 px-4 py-2 flex items-center justify-between">
-          <p className="text-gray-200">{state === "followers" ? "Followers" : "Following"}</p>
-          <IoClose className="text-gray-300 text-[25px] cursor-pointer hover:bg-gray-600 rounded-full p-1" onClick={() => close(false)}/>
+    <div className="fixed inset-0 bg-[#00060F]/85 flex items-center justify-center z-50">
+      <div
+        className="bg-[#1C1F2B] rounded-2xl md:w-[500px] min-h-[400px] max-h-[480px] flex flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="w-full bg-[#3A3A3A] px-4 py-2 flex items-center justify-between">
+          <p></p>
+          <p className="text-gray-200">
+            {state === "followers" ? "Followers" : "Following"}
+          </p>
+          <IoClose
+            className="text-gray-300 text-[32px] cursor-pointer hover:bg-[#2A2A2A] rounded-full p-1"
+            onClick={() => close(false)}
+          />
         </div>
-
+        <div className="relative w-full sm:py-4 sm:px-4">
+          <FiSearch className="absolute text-[22px] sm:top-6 left-6 text-gray-200"/>
+          <input
+            type="text"
+            name=""
+            id=""
+            className="bg-[#2A2A2A] w-full py-1.5 pl-10 rounded-2xl text-gray-200"
+            placeholder="search"
+          />
+        </div>
         {/* Header */}
         {/* <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <div className="flex gap-4">
@@ -45,37 +62,49 @@ export default function FollowersModal({ user, state, close }) {
 
         {/* List */}
         <div className="overflow-y-auto flex-1">
-          { state === "following" ? user?.following?.map((user) => (
-            <div key={user._id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5">
-              <img
-                src={user.profilePic}
-                className="w-10 h-10 rounded-full object-cover"
-                alt={user.userName}
-              />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-white">{user.userName}</p>
-                <p className="text-xs text-gray-400">{user.designation}</p>
-              </div>
-              <button className="text-xs px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
-                Follow
-              </button>
-            </div>
-          )) : user?.followers?.map((user) => (
-            <div key={user._id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5">
-              <img
-                src={user.profilePic}
-                className="w-10 h-10 rounded-full object-cover"
-                alt={user.userName}
-              />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-white">{user.userName}</p>
-                <p className="text-xs text-gray-400">{user.designation}</p>
-              </div>
-              <button className="text-xs px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
-                Follow
-              </button>
-            </div>
-          ))}
+          {state === "following"
+            ? user?.following?.map((user) => (
+                <div
+                  key={user._id}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
+                >
+                  <img
+                    src={user.profilePic}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt={user.userName}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-white">
+                      {user.userName}
+                    </p>
+                    <p className="text-xs text-gray-400">{user.designation}</p>
+                  </div>
+                  <button className="text-[14px] text-gray-200 font-semibold px-3 py-1.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
+                    Following
+                  </button>
+                </div>
+              ))
+            : user?.followers?.map((user) => (
+                <div
+                  key={user._id}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
+                >
+                  <img
+                    src={user.profilePic}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt={user.userName}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-white">
+                      {user.userName}
+                    </p>
+                    <p className="text-xs text-gray-400">{user.designation}</p>
+                  </div>
+                  <button className="text-[16px] px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
+                    remove
+                  </button>
+                </div>
+              ))}
         </div>
       </div>
     </div>

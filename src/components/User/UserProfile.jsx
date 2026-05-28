@@ -75,7 +75,7 @@ const UserProfile = ({ user }) => {
 
   return (
     <>
-      <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-gray-700 text-white flex items-start 2xl:px-48 3xl:px-84">
+      <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-[#2A2A2A] text-white flex items-start 2xl:px-48 3xl:px-84">
 
         {/* ── Main content ── */}
         <div className="w-full px-4 py-10 mt-10">
@@ -145,12 +145,12 @@ const UserProfile = ({ user }) => {
               </div>
 
               <div
-                className="w-full grid grid-cols-3 rounded-lg overflow-hidden mb-5"
-                style={{ gap: "1px", background: "rgba(255,255,255,0.06)" }}
+                className="w-full grid grid-cols-3 rounded-lg overflow-hidden mb-5 bg-[#3A3A3A]"
+                style={{ gap: "1px" }}
               >
                 <div
                   onClick={() => handleFollowersModel("followers")}
-                  className="bg-gray-600 py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer"
+                  className=" py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600 py-4"
                 >
                   <div className="text-[18px] text-gray-300 mt-1">Followers</div>
                   <div className="text-xl font-medium text-white/90">
@@ -160,7 +160,7 @@ const UserProfile = ({ user }) => {
                 <div
 
                   onClick={() => handleFollowersModel("following")}
-                  className="bg-gray-600 py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer"
+                  className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600"
                 >
                   <div className="text-[18px] text-gray-300 mt-1">Following</div>
                   <div className="text-xl font-medium text-white/90">
@@ -168,7 +168,7 @@ const UserProfile = ({ user }) => {
                   </div>
                 </div>
                 <div
-                  className="bg-gray-600 py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer"
+                  className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer"
                 >
                   <div className="text-[18px] text-gray-300 mt-1">Connections</div>
                   <div className="text-xl font-medium text-white/90">

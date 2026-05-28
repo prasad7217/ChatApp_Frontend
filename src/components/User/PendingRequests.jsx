@@ -5,7 +5,7 @@ const PendingRequests = () => {
   const userProfile = useSelector((store) => store.user.profile);
 
   return (
-    <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] w-full bg-gray-700 px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
+    <div className="3xl:min-h-[86vh] 2xl:min-h-[80vh] w-full bg-gray-700 px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
       
       {/* Heading */}
       <div className="mb-8">
