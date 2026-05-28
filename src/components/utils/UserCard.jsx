@@ -2,15 +2,15 @@ import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../../Constants";
 
-export default function UserCard({ card }) {
+export default function  UserCard({ card }) {
   const [following, setFollowing] = useState(false);
 
   const handleFriendRequest = async (id, status) => {
     try {
       console.log(id)
       const res = await axios.post(BASE_URL + "/request/sent/" + id, { status }, { withCredentials: true });
-      
-      if(res?.data?.success){
+
+      if (res?.data?.success) {
         setFollowing(true)
       }
 
@@ -20,7 +20,8 @@ export default function UserCard({ card }) {
   }
 
   return (
-    <div className="2xl:w-52 3xl:w-56 min-h-[380px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-5 flex flex-col shadow-xl">
+    <div className="2xl:w-52 w-44 lg:h-[300px] md:h-[300px] 2xl:h-[300px] 3xl:h-[300px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-3 flex flex-col shadow-xl">
+
       {/* Top Section */}
       <div className="flex flex-col items-center gap-3">
         <img
@@ -33,52 +34,32 @@ export default function UserCard({ card }) {
           }}
         />
 
-        <div className="hidden w-20 h-20 rounded-full bg-blue-100 items-center justify-center text-blue-200 text-2xl font-semibold">
+        {/* <div className="hidden w-20 h-20 rounded-full bg-blue-100 items-center justify-center text-blue-200 text-2xl font-semibold">
           {card?.userName?.charAt(0)}
-        </div>
+        </div> */}
 
         <div className="text-center">
           <h3 className="text-gray-200 dark:text-white font-semibold text-base">
             {card?.userName}
           </h3>
-
-          {/* Fixed designation height */}
-          <p className="text-gray-300 text-sm mt-0.5 min-h-[20px]">
+          <p className="text-gray-300 text-sm mt-0.5 h-[16px]">
             {card?.designation}
           </p>
         </div>
 
-        {/* Fixed bio height */}
-        <p className="text-gray-400 text-sm text-center leading-relaxed 2xl:min-h-[45px] 3xl:min-h-[45px] flex items-start">
+        {/* ✅ Fixed height bio — clamp text overflow */}
+        <p className="text-gray-400 text-sm text-center
+         leading-relaxed h-[60px] overflow-wrap line-clamp-3">
           {card?.bio}
         </p>
       </div>
 
-      {/* Stats */}
-      {/* <div className="flex gap-6 py-3 border-y border-gray-100 dark:border-white/[0.07] w-full justify-center mt-4">
-        <div className="text-center">
-          <p className="text-gray-900 dark:text-white font-semibold text-sm">
-            128
-          </p>
-          <p className="text-gray-400 text-xs mt-0.5">Followers</p>
-        </div>
-
-        <div className="w-px bg-gray-200 dark:bg-white/10" />
-
-        <div className="text-center">
-          <p className="text-gray-900 dark:text-white font-semibold text-sm">
-            64
-          </p>
-          <p className="text-gray-400 text-xs mt-0.5">Following</p>
-        </div>
-      </div> */}
-
-      {/* Button always bottom */}
+      {/* ✅ Button always pinned to bottom */}
       <button
         onClick={() => handleFriendRequest(card._id, "requested")}
-        className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-auto ${following
-          ? "bg-transparent border border-red-500 text-red-500"
-          : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
+        className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-4 ${following
+            ? "bg-transparent border border-red-500 text-red-500"
+            : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
           }`}
       >
         {following ? "requested" : "+ Follow"}

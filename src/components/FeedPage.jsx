@@ -23,10 +23,10 @@ const FeedPage = () => {
   }, [allUsers]);
 
   return (
-    <div className="2xl:h-[86vh] 2xl:pt-12 2xl:px-44 3xl:px-84">
+    <div className="2xl:h-[86vh] 2xl:pt-12 2xl:px-44 3xl:px-84 h-[86vh]">
       <div className="flex items-center justify-between h-[10%] py-10 3xl:py-4">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 mt-1.5">
+        <div className="flex flex-col gap-1 pl-4 mt-8">
+          <div className="flex items-center gap-2 ">
             <h2 className="text-white font-bold text-4xl tracking-tight">
               Discover People
             </h2>
@@ -38,7 +38,7 @@ const FeedPage = () => {
         </div>
 
         {/* Search */}
-        <div className="relative flex items-center group">
+        <div className="relative hidden sm:hidden lg:flex md:flex xl:flex 2xl:flex 3xl:flex items-center group">
           <CiSearch className="absolute left-3.5 text-gray-500 group-focus-within:text-red-500 transition-colors text-base pointer-events-none" />
           <input
             type="text"
@@ -48,7 +48,7 @@ const FeedPage = () => {
           />
         </div>
       </div>
-      <div className="h-[90%] flex flex-wrap items-center gap-4 2xl:py-8 3xl:py-8 2xl:p 3xl:px-8 card_section overflow-auto">
+      <div className="h-[85%] flex flex-wrap items-center justify-center px-4 gap-4 lg:gap-10 py-4 2xl:py-8 3xl:py-8 2xl:p 3xl:px-8 card_section overflow-auto mt-8">
         {users?.map((card) => (
           <UserCard key={card._id} card={card} />
         ))}

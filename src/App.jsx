@@ -13,7 +13,7 @@ import UserProfile from './components/User/UserProfile'
 import AdminLogin from './components/admin/authentication/AdminLogin.'
 import AdminDashboard from './components/admin/AdminDashboard'
 // import ProtectedRoutes from './ProtectedRoutes'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import appStore from './components/Redux/appStore'
 import ResetViaEmail from './components/UserAuthentication/ResetViaEmail'
 import NewPassword from './components/UserAuthentication/NewPassword'
@@ -23,7 +23,7 @@ import RecievedRequests from './components/User/RecievedRequests'
 
 function App() {
 
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <Provider store={appStore}>

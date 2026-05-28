@@ -26,6 +26,12 @@ const Navbar = () => {
   // console.log("request", userProfile)
   const user = useSelector((store) => store.user.profile);
   // console.log("navbar", window.innerWidth)
+
+  // if (user) {
+  //   navigate("/feed")
+  // } else {
+  //   navigate("/")
+  // }
   const fetchUserProfile = async () => {
     try {
       const res1 = await axios.get(BASE_URL + "/profile", {
@@ -59,11 +65,6 @@ const Navbar = () => {
 
   useEffect(() => {
     !user && fetchUserProfile();
-    if (user) {
-      navigate("/feed")
-    } else {
-      navigate("/")
-    }
   }, [user]);
 
   return (
@@ -76,7 +77,7 @@ const Navbar = () => {
       >
         <div className="flex items-center gap-[10px] px-[18px] pl-[10px] py-[10px]">
           {/* Icon */}
-          <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path
                 d="M3 6.5C3 5.12 4.12 4 5.5 4h11C17.88 4 19 5.12 19 6.5v8c0 1.38-1.12 2.5-2.5 2.5H13l-3 3.5L7 17H5.5C4.12 17 3 15.88 3 14.5v-8z"
@@ -92,12 +93,12 @@ const Navbar = () => {
           {/* Text */}
           <div className="flex flex-col leading-none">
             <span
-              className="font-extrabold text-[22px] tracking-tight text-white"
+              className="font-extrabold text:-[12px] sm:text-[22px] tracking-tight text-white"
               style={{ fontFamily: "'Syne', sans-serif" }}
             >
               Nex<span className="text-red-600">chat</span>
             </span>
-            <span className="text-[10px] tracking-[1.5px] uppercase text-white/30 mt-[3px]">
+            <span className="text-[8px] sm:text-[10px] tracking-[1.5px] uppercase text-white/30 mt-[3px]">
               Real-time messaging
             </span>
           </div>
@@ -110,7 +111,7 @@ const Navbar = () => {
         )}
       </div>
 
-      <div className="flex items-center justify-center 3xl:gap-16 2xl:gap-16 xl:gap-16 lg:gap-16 md:gap-14 gap-4">
+      <div className="flex items-center justify-center 3xl:gap-16 2xl:gap-16 xl:gap-16 lg:gap-16 md:gap-14 gap-8">
         {user && <><div className="relative">
           <BsMessenger className="text-[22px] text-gray-300" />
           <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-1 rounded-full bg-red-600">9+</span>
@@ -138,17 +139,17 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => navigate("/login")}
-                className="flex items-center gap-2 border border-red-500 text-red-400 hover:bg-red-500 hover:text-white active:scale-95 transition-all text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
+                className="flex items-center gap-2 border border-red-500 text-red-400 hover:bg-red-500 hover:text-white active:scale-95 transition-all text-sm font-semibold sm:px-4 sm:py-2 px-3 py-1.5 rounded-xl cursor-pointer"
               >
                 <AiOutlineLogin className="text-[18px]" />
                 Login
               </button>
 
               <Link to={"/signup"}><button
-                className="flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
+                className="hidden sm:flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
               >
                 <FaUserAlt className="text-[14px]" />
-                Sign Up
+                SignUp
               </button>
               </Link>
             </div>
@@ -159,7 +160,7 @@ const Navbar = () => {
             </p>
           )}
           {user && loginHover && (
-            <div className="absolute 2xl:top-10 left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
+            <div className="absolute top-10 -left-20 sm:top-10 sm:left-0 w-32 bg-gray-600 rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
                 <Link to={"/feed"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
@@ -168,7 +169,7 @@ const Navbar = () => {
                 </li>
                 </Link>
                 <Link to={"/pending/requests"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
-                  <FaUserPlus  className="text-gray-100 text-lg" />
+                  <FaUserPlus className="text-gray-100 text-lg" />
                   <span className="text-sm">Requested</span>
                 </li>
                 </Link>
