@@ -2,6 +2,10 @@ import React, { use, useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import UserCard from "./utils/UserCard";
+import axios from "axios";
+import { BASE_URL } from "../Constants";
+import { addAllUsers } from "./Redux/userSlices/allUserSlice";
+import { addUserProfile } from "./Redux/userSlices/userSlice";
 
 const FeedPage = () => {
   const [filteredUser, searchFilteredUser] = useState("");
@@ -18,8 +22,28 @@ const FeedPage = () => {
     setUsers(filtered);
   };
 
+  const fetchUserProfile = async () => {
+    try {
+      const res1 = await axios.get(BASE_URL + "/profile", {
+        withCredentials: true,
+      });
+      if (res1?.data?.success) {
+        dispatch(addUserProfile(res1?.data?.data))
+        // setUserProfile(res1?.data?.data)
+
+        const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
+
+        dispatch(addAllUsers(allRes?.data?.suggestions))
+
+      }
+    } catch (error) {
+      console.log("Error :", error);
+    }
+  };
+
   useEffect(() => {
     setUsers(allUsers);
+    fetchUserProfile()
   }, [allUsers]);
 
   return (

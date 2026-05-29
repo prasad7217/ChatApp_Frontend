@@ -43,6 +43,15 @@ const RecievedRequests = () => {
     }
   };
 
+  const handleRemoveRequest = async (id, status) =>{
+    try {
+      const res = await axios.post(BASE_URL + "/request/response/" + id, {status}, {withCredentials: true});
+      console.log("Reject :", res)
+    } catch (error) {
+      console.log("Error :", error)
+    }
+  }
+
   return (
     <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] w-full bg-gray-700 px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
       {/* Heading */}
@@ -83,7 +92,7 @@ const RecievedRequests = () => {
             </div>
             {/* Buttons */}
             <div className="flex flex-col items-center gap-5 mt-">
-              <RxCross2 className="text-gray-400 text-[16px] font-semibold ml-10 hover:text-gray-400/50 transition-all duration-200 ease cursor-pointer" />
+              <RxCross2 className="text-gray-400 text-[16px] font-semibold ml-10 hover:text-gray-400/50 transition-all duration-200 ease cursor-pointer" onClick={() => handleRemoveRequest(user?._id, "rejected")}/>
               {/* Accept Button */}
               <button
                 onClick={() => {
