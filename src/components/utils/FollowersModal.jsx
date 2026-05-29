@@ -2,41 +2,78 @@
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
+import axios from "axios";
+import { BASE_URL } from "../../Constants";
+import { useDispatch } from "react-redux";
+import { addUserProfile } from "../Redux/userSlices/userSlice";
 
 export default function FollowersModal({ user, state, close }) {
-
   // const [activeTab, setActiveTab] = useState("followers");
 
   const [followers, setFollowers] = useState();
   const [following, setFollowing] = useState();
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
+  const dispatch = useDispatch();
+
+  const handleUnfollow = async (id, status) => {
+    if (status === "unfollow") {
+      try {
+        const unfollowRes = await axios.post(
+          BASE_URL + "/request/status/" + id,
+          { status },
+          { withCredentials: true },
+        );
+
+        if (unfollowRes?.data?.success) {
+          dispatch(addUserProfile(unfollowRes?.data?.data));
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    } else if (status === "remove") {
+      try {
+        const unfollowRes = await axios.post(
+          BASE_URL + "/request/status/" + id,
+          { status },
+          { withCredentials: true },
+        );
+        console.log("remove", unfollowRes);
+        if (unfollowRes?.data?.success) {
+          dispatch(addUserProfile(unfollowRes?.data?.data));
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
+  };
 
   useEffect(() => {
-
     setFollowers(user?.followers);
     setFollowing(user?.following);
 
     if (state === "follower") {
+      const filtered = followers?.filter((each) =>
+        each?.userName?.toLowerCase()?.includes(searchValue),
+      );
 
-      const filtered = followers?.filter(each => each?.userName?.toLowerCase()?.includes(searchValue));
-
-      if (!filtered || filtered.length === 0 || searchValue === '') {
+      if (!filtered || filtered.length === 0 || searchValue === "") {
         setFollowers(user?.followers);
       } else {
-        setFollowers(filtered)
+        setFollowers(filtered);
       }
     } else {
-      const filtered = following?.filter(each => each?.userName?.toLowerCase()?.includes(searchValue));
+      const filtered = following?.filter((each) =>
+        each?.userName?.toLowerCase()?.includes(searchValue),
+      );
 
-      if (!filtered || filtered.length === 0 || searchValue === '') {
+      if (!filtered || filtered.length === 0 || searchValue === "") {
         setFollowing(user?.following);
       } else {
-        setFollowing(filtered)
+        setFollowing(filtered);
       }
     }
-
-  }, [searchValue])
+  }, [searchValue]);
 
   // const list = activeTab === "followers" ? followers : following;
 
@@ -97,57 +134,77 @@ export default function FollowersModal({ user, state, close }) {
         <div className="overflow-y-auto flex-1">
           {state === "following"
             ? following?.map((user1, i) => {
+                const fil = user?.mutualfrds?.filter((each) =>
+                  each?._id.includes(user1?._id),
+                );
 
-              const fil = user?.mutualfrds?.filter(each => each?._id.includes(user1?._id));
-
-              return (
-                <div
-                  key={user1._id}
-                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
-                >
-                  <img
-                    src={user1.profilePic}
-                    className="w-10 h-10 rounded-full object-cover"
-                    alt={user1.userName}
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-white">
-                      {user1.userName}
-                    </p>
-                    <p className="text-xs text-gray-400">{user1.designation}</p>
+                return (
+                  <div
+                    key={user1._id}
+                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
+                  >
+                    <img
+                      src={user1.profilePic}
+                      className="w-10 h-10 rounded-full object-cover"
+                      alt={user1.userName}
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white">
+                        {user1.userName}
+                        {"  "}
+                        <span
+                          className="text-[12px] text-red-400 font-normal cursor-pointer"
+                          onClick={() => handleUnfollow(user1._id, "unfollow")}
+                        >
+                          . Unfollow
+                        </span>
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {user1.designation}
+                      </p>
+                    </div>
+                    <button className="text-[14px] text-gray-200 font-semibold px-1.5 py-0.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
+                      {fil?.length > 0 ? "message" : "Following"}
+                    </button>
                   </div>
-                  <button className="text-[14px] text-gray-200 font-semibold px-1.5 py-0.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
-                    {fil.length > 0 ? "message" : "Following"}
-                  </button>
-                </div>
-              )
-            })
+                );
+              })
             : followers?.map((user1) => {
+                const fil = user?.mutualfrds?.filter(
+                  (each) => each?._id === user1?._id,
+                );
 
-              const fil = user?.mutualfrds?.filter(each => each?._id === user1?._id);
-
-              return (
-                <div
-                  key={user1._id}
-                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
-                >
-                  <img
-                    src={user1.profilePic}
-                    className="w-10 h-10 rounded-full object-cover"
-                    alt={user1.userName}
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-white">
-                      {user1.userName}{"  "}<span className="text-[12px] text-red-400 font-normal">. remove</span>
-                    </p>
-                    <p className="text-xs text-gray-400">{user1.designation}</p>
+                return (
+                  <div
+                    key={user1._id}
+                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
+                  >
+                    <img
+                      src={user1.profilePic}
+                      className="w-10 h-10 rounded-full object-cover"
+                      alt={user1.userName}
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white">
+                        {user1.userName}
+                        {"  "}
+                        <span
+                          className="text-[12px] text-red-400 font-normal cursor-pointer"
+                          onClick={() => handleUnfollow(user1._id, "remove")}
+                        >
+                          . remove
+                        </span>
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {user1.designation}
+                      </p>
+                    </div>
+                    <button className="text-[14px] px-1.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
+                      {fil?.length > 0 ? "Follower" : "Follow"}
+                    </button>
                   </div>
-                  <button className="text-[14px] px-1.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
-                    {fil.length > 0 ? "Follower" : "Follow"}
-                  </button>
-                </div>
-              )
-            })}
+                );
+              })}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserCard from "./utils/UserCard";
 import axios from "axios";
 import { BASE_URL } from "../Constants";
@@ -13,6 +13,7 @@ const FeedPage = () => {
   const allUsers = useSelector((store) => store.allUsers);
 
   // console.log(allUsers);
+const dispatch = useDispatch();
 
   const handleUserSearch = (e) => {
     const filtered = allUsers?.filter((each) =>

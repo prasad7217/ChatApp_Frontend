@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { BASE_URL } from "../../Constants";
+import { addUserProfile } from "../Redux/userSlices/userSlice";
 
 const RecievedRequests = () => {
   const [buttonText, setButtonText] = useState("Accept");
   const [index, setIndex] = useState(null);
   const userProfile = useSelector((store) => store.user.profile);
+
+  const dispatch = useDispatch();
 
   const confirmRequest = async (id, status, i) => {
     try {
@@ -20,6 +23,7 @@ const RecievedRequests = () => {
       if (res?.data?.success) {
         setIndex(i)
         setButtonText("Followback");
+        dispatch(addUserProfile(res?.data?.data))
       }
     } catch (error) {
       console.log("Error :", error);

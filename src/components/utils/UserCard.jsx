@@ -13,7 +13,7 @@ export default function UserCard({ card }) {
     try {
       console.log(id)
       const res = await axios.post(BASE_URL + "/request/sent/" + id, { status }, { withCredentials: true });
-      console.log("update :", res)
+      // console.log("update :", res)
       if (res?.data?.success) {
         setFollowing(true)
         dispatch(addUserProfile(res?.data?.data))
