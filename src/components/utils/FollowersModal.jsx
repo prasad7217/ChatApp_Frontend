@@ -17,7 +17,7 @@ export default function FollowersModal({ user, state, close }) {
     setFollowers(user?.followers);
     setFollowing(user?.following);
 
-    if (state === "followers") {
+    if (state === "follower") {
 
       const filtered = followers?.filter(each => each?.userName?.toLowerCase()?.includes(searchValue));
 
@@ -96,48 +96,58 @@ export default function FollowersModal({ user, state, close }) {
         {/* List */}
         <div className="overflow-y-auto flex-1">
           {state === "following"
-            ? following?.map((user) => (
-              <div
-                key={user._id}
-                className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
-              >
-                <img
-                  src={user.profilePic}
-                  className="w-10 h-10 rounded-full object-cover"
-                  alt={user.userName}
-                />
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-white">
-                    {user.userName}
-                  </p>
-                  <p className="text-xs text-gray-400">{user.designation}</p>
+            ? following?.map((user1, i) => {
+
+              const fil = user?.mutualfrds?.filter(each => each?._id.includes(user1?._id));
+
+              return (
+                <div
+                  key={user1._id}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
+                >
+                  <img
+                    src={user1.profilePic}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt={user1.userName}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-white">
+                      {user1.userName}
+                    </p>
+                    <p className="text-xs text-gray-400">{user1.designation}</p>
+                  </div>
+                  <button className="text-[14px] text-gray-200 font-semibold px-1.5 py-0.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
+                    {fil.length > 0 ? "message" : "Following"}
+                  </button>
                 </div>
-                <button className="text-[14px] text-gray-200 font-semibold px-1.5 py-0.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
-                  Following
-                </button>
-              </div>
-            ))
-            : followers?.map((user) => (
-              <div
-                key={user._id}
-                className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
-              >
-                <img
-                  src={user.profilePic}
-                  className="w-10 h-10 rounded-full object-cover"
-                  alt={user.userName}
-                />
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-white">
-                    {user.userName}
-                  </p>
-                  <p className="text-xs text-gray-400">{user.designation}</p>
+              )
+            })
+            : followers?.map((user1) => {
+
+              const fil = user?.mutualfrds?.filter(each => each?._id === user1?._id);
+
+              return (
+                <div
+                  key={user1._id}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
+                >
+                  <img
+                    src={user1.profilePic}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt={user1.userName}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-white">
+                      {user1.userName}{"  "}<span className="text-[12px] text-red-400 font-normal">. remove</span>
+                    </p>
+                    <p className="text-xs text-gray-400">{user1.designation}</p>
+                  </div>
+                  <button className="text-[14px] px-1.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
+                    {fil.length > 0 ? "Follower" : "Follow"}
+                  </button>
                 </div>
-                <button className="text-[14px] px-1.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
-                  remove
-                </button>
-              </div>
-            ))}
+              )
+            })}
         </div>
       </div>
     </div>
