@@ -25,7 +25,7 @@ export default function UserCard({ card }) {
   }
 
   return (
-    <div className="2xl:w-52 w-44 lg:h-[300px] md:h-[300px] 2xl:h-[300px] 3xl:h-[300px] bg-gray-800 dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-3 flex flex-col shadow-xl">
+    <div className="2xl:w-52 w-44 lg:h-[300px] md:h-[300px] 2xl:h-[300px] 3xl:h-[300px] bg-[#2A2A2A] dark:bg-[#1a1d27] border border-gray-600 dark:border-white/[0.07] rounded-2xl p-3 flex flex-col shadow-xl">
 
       {/* Top Section */}
       <div className="flex flex-col items-center gap-3">
@@ -62,7 +62,7 @@ export default function UserCard({ card }) {
       {/* ✅ Button always pinned to bottom */}
       <button
         onClick={() => handleFriendRequest(card._id, "requested")}
-        className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-4 ${following
+        className={`w-full py-2 rounded-xl text-sm font-medium transition-all duration-200 mt-4 cursor-pointer ${following
           ? "bg-transparent border border-red-500 text-red-500"
           : "bg-red-500 text-white border border-red-500 hover:bg-red-600"
           }`}

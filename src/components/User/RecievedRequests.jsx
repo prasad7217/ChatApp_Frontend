@@ -57,7 +57,7 @@ const RecievedRequests = () => {
   }
 
   return (
-    <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] w-full bg-gray-700 px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
+    <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] w-full bg-[#3A3A3A] px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
       {/* Heading */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white">Pending Requests</h1>

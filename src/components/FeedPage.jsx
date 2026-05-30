@@ -48,7 +48,7 @@ const dispatch = useDispatch();
   }, [allUsers]);
 
   return (
-    <div className="2xl:h-[86vh] bg-[#2A2A2A] 2xl:pt-12 2xl:px-44 3xl:px-84 h-[86vh]">
+    <div className="2xl:h-[86vh] bg-[#3A3A3A] 2xl:pt-12 2xl:px-44 3xl:px-84 h-[86vh]">
       <div className="flex items-center justify-between h-[10%] py-10 3xl:py-4">
         <div className="flex flex-col gap-1 pl-4 mt-8">
           <div className="flex items-center gap-2 ">

@@ -5,7 +5,7 @@ const PendingRequests = () => {
   const userProfile = useSelector((store) => store.user.profile);
 
   return (
-    <div className="3xl:min-h-[86vh] 2xl:min-h-[80vh] w-full bg-gray-700 px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
+    <div className="3xl:min-h-[86vh] 2xl:min-h-[80vh] w-full bg-[#3A3A3A] px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
       
       {/* Heading */}
       <div className="mb-8">
@@ -23,7 +23,7 @@ const PendingRequests = () => {
         {userProfile?.sentRequests?.map((user) => (
           <div
             key={user?._id}
-            className="bg-gray-800/35 2xl:w-[50%] border border-white/10 rounded-2xl p-5 shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center justify-between"
+            className="bg-[#2A2A2A]/50 2xl:w-[50%] border border-white/10 rounded-2xl p-5 shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center justify-between"
           >
             {/* Top Section */}
             <div className="flex items-center gap-4">
@@ -32,7 +32,7 @@ const PendingRequests = () => {
               <img
                 src={user?.profilePic}
                 alt={user?.userName}
-                className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                className="w-16 h-16 rounded-full object-cover"
               />
 
               {/* User Details */}
@@ -51,9 +51,14 @@ const PendingRequests = () => {
               
               {/* Accept Button */}
               <button
-                className=" bg-gray-700 text-white py-1 px-2 rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
+                className=" bg-[#3A3A3A] text-white py-1 px-2 rounded-lg hover:bg-[#4A4A4A] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer"
               >
                 requsted
+              </button>
+              <button
+                className=" bg-red-600 text-white py-1 px-2 rounded-lg hover:bg-red-600/80 flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer"
+              >
+                Cancel
               </button>
             </div>
           </div>

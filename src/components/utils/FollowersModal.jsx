@@ -80,7 +80,7 @@ export default function FollowersModal({ user, state, close }) {
   return (
     <div className="fixed inset-0 bg-[#2A2A2A]/75 flex items-center justify-center z-50">
       <div
-        className="bg-[#2A2A2A] rounded-2xl md:w-[500px] min-h-[400px] max-h-[480px] flex flex-col overflow-hidden"
+        className="bg-[#2A2A2A] rounded-2xl md:w-[500px] min-h-[400px] max-h-[480px] flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full bg-[#4A4A4A] px-4 py-2 flex items-center justify-between">
