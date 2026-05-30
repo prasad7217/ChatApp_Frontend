@@ -6,6 +6,7 @@ import axios from "axios";
 import { BASE_URL } from "../../Constants";
 import { useDispatch } from "react-redux";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
+import { Trophy } from "lucide-react";
 
 export default function FollowersModal({ user, state, close }) {
   // const [activeTab, setActiveTab] = useState("followers");
@@ -48,6 +49,20 @@ export default function FollowersModal({ user, state, close }) {
     }
   };
 
+  const handleFollowBack = async (id, status) => {
+    try {
+      console.log(id, status)
+      const res = await axios.post(BASE_URL + "/request/sent/" + id, { status }, { withCredentials: true });
+
+      if (res?.data?.success) {
+        dispatch(addUserProfile(res?.data?.data))
+      }
+
+    } catch (error) {
+      console.log("Error :", error)
+    }
+  }
+
   useEffect(() => {
     setFollowers(user?.followers);
     setFollowing(user?.following);
@@ -80,7 +95,8 @@ export default function FollowersModal({ user, state, close }) {
   return (
     <div className="fixed inset-0 bg-[#2A2A2A]/75 flex items-center justify-center z-50">
       <div
-        className="bg-[#2A2A2A] rounded-2xl md:w-[500px] min-h-[400px] max-h-[480px] flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster"
+        id="follow"
+        className="bg-[#2A2A2A] rounded-2xl md:w-[500px] min-h-[400px] max-h-[450px] flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full bg-[#4A4A4A] px-4 py-2 flex items-center justify-between">
@@ -90,7 +106,7 @@ export default function FollowersModal({ user, state, close }) {
           </p>
           <IoClose
             className="text-gray-300 text-[32px] cursor-pointer hover:bg-[#2A2A2A] rounded-full p-1"
-            onClick={() => close(false)}
+            onClick={() => { close(false) }}
           />
         </div>
         <div className="relative w-full sm:py-4 sm:px-4">
@@ -134,77 +150,77 @@ export default function FollowersModal({ user, state, close }) {
         <div className="overflow-y-auto flex-1">
           {state === "following"
             ? following?.map((user1, i) => {
-                const fil = user?.mutualfrds?.filter((each) =>
-                  each?._id.includes(user1?._id),
-                );
+              const fil = user?.mutualfrds?.filter((each) =>
+                each?._id.includes(user1?._id),
+              );
 
-                return (
-                  <div
-                    key={user1._id}
-                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
-                  >
-                    <img
-                      src={user1.profilePic}
-                      className="w-10 h-10 rounded-full object-cover"
-                      alt={user1.userName}
-                    />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-white">
-                        {user1.userName}
-                        {"  "}
-                        <span
-                          className="text-[12px] text-red-400 font-normal cursor-pointer"
-                          onClick={() => handleUnfollow(user1._id, "unfollow")}
-                        >
-                          . Unfollow
-                        </span>
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {user1.designation}
-                      </p>
-                    </div>
-                    <button className="text-[14px] text-gray-200 font-semibold px-1.5 py-0.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
-                      {fil?.length > 0 ? "message" : "Following"}
-                    </button>
+              return (
+                <div
+                  key={user1._id}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/2"
+                >
+                  <img
+                    src={user1.profilePic}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt={user1.userName}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-white">
+                      {user1.userName}
+                      {"  "}
+                      <span
+                        className="text-[12px] text-red-400 font-normal cursor-pointer"
+                        onClick={() => handleUnfollow(user1._id, "unfollow")}
+                      >
+                        . Unfollow
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {user1.designation}
+                    </p>
                   </div>
-                );
-              })
+                  <button className="text-[14px] text-gray-200 font-semibold px-1.5 py-0.5 rounded-lg bg-[#4D4D4D]/40 hover:bg-[#4D4D4D] cursor-pointer transform transition-all duration-100 ease">
+                    {fil?.length > 0 ? "message" : "Following"}
+                  </button>
+                </div>
+              );
+            })
             : followers?.map((user1) => {
-                const fil = user?.mutualfrds?.filter(
-                  (each) => each?._id === user1?._id,
-                );
+              const fil = user?.mutualfrds?.filter(
+                (each) => each?._id === user1?._id,
+              );
 
-                return (
-                  <div
-                    key={user1._id}
-                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
-                  >
-                    <img
-                      src={user1.profilePic}
-                      className="w-10 h-10 rounded-full object-cover"
-                      alt={user1.userName}
-                    />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-white">
-                        {user1.userName}
-                        {"  "}
-                        <span
-                          className="text-[12px] text-red-400 font-normal cursor-pointer"
-                          onClick={() => handleUnfollow(user1._id, "remove")}
-                        >
-                          . remove
-                        </span>
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {user1.designation}
-                      </p>
-                    </div>
-                    <button className="text-[14px] px-1.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease">
-                      {fil?.length > 0 ? "Follower" : "Follow"}
-                    </button>
+              return (
+                <div
+                  key={user1._id}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5"
+                >
+                  <img
+                    src={user1.profilePic}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt={user1.userName}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-white">
+                      {user1.userName}
+                      {"  "}
+                      <span
+                        className="text-[12px] text-red-400 font-normal cursor-pointer"
+                        onClick={() => handleUnfollow(user1._id, "remove")}
+                      >
+                        . remove
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {user1.designation}
+                    </p>
                   </div>
-                );
-              })}
+                  <button className="text-[14px] px-1.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-600/80 transform transition-all duration-200 ease" onClick={() => handleFollowBack(user1._id, "requested")}>
+                    {fil?.length > 0 ? "Follower" : "Follow back"}
+                  </button>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

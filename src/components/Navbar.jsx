@@ -160,20 +160,20 @@ const Navbar = () => {
             </p>
           )}
           {user && loginHover && (
-            <div className="absolute top-10 -left-20 sm:top-10 sm:left-0 w-32 bg-[#2A2A2A] rounded-xl shadow-lg py-1 text-gray-100 font-medium">
+            <div className="absolute top-10 -left-20 sm:top-10 sm:left-0 w-32 bg-[#3A3A3A] rounded-xl shadow-lg py-1 text-gray-100 font-medium">
               {/* Menu List */}
               <ul className="py-1">
-                <Link to={"/feed"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
+                <Link to={"/feed"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
                   <TbBrandFeedly className="text-gray-100 text-lg" />
                   <span className="text-sm">Feed</span>
                 </li>
                 </Link>
-                <Link to={"/pending/requests"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
+                <Link to={"/pending/requests"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
                   <FaUserPlus className="text-gray-100 text-lg" />
                   <span className="text-sm">Requested</span>
                 </li>
                 </Link>
-                <Link to={"/profile"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 cursor-pointer transition-colors">
+                <Link to={"/profile"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
                   <IoMdPerson className="text-gray-100 text-lg" />
                   <span className="text-sm">Profile</span>
                 </li>
@@ -182,7 +182,7 @@ const Navbar = () => {
                 <li className="my-1 border-t border-gray-100"></li>
 
                 <li
-                  className="px-2 py-1 flex items-center gap-3 hover:bg-gray-700 group cursor-pointer transition-colors"
+                  className="px-2 py-1 flex items-center gap-3 hover:bg-red-900/30 group cursor-pointer transition-colors"
                   onClick={userLogout}
                 >
                   <IoMdLogOut className="text-gray-100 group-hover:text-red-600 text-lg" />

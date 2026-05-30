@@ -1,12 +1,31 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../../Constants";
+import axios from "axios";
+import { addUserProfile } from "../Redux/userSlices/userSlice";
 
 const PendingRequests = () => {
   const userProfile = useSelector((store) => store.user.profile);
 
+  const dispatch = useDispatch();
+
+  const handleCancelReq = async (id, status) => {
+    try {
+
+      const res = await axios.post(BASE_URL + "/request/remove/" + id, { status }, { withCredentials: true });
+
+      if (res?.data?.success) {
+        dispatch(addUserProfile(res?.data?.data))
+      }
+
+    } catch (error) {
+      console.log("Error :", error)
+    }
+  }
+
   return (
     <div className="3xl:min-h-[86vh] 2xl:min-h-[80vh] w-full bg-[#3A3A3A] px-4 sm:px-8 md:px-16 py-8 2xl:px-48 2xl:py-16 3xl:py-12 3xl:px-80">
-      
+
       {/* Heading */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white">
@@ -27,7 +46,7 @@ const PendingRequests = () => {
           >
             {/* Top Section */}
             <div className="flex items-center gap-4">
-              
+
               {/* Profile Image */}
               <img
                 src={user?.profilePic}
@@ -48,7 +67,7 @@ const PendingRequests = () => {
             </div>
             {/* Buttons */}
             <div className="flex items-center gap-3 mt-6">
-              
+
               {/* Accept Button */}
               <button
                 className=" bg-[#3A3A3A] text-white py-1 px-2 rounded-lg hover:bg-[#4A4A4A] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer"
@@ -56,6 +75,7 @@ const PendingRequests = () => {
                 requsted
               </button>
               <button
+                onClick={() => handleCancelReq(user?._id, "cancel")}
                 className=" bg-red-600 text-white py-1 px-2 rounded-lg hover:bg-red-600/80 flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer"
               >
                 Cancel
