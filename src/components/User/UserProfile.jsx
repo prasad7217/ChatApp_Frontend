@@ -9,6 +9,7 @@ import { BiSolidMapPin } from "react-icons/bi";
 import FollowersModal from "../utils/FollowersModal";
 import axios from "axios";
 import { BASE_URL } from "../../Constants";
+import { useSearchParams } from "react-router-dom";
 
 const UserProfile = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,10 +23,27 @@ const UserProfile = ({ user }) => {
 
   const [openModel, setOpenModel] = useState('');
   const [closeModel, setCloseModel] = useState(false);
+  const [userProfile, setUserProfile] = useState();
+  const [requiredUser, setRequiredUser] = useState();
 
-  const userProfile = useSelector((store) => store.user.profile);
+  const [searParams] = useSearchParams();
+  const currentUserId = searParams.get("id");
 
-  // console.log("user", userProfile)
+  const userProfile1 = useSelector((store) => store.user.profile);
+
+  const handleReqUserPro = async (id) => {
+
+    try {
+      const res = await axios.post(BASE_URL + "/user/profile", { userId: id }, { withCredentials: true });
+
+      if(res?.data?.success){
+        setUserProfile(res?.data?.data)
+      }
+    } catch (error) {
+      console.log("Error :", error)
+    }
+
+  }
 
   const followers = userProfile?.followers?.length || 0;
   const following = userProfile?.following?.length || 0;
@@ -60,9 +78,16 @@ const UserProfile = ({ user }) => {
 
   // }
 
-  // useEffect(() => {
-  //   handleUserProfile();
-  // }, [])
+  useEffect(() => {
+
+    if (currentUserId === userProfile1?._id) {
+      console.log("user", userProfile1)
+      userProfile1 && setUserProfile(userProfile1);
+    } else {
+
+    }
+
+  }, [userProfile1])
 
   const handleSave = () => {
     // call your update API here, e.g. dispatch(updateProfile(formData))
@@ -285,8 +310,8 @@ const UserProfile = ({ user }) => {
           <p>Name</p>
         </div>
       </div>
-      {openModel === "followers" && <FollowersModal user={userProfile} state={"follower"} close={setOpenModel} />}
-      {openModel === "following" && <FollowersModal user={userProfile} state={"following"} close={setOpenModel} />}
+      {openModel === "followers" && <FollowersModal user={userProfile} state={"follower"} close={setOpenModel} userId={handleReqUserPro} />}
+      {openModel === "following" && <FollowersModal user={userProfile} state={"following"} close={setOpenModel} userId={handleReqUserPro} />}
     </>
   );
 };

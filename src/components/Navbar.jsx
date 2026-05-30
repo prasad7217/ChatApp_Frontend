@@ -173,7 +173,7 @@ const Navbar = () => {
                   <span className="text-sm">Requested</span>
                 </li>
                 </Link>
-                <Link to={"/profile"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
+                <Link to={`/profile?id=${user._id}`}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
                   <IoMdPerson className="text-gray-100 text-lg" />
                   <span className="text-sm">Profile</span>
                 </li>
