@@ -59,7 +59,7 @@ const Body = () => {
     }, [])
 
     return (
-        <div className="min-h-screen w-full bg-gray-800/80 overflow-x-hidden">
+        <div className="min-h-screen w-full bg-[#4A4A4A] overflow-x-hidden">
             {/* Main Container: Centered max-width wrapper */}
             <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:px-40 2xl:px-20 3xl:px-6 flex flex-col gap-16 md:gap-24">
 
@@ -164,7 +164,7 @@ const Body = () => {
                         { title: "Connect with people", desc: "Discover and connect with people who share your interests.", icon: <FaUserFriends />, color: "red" },
                         { title: "Secure & private", desc: "End-to-end encryption keeps your conversations private.", icon: <MdLockOpen />, color: "green" }
                     ].map((feature, idx) => (
-                        <div key={idx} ref={(rf) => refElement.current[idx] = rf} style={{ transitionDelay: `${idx * 0.2}s` }} className="group p-8 bg-gray-800/40 border border-gray-700/50 rounded-3xl hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 cursor-pointer fadeUp">
+                        <div key={idx} ref={(rf) => refElement.current[idx] = rf} style={{ transitionDelay: `${idx * 0.2}s` }} className="group p-8 bg-[#2A2A2A] border border-gray-700/50 rounded-3xl hover:bg-[#3A3A3A] hover:border-gray-500 transition-all duration-300 cursor-pointer fadeUp">
                             <div className={`w-12 h-12 flex items-center justify-center rounded-2xl mb-6 bg-${feature.color}-900 text-${feature.color}-400 group-hover:scale-110 transition-transform`}>
                                 {feature.icon}
                             </div>

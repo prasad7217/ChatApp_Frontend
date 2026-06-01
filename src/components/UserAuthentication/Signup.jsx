@@ -63,8 +63,8 @@ const SignUp = () => {
     }
 
     return (
-        <div className="flex items-center justify-center bg-gray-700 p-4 ">
-            <div className="w-full max-w-lg p-8 space-y-2 bg-gray-800 rounded-3xl shadow-2xl my-8 lg:my-4 md:my-4 xl:my-4 2xl:my-14">
+        <div className="flex items-center justify-center bg-[#4A4A4A] p-4 ">
+            <div className="w-full max-w-lg p-8 space-y-2 bg-[#2A2A2A] rounded-3xl shadow-2xl my-8 lg:my-4 md:my-4 xl:my-4 2xl:my-14">
                 {/* Header */}
                 <div className="space-y-2 text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-white">Create Account</h1>
@@ -76,7 +76,7 @@ const SignUp = () => {
                     {/* Profile Pic Upload Section */}
                     <div className="flex items-center justify-center gap-4">
                         <div className="flex flex-col items-center gap-1">
-                            <div className="relative w-24 h-24 rounded-full border-2 border-dashed border-slate-500 bg-slate-800/50 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-red-500 transition-colors">
+                            <div className="relative w-24 h-24 rounded-full border-2 border-dashed border-[#3A3A3A] bg-[#3A3A3A]/40 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-red-500 transition-colors">
                                 <span className="text-slate-500 group-hover:text-red-400 text-xs text-center px-2">Upload Photo</span>
                                 <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={(e) => handleProfile(e)} />
                             </div>
@@ -105,7 +105,7 @@ const SignUp = () => {
                                 value={userName}
                                 type="text"
                                 placeholder="johndoe"
-                                className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                                className="w-full h-12 rounded-xl bg-[#3A3A3A]/40 border border-[#3A3A3A] px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                             />
                         </div>
                         <div className="space-y-1.5 ">
@@ -118,7 +118,7 @@ const SignUp = () => {
                                 value={designation}
                                 type="text"
                                 placeholder="Developer"
-                                className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                                className="w-full h-12 rounded-xl bg-[#3A3A3A]/40 border border-[#3A3A3A] px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                             />
                         </div>
 
@@ -133,7 +133,7 @@ const SignUp = () => {
                             type="email"
                             value={email}
                             placeholder="name@company.com"
-                            className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                            className="w-full h-12 rounded-xl bg-[#3A3A3A]/40 border border-[#3A3A3A] px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                         />
                     </div>
                     {/* Password */}
@@ -147,7 +147,7 @@ const SignUp = () => {
                             type={showPass ? "text" : "password"}
                             value={password}
                             placeholder="*****"
-                            className="w-full h-12 rounded-xl bg-[#1e293b]/50 border border-slate-600 px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                            className="w-full h-12 rounded-xl bg-[#3A3A3A]/40 border border-[#3A3A3A] px-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                         />
                         <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] top-[36px] right-4 xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
                             {showPass ? <BsEyeSlash /> : <BsEye />}
@@ -165,7 +165,7 @@ const SignUp = () => {
                             placeholder="Tell us a bit about yourself..."
                             rows="3"
                             value={bio}
-                            className="w-full rounded-xl bg-[#1e293b]/50 border border-slate-600 p-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all resize-none"
+                            className="w-full rounded-xl bg-[#3A3A3A]/40 border border-[#3A3A3A] p-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all resize-none"
                         ></textarea>
                     </div>
 
