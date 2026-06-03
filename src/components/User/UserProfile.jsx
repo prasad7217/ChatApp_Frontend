@@ -10,18 +10,22 @@ import FollowersModal from "../utils/FollowersModal";
 import axios from "axios";
 import { BASE_URL } from "../../Constants";
 import { useSearchParams } from "react-router-dom";
+import { LiaUserEditSolid } from "react-icons/lia";
+import { TbCreditCardPay } from "react-icons/tb";
 
 const UserProfile = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     userName: user?.userName || "Rahul Kumar",
     designation: user?.designation || "Full Stack Developer",
-    bio: user?.bio || "Building cool stuff with React & Node. Open to collaborations and side projects.",
+    bio:
+      user?.bio ||
+      "Building cool stuff with React & Node. Open to collaborations and side projects.",
     profilePic: user?.profilePic || "",
   });
   const [preview, setPreview] = useState(user?.profilePic || "");
 
-  const [openModel, setOpenModel] = useState('');
+  const [openModel, setOpenModel] = useState("");
   const [closeModel, setCloseModel] = useState(false);
   const [userProfile, setUserProfile] = useState();
   const [requiredUser, setRequiredUser] = useState();
@@ -32,22 +36,25 @@ const UserProfile = ({ user }) => {
   const userProfile1 = useSelector((store) => store.user.profile);
 
   const handleReqUserPro = async (id) => {
-
     try {
-      const res = await axios.post(BASE_URL + "/user/profile", { userId: id }, { withCredentials: true });
+      const res = await axios.post(
+        BASE_URL + "/user/profile",
+        { userId: id },
+        { withCredentials: true },
+      );
 
-      if(res?.data?.success){
-        setUserProfile(res?.data?.data)
+      if (res?.data?.success) {
+        setUserProfile(res?.data?.data);
       }
     } catch (error) {
-      console.log("Error :", error)
+      console.log("Error :", error);
     }
-
-  }
+  };
 
   const followers = userProfile?.followers?.length || 0;
   const following = userProfile?.following?.length || 0;
-  const connections = userProfile?.followers?.length + user?.following?.length || 0;
+  const connections =
+    userProfile?.followers?.length + user?.following?.length || 0;
 
   const getInitials = (name) =>
     name
@@ -79,15 +86,12 @@ const UserProfile = ({ user }) => {
   // }
 
   useEffect(() => {
-
     if (currentUserId === userProfile1?._id) {
-      console.log("user", userProfile1)
+      console.log("user", userProfile1);
       userProfile1 && setUserProfile(userProfile1);
     } else {
-
     }
-
-  }, [userProfile1])
+  }, [userProfile1]);
 
   const handleSave = () => {
     // call your update API here, e.g. dispatch(updateProfile(formData))
@@ -95,16 +99,14 @@ const UserProfile = ({ user }) => {
   };
 
   const handleFollowersModel = (state) => {
-    setOpenModel((prev) => prev = state);
-  }
+    setOpenModel((prev) => (prev = state));
+  };
 
   return (
     <>
       <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-[#3A3A3A] text-white flex items-start 2xl:px-48 3xl:px-84">
-
         {/* ── Main content ── */}
         <div className="w-full px-4 py-10 mt-10">
-
           {/* Cover */}
           {/* <div className="h-32 rounded-t-xl bg-[#1e2a42] relative overflow-hidden">
           <div
@@ -126,7 +128,6 @@ const UserProfile = ({ user }) => {
                 {/* Avatar row */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="relative">
-
                     <img
                       src={userProfile?.profilePic}
                       alt="profile"
@@ -150,7 +151,6 @@ const UserProfile = ({ user }) => {
                                 </button> */}
                 </div>
 
-
                 <div className="flex items-center gap-2 mb-1">
                   <h1 className="text-xl font-medium text-white/90">
                     {userProfile?.userName}
@@ -168,39 +168,52 @@ const UserProfile = ({ user }) => {
                   {userProfile?.bio}
                 </p>
               </div>
-
-              <div
-                className="w-full grid grid-cols-3 rounded-lg overflow-hidden mb-5 bg-[#4A4A4A]"
-                style={{ gap: "1px" }}
-              >
+              <div className="w-full flex flex-col ">
                 <div
-                  onClick={() => handleFollowersModel("followers")}
-                  className=" py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600 py-4"
+                  className="w-full grid grid-cols-3 rounded-lg overflow-hidden mb-5 bg-[#4A4A4A]"
+                  style={{ gap: "1px" }}
                 >
-                  <div className="text-[18px] text-gray-300 mt-1">Followers</div>
-                  <div className="text-xl font-medium text-white/90">
-                    {followers}
+                  <div
+                    onClick={() => handleFollowersModel("followers")}
+                    className=" py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600 py-4"
+                  >
+                    <div className="text-[18px] text-gray-300 mt-1">
+                      Followers
+                    </div>
+                    <div className="text-xl font-medium text-white/90">
+                      {followers}
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => handleFollowersModel("following")}
+                    className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600"
+                  >
+                    <div className="text-[18px] text-gray-300 mt-1">
+                      Following
+                    </div>
+                    <div className="text-xl font-medium text-white/90">
+                      {following}
+                    </div>
+                  </div>
+                  <div className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer">
+                    <div className="text-[18px] text-gray-300 mt-1">
+                      Connections
+                    </div>
+                    <div className="text-xl font-medium text-white/90">
+                      {connections}
+                    </div>
                   </div>
                 </div>
-                <div
-
-                  onClick={() => handleFollowersModel("following")}
-                  className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600"
-                >
-                  <div className="text-[18px] text-gray-300 mt-1">Following</div>
-                  <div className="text-xl font-medium text-white/90">
-                    {following}
+                <div className="flex items-center justify-between px-36 py-2 ">
+                  <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-[#5A5A5A] hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
+                    <LiaUserEditSolid className="text-[20px]"/>
+                    <p className="text-gray-300">Edit Profile</p>
+                  </div>
+                  <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-[#5A5A5A] hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
+                    <TbCreditCardPay className="text-[20px]"/>
+                    <p className="text-gray-300">Subscribe</p>
                   </div>
                 </div>
-                <div
-                  className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer"
-                >
-                  <div className="text-[18px] text-gray-300 mt-1">Connections</div>
-                  <div className="text-xl font-medium text-white/90">
-                    {connections}
-                  </div>
-                </div>
-
               </div>
             </div>
 
@@ -211,10 +224,19 @@ const UserProfile = ({ user }) => {
             </p>
             <div className="grid grid-cols-4 gap-2.5">
               {[
-                { icon: <TbMailFilled />, text: userProfile?.email || "rahul@example.com" },
-                { icon: <BiSolidMapPin className="text-red-600" />, text: "Hyderabad, India" },
+                {
+                  icon: <TbMailFilled />,
+                  text: userProfile?.email || "rahul@example.com",
+                },
+                {
+                  icon: <BiSolidMapPin className="text-red-600" />,
+                  text: "Hyderabad, India",
+                },
                 { icon: <SlCalender />, text: "Joined March 2023" },
-                { icon: <FaRegSquareCheck className="text-green-600 " />, text: "Email verified" },
+                {
+                  icon: <FaRegSquareCheck className="text-green-600 " />,
+                  text: "Email verified",
+                },
               ].map(({ icon, text }) => (
                 <div
                   key={text}
@@ -310,8 +332,22 @@ const UserProfile = ({ user }) => {
           <p>Name</p>
         </div>
       </div>
-      {openModel === "followers" && <FollowersModal user={userProfile} state={"follower"} close={setOpenModel} userId={handleReqUserPro} />}
-      {openModel === "following" && <FollowersModal user={userProfile} state={"following"} close={setOpenModel} userId={handleReqUserPro} />}
+      {openModel === "followers" && (
+        <FollowersModal
+          user={userProfile}
+          state={"follower"}
+          close={setOpenModel}
+          userId={handleReqUserPro}
+        />
+      )}
+      {openModel === "following" && (
+        <FollowersModal
+          user={userProfile}
+          state={"following"}
+          close={setOpenModel}
+          userId={handleReqUserPro}
+        />
+      )}
     </>
   );
 };
