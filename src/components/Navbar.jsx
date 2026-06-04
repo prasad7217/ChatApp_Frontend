@@ -19,19 +19,12 @@ import { FaUserPlus } from "react-icons/fa";
 const Navbar = () => {
   const [loginHover, setLoginHover] = useState(false);
   const [iconHover, seticonHover] = useState(false);
-  const [userProfile, setUserProfile] = useState();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log("request", userProfile)
+  const [hasFetched, setHasFetched] = useState(false);
   const user = useSelector((store) => store.user.profile);
-  // console.log("navbar", window.innerWidth)
-
-  // if (user) {
-  //   navigate("/feed")
-  // } else {
-  //   navigate("/")
-  // }
+ 
   const fetchUserProfile = async () => {
     try {
       const res1 = await axios.get(BASE_URL + "/profile", {
@@ -39,7 +32,7 @@ const Navbar = () => {
       });
       if (res1?.data?.success) {
         dispatch(addUserProfile(res1?.data?.data))
-        setUserProfile(res1?.data?.data)
+        // setUserProfile(res1?.data?.data)
 
         const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
 
@@ -63,9 +56,12 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    !user && fetchUserProfile();
-  }, [user]);
+ useEffect(() => {
+    if (!user && !hasFetched) {
+      setHasFetched(true); 
+      fetchUserProfile();
+    }
+  }, [hasFetched]);
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#2A2A2A] navShadow z-50 px-4 sm:px-6 md:px-20 lg:px-16 xl:px-32 2xl:px-44 3xl:px-80 py-4 2xl:py-10 xl:py-8 lg:py-8 md:py-8 flex items-center justify-between h-16">
@@ -118,7 +114,7 @@ const Navbar = () => {
         </div>
           <div className="relative" onClick={() => navigate("/recieved/requests")}>
             <FaUserGroup className="text-[22px] text-gray-300" />
-            {userProfile?.recievedRequests?.length > 0 && <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{userProfile?.recievedRequests?.length}</span>}
+            {user?.recievedRequests?.length > 0 && <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{user?.recievedRequests?.length}</span>}
           </div></>}
         <div
           className="relative cursor-pointer"

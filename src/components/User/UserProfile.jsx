@@ -9,7 +9,7 @@ import { BiSolidMapPin } from "react-icons/bi";
 import FollowersModal from "../utils/FollowersModal";
 import axios from "axios";
 import { BASE_URL } from "../../Constants";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { TbCreditCardPay } from "react-icons/tb";
 
@@ -205,14 +205,16 @@ const UserProfile = ({ user }) => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between px-36 py-2 ">
-                  <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-[#5A5A5A] hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
-                    <LiaUserEditSolid className="text-[20px]"/>
-                    <p className="text-gray-300">Edit Profile</p>
+                  <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-red-600 hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
+                    <LiaUserEditSolid className="text-[20px] text-red-600"/>
+                    <p className="text-red-600">Edit Profile</p>
                   </div>
+                  <Link to={"/payment"}>
                   <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-[#5A5A5A] hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
                     <TbCreditCardPay className="text-[20px]"/>
                     <p className="text-gray-300">Subscribe</p>
                   </div>
+                  </Link>
                 </div>
               </div>
             </div>

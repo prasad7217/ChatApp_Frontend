@@ -1,10 +1,22 @@
+import axios from "axios";
 import { useState } from "react";
+import { BASE_URL } from "../Constants";
 
 const features = [
   {
     icon: (
-      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-        <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        className="w-[18px] h-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "Unlimited messaging",
@@ -12,8 +24,18 @@ const features = [
   },
   {
     icon: (
-      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        className="w-[18px] h-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "Verified badge",
@@ -21,8 +43,18 @@ const features = [
   },
   {
     icon: (
-      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-        <path d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        className="w-[18px] h-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "HD video & voice calls",
@@ -30,8 +62,18 @@ const features = [
   },
   {
     icon: (
-      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        className="w-[18px] h-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "4 GB media sharing",
@@ -39,8 +81,18 @@ const features = [
   },
   {
     icon: (
-      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        className="w-[18px] h-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "End-to-end encryption",
@@ -48,8 +100,18 @@ const features = [
   },
   {
     icon: (
-      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-        <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        className="w-[18px] h-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "Priority support",
@@ -57,39 +119,91 @@ const features = [
   },
 ];
 
-const plans = [
-  { id: "monthly", label: "Monthly", price: 9.99, period: "/ month", billed: null, save: null },
-  { id: "yearly", label: "Yearly", price: 7.49, period: "/ month", billed: "Billed as $89.88/yr", save: "Save 25%" },
-];
-
-export default function NexchatSubscription() {
+export default function Payment() {
   const [selected, setSelected] = useState("yearly");
   const [loading, setLoading] = useState(false);
   const [paid, setPaid] = useState(false);
 
-  const plan = plans.find((p) => p.id === selected);
+  // const plan = plans.find((p) => p.id === selected);
 
   const handlePay = () => {
     setLoading(true);
-    setTimeout(() => { setLoading(false); setPaid(true); }, 1800);
+    setTimeout(() => {
+      setLoading(false);
+      setPaid(true);
+    }, 1800);
+  };
+
+  const handlePayment = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/payment/create",
+        {},
+        { withCredentials: true },
+      );
+      console.log("pay", res);
+      if (res?.data?.success) {
+
+        const {amount, currency, orderId, reciept, status, userId, notes} = res?.data?.paymentData
+
+        const options = {
+          key: res?.data?.key,
+          amount, // Amount is in currency subunits.
+          currency,
+          name: "Nexchat",
+          image: "https://res.cloudinary.com/dssabhgtb/image/upload/v1780591922/gemini-svg_axdgwu.png",
+          order_id: orderId,
+          prefill: {
+            name: notes?.userName, //your customer's name
+            email: notes?.email
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#cc334d",
+          },
+        };
+        var rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      }
+    } catch (error) {
+      console.log("Error :", error);
+    }
   };
 
   if (paid) {
     return (
-      <div style={s.root}>
-        <div style={s.successWrap}>
-          <div style={s.successCircle}>
-            <svg width="32" height="32" fill="none" stroke="#22c55e" strokeWidth="2.2" viewBox="0 0 24 24">
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" />
+      <div className="bg-[#2a2a2a] rounded-xl overflow-hidden font-sans text-slate-200 max-w-[620px] mx-auto border border-white/5">
+        <div className="py-13 px-8 text-center">
+          <div className="w-16 h-16 rounded-full bg-[#22c55e]/10 flex items-center justify-center mx-auto mb-4.5">
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="#22c55e"
+              strokeWidth="2.2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </div>
-          <p style={s.successTitle}>You're subscribed!</p>
-          <p style={s.successSub}>Welcome to Nexchat Pro. Your verified badge is now live.</p>
-          <div style={s.verifiedPreview}>
-            <span style={s.verifiedUsername}>Prasad</span>
-            <span style={s.verifiedOnline}>Online</span>
-            <span style={s.verifiedBadge}>
-              <svg width="13" height="13" fill="#22c55e" viewBox="0 0 24 24">
+          <p className="text-2xl font-bold mb-1.5 text-white">
+            You're subscribed!
+          </p>
+          <p className="text-[13px] text-white/45 mb-6 leading-relaxed">
+            Welcome to Nexchat Pro. Your verified badge is now live.
+          </p>
+          <div className="inline-flex items-center gap-2 bg-[#333333] border border-white/10 rounded-full py-2 px-4">
+            <span className="text-sm font-bold text-white">Prasad</span>
+            <span className="text-[11px] font-semibold bg-[#22c55e]/15 text-[#22c55e] rounded-full py-0.5 px-2">
+              Online
+            </span>
+            <span className="flex items-center gap-1 text-xs font-semibold text-[#22c55e]">
+              <svg className="w-3.5 h-3.5" fill="#22c55e" viewBox="0 0 24 24">
                 <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
               Verified
@@ -101,84 +215,79 @@ export default function NexchatSubscription() {
   }
 
   return (
-    <div style={s.root}>
-
-      {/* ── Header ── */}
-      <div style={s.topBar}>
-        <div style={s.logoRow}>
-          <div style={s.logoBox}>
-            <svg width="16" height="16" fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <span style={s.logoLabel}>
-            <span style={{ color: "#fff" }}>Nex</span>
-            <span style={{ color: "#e53e3e" }}>chat</span>
-          </span>
-          <span style={s.logoSub}>REAL-TIME MESSAGING</span>
-        </div>
-        <div style={s.proBadge}>PRO</div>
-      </div>
-
+    <div className="bg-[#4a4a4a] rounded-xl overflow-hidden font-sans text-slate-200 max-w-full mx-auto border border-white/5 shadow-2xl sm:px-44 sm:mt-6">
       {/* ── Hero ── */}
-      <div style={s.hero}>
-        <p style={s.heroEyebrow}>Upgrade your account</p>
-        <h1 style={s.heroTitle}>Chat without limits</h1>
-        <p style={s.heroSub}>
-          Join <strong style={{ color: "#e2e8f0" }}>2.4M+ subscribers</strong> and unlock the full Nexchat experience.
+      <div className="py-7 px-6">
+        <p className="text-[14px] font-semibold tracking-widest text-[#e53e3e] mb-1.5 uppercase">
+          Upgrade your account
+        </p>
+        <h1 className="text-4xl font-bold mb-2 tracking-tight text-white">
+          Chat without limits
+        </h1>
+        <p className="text-[14px] text-white/45 leading-relaxed">
+          Join{" "}
+          <strong className="text-slate-200 font-semibold">
+            2.4M+ subscribers
+          </strong>{" "}
+          and unlock the full Nexchat experience.
         </p>
       </div>
 
-      <div style={s.divider} />
+      <div className="h-[1px] bg-white/5 mx-6" />
 
       {/* ── Features ── */}
-      <div style={s.section}>
-        <p style={s.sectionLabel}>WHAT YOU GET</p>
-        <div style={s.featureGrid}>
+      <div className="py-4.5 px-6">
+        <p className="text-[10px] font-semibold tracking-widest text-white/30 mb-3.5 uppercase">
+          What you get
+        </p>
+        <div className="grid grid-cols-2 gap-x-5 gap-y-3">
           {features.map((f) => (
-            <div key={f.title} style={s.featureRow}>
-              <div style={s.featureIconWrap}>{f.icon}</div>
+            <div key={f.title} className="flex gap-2.5 items-start">
+              <div className="w-12 h-12 rounded-lg bg-[#e53e3e]/10 text-[#e53e3e] flex items-center justify-center flex-shrink-0 text-[28px]">
+                {f.icon}
+              </div>
               <div>
-                <p style={s.featureTitle}>{f.title}</p>
-                <p style={s.featureDesc}>{f.desc}</p>
+                <p className="text-[16px] font-semibold mb-[2px] text-slate-200">
+                  {f.title}
+                </p>
+                <p className="text-xs text-white/40 leading-normal">{f.desc}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={s.divider} />
+      <div className="h-[1px] bg-white/5 mx-6" />
 
-      {/* ── Plan selector ── */}
-      <div style={s.section}>
-        <p style={s.sectionLabel}>CHOOSE YOUR PLAN</p>
-        <div style={s.planRow}>
-          {plans.map((p) => (
-            <button
-              key={p.id}
-              onClick={() => setSelected(p.id)}
-              style={{ ...s.planCard, ...(selected === p.id ? s.planCardActive : {}) }}
-            >
-              {p.save && <span style={s.savePill}>{p.save}</span>}
-              <p style={s.planName}>{p.label}</p>
-              <div style={s.planPriceRow}>
-                <span style={{ ...s.planPrice, ...(selected === p.id ? { color: "#e53e3e" } : {}) }}>
-                  ${p.price}
-                </span>
-                <span style={s.planPer}>{p.period}</span>
-              </div>
-              {p.billed && <p style={s.planBilled}>{p.billed}</p>}
-            </button>
-          ))}
+      {/* ── Plan Selector ── */}
+      <div className="py-4.5 px-6">
+        <div className="flex gap-2.5">
+          <button
+            // onClick={() => setSelected(p.id)}
+            className={`flex-1 bg-[#333333] border rounded-xl py-3.5 px-4 cursor-pointer text-left relative transition-all duration-150`}
+          >
+            <span className="absolute -top-2.5 right-3 text-[9px] font-bold bg-[#22c55e] text-emerald-950 rounded-full py-0.5 px-2 tracking-wide"></span>
+
+            <p className="text-[11px] text-white/40 mb-1 font-medium"></p>
+            <div className="flex items-baseline gap-1">
+              <span
+                className={`text-2xl font-bold text-slate-200 transition-colors`}
+              >
+                ₹ 399/-
+              </span>
+              <span className="text-xs text-white/35"></span>
+            </div>
+            <p className="text-[10px] text-white/30 mt-1"></p>
+          </button>
         </div>
       </div>
 
-      <div style={s.divider} />
+      <div className="h-[1px] bg-white/5 mx-6" />
 
       {/* ── Checklist ── */}
-      <div style={s.section}>
-        <p style={s.sectionLabel}>PROFILE INFO</p>
-        <div style={s.checkGrid}>
+      {/* <div className="py-4.5 px-6">
+        <p className="text-[10px] font-semibold tracking-widest text-white/30 mb-3.5 uppercase">Profile info</p>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
           {[
             "Unlimited real-time messaging",
             "Verified profile badge",
@@ -187,221 +296,56 @@ export default function NexchatSubscription() {
             "End-to-end encryption",
             "Priority 24/7 support",
           ].map((item) => (
-            <div key={item} style={s.checkRow}>
-              <svg width="14" height="14" fill="none" stroke="#22c55e" strokeWidth="2.5" viewBox="0 0 24 24">
+            <div key={item} className="flex items-center gap-2">
+              <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="#22c55e" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span style={s.checkText}>{item}</span>
+              <span className="text-[13px] text-white/60">{item}</span>
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      <div style={s.divider} />
+      <div className="h-[1px] bg-white/5 mx-6" />
 
-      {/* ── Pay ── */}
-      <div style={s.paySection}>
-        <div style={s.payLeft}>
-          <span style={s.payPrice}>${plan.price}</span>
-          <span style={s.payPer}>{plan.period}</span>
+      {/* ── Pay Action ── */}
+      <div className="pt-4.5 pb-2 px-6 flex items-center justify-between gap-4">
+        <div className="flex items-baseline gap-1">
+          <span className="text-3xl font-bold text-white tracking-tight"></span>
+          <span className="text-[13px] text-white/35"></span>
         </div>
         <button
-          onClick={handlePay}
+          onClick={handlePayment}
           disabled={loading}
-          style={{ ...s.payBtn, ...(loading ? s.payBtnDisabled : {}) }}
+          className={`flex items-center gap-2 py-[11px] px-[22px] rounded-lg bg-[#e53e3e] hover:bg-[#c53030] active:scale-[0.98] text-white text-sm font-semibold border-none cursor-pointer tracking-tight transition-all whitespace-nowrap ${
+            loading ? "opacity-60 cursor-not-allowed" : ""
+          }`}
         >
           {loading ? (
-            <span style={s.spinner} />
+            <span className="w-4 h-4 border-2 border-white/30 border-top-white rounded-full inline-block animate-spin" />
           ) : (
             <>
-              <svg width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                className="w-[17px] h-[17px]"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
               Subscribe now
             </>
           )}
         </button>
       </div>
-      <p style={s.payNote}>Cancel anytime · No hidden fees · Secured by Stripe</p>
-
+      <p className="text-[11px] text-white/25 text-center mb-5 px-6">
+        Cancel anytime · No hidden fees · Secured by Stripe
+      </p>
     </div>
   );
 }
-
-const s = {
-  root: {
-    background: "#2b2b2b",
-    borderRadius: 12,
-    overflow: "hidden",
-    fontFamily: "'Segoe UI', sans-serif",
-    color: "#e2e8f0",
-    maxWidth: 620,
-    margin: "0 auto",
-    border: "1px solid rgba(255,255,255,0.07)",
-  },
-
-  /* top bar — matches app navbar */
-  topBar: {
-    background: "#222222",
-    borderBottom: "1px solid rgba(255,255,255,0.07)",
-    padding: "12px 20px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  logoRow: { display: "flex", alignItems: "center", gap: 8 },
-  logoBox: {
-    width: 30, height: 30, borderRadius: 8,
-    background: "#e53e3e",
-    display: "flex", alignItems: "center", justifyContent: "center",
-  },
-  logoLabel: { fontSize: 18, fontWeight: 700, letterSpacing: "-0.02em" },
-  logoSub: {
-    fontSize: 9, letterSpacing: "0.1em",
-    color: "rgba(255,255,255,0.35)",
-    fontWeight: 500,
-    alignSelf: "flex-end",
-    marginBottom: 1,
-  },
-  proBadge: {
-    fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
-    background: "#e53e3e",
-    color: "#fff",
-    borderRadius: 6,
-    padding: "3px 8px",
-  },
-
-  /* hero */
-  hero: { padding: "28px 24px 20px" },
-  heroEyebrow: {
-    fontSize: 11, fontWeight: 600, letterSpacing: "0.1em",
-    color: "#e53e3e", margin: "0 0 6px",
-    textTransform: "uppercase",
-  },
-  heroTitle: {
-    fontSize: 24, fontWeight: 700, margin: "0 0 8px",
-    letterSpacing: "-0.02em", color: "#fff",
-  },
-  heroSub: {
-    fontSize: 13, color: "rgba(255,255,255,0.45)",
-    margin: 0, lineHeight: 1.6,
-  },
-
-  divider: { height: 1, background: "rgba(255,255,255,0.07)", margin: "0 24px" },
-
-  section: { padding: "18px 24px" },
-  sectionLabel: {
-    fontSize: 10, fontWeight: 600, letterSpacing: "0.1em",
-    color: "rgba(255,255,255,0.3)",
-    margin: "0 0 14px", textTransform: "uppercase",
-  },
-
-  /* features */
-  featureGrid: {
-    display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px 20px",
-  },
-  featureRow: { display: "flex", gap: 10, alignItems: "flex-start" },
-  featureIconWrap: {
-    width: 32, height: 32, borderRadius: 8,
-    background: "rgba(229,62,62,0.12)",
-    color: "#e53e3e",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    flexShrink: 0,
-  },
-  featureTitle: { fontSize: 13, fontWeight: 600, margin: "0 0 2px", color: "#e2e8f0" },
-  featureDesc: { fontSize: 12, color: "rgba(255,255,255,0.38)", margin: 0, lineHeight: 1.5 },
-
-  /* plans */
-  planRow: { display: "flex", gap: 10 },
-  planCard: {
-    flex: 1, background: "#333333",
-    border: "1.5px solid rgba(255,255,255,0.09)",
-    borderRadius: 10, padding: "14px 16px",
-    cursor: "pointer", textAlign: "left",
-    position: "relative", transition: "border-color 0.15s",
-  },
-  planCardActive: {
-    border: "1.5px solid #e53e3e",
-    background: "rgba(229,62,62,0.07)",
-  },
-  savePill: {
-    position: "absolute", top: -9, right: 12,
-    fontSize: 9, fontWeight: 700,
-    background: "#22c55e", color: "#052e16",
-    borderRadius: 20, padding: "2px 7px",
-    letterSpacing: "0.04em",
-  },
-  planName: { fontSize: 11, color: "rgba(255,255,255,0.4)", margin: "0 0 4px", fontWeight: 500 },
-  planPriceRow: { display: "flex", alignItems: "baseline", gap: 3 },
-  planPrice: { fontSize: 22, fontWeight: 700, color: "#e2e8f0", transition: "color 0.15s" },
-  planPer: { fontSize: 12, color: "rgba(255,255,255,0.35)" },
-  planBilled: { fontSize: 10, color: "rgba(255,255,255,0.28)", margin: "4px 0 0" },
-
-  /* checklist — styled like profile info section */
-  checkGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "9px 16px" },
-  checkRow: { display: "flex", alignItems: "center", gap: 7 },
-  checkText: { fontSize: 13, color: "rgba(255,255,255,0.6)" },
-
-  /* pay */
-  paySection: {
-    padding: "18px 24px 10px",
-    display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16,
-  },
-  payLeft: { display: "flex", alignItems: "baseline", gap: 5 },
-  payPrice: { fontSize: 28, fontWeight: 700, color: "#fff", letterSpacing: "-0.03em" },
-  payPer: { fontSize: 13, color: "rgba(255,255,255,0.35)" },
-  payBtn: {
-    display: "flex", alignItems: "center", gap: 7,
-    padding: "11px 22px", borderRadius: 9,
-    background: "#e53e3e", color: "#fff",
-    fontSize: 14, fontWeight: 600,
-    border: "none", cursor: "pointer",
-    letterSpacing: "-0.01em",
-    transition: "opacity 0.15s",
-    whiteSpace: "nowrap",
-  },
-  payBtnDisabled: { opacity: 0.6, cursor: "not-allowed" },
-  spinner: {
-    width: 16, height: 16,
-    border: "2px solid rgba(255,255,255,0.3)",
-    borderTop: "2px solid #fff",
-    borderRadius: "50%",
-    display: "inline-block",
-    animation: "spin 0.7s linear infinite",
-  },
-  payNote: {
-    fontSize: 11, color: "rgba(255,255,255,0.25)",
-    textAlign: "center", margin: "0 0 20px", padding: "0 24px",
-  },
-
-  /* success */
-  successWrap: {
-    padding: "52px 32px", textAlign: "center",
-  },
-  successCircle: {
-    width: 64, height: 64, borderRadius: "50%",
-    background: "rgba(34,197,94,0.1)",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    margin: "0 auto 18px",
-  },
-  successTitle: { fontSize: 22, fontWeight: 700, margin: "0 0 6px", color: "#fff" },
-  successSub: { fontSize: 13, color: "rgba(255,255,255,0.45)", margin: "0 0 24px", lineHeight: 1.6 },
-  verifiedPreview: {
-    display: "inline-flex", alignItems: "center", gap: 8,
-    background: "#333333",
-    border: "1px solid rgba(255,255,255,0.09)",
-    borderRadius: 40,
-    padding: "8px 16px",
-  },
-  verifiedUsername: { fontSize: 14, fontWeight: 700, color: "#fff" },
-  verifiedOnline: {
-    fontSize: 11, fontWeight: 600,
-    background: "rgba(34,197,94,0.15)",
-    color: "#22c55e", borderRadius: 20,
-    padding: "2px 8px",
-  },
-  verifiedBadge: {
-    display: "flex", alignItems: "center", gap: 4,
-    fontSize: 12, fontWeight: 600, color: "#22c55e",
-  },
-};

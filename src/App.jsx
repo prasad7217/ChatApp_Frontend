@@ -20,6 +20,7 @@ import NewPassword from './components/UserAuthentication/NewPassword'
 import FeedPage from './components/FeedPage'
 import PendingRequests from './components/User/PendingRequests'
 import RecievedRequests from './components/User/RecievedRequests'
+import Payment from './components/Payment'
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='/profile' element={<UserProfile />} />
             <Route path='/pending/requests' element={<PendingRequests />} />
             <Route path='/recieved/requests' element={<RecievedRequests/>} />
+            <Route path='/payment' element={<Payment/>}></Route>
             {/* </Route> */}
           </Route>
 
