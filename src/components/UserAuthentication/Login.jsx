@@ -34,9 +34,9 @@ const Login = () => {
     }
 
     return (
-        <div className="w-full bg-gray-700 flex items-center justify-center mt-12 py-8 ">
-            <div className="min-h-[77vh] xl:min-h-[55vh] 2xl:min-h-[79vh] flex items-center justify-center px-4">
-                <div className="xl:w-[420px] lg:w-[420px] md:w-[400px] w-[350px] max-w-md p-8 space-y-6 rounded-2xl bg-gray-800 shadow-2xl border border-slate-700/50 lg:my-4">
+        <div className="w-full bg-[#4A4A4A] flex items-center justify-center pt-12 py-8 ">
+            <div className="min-h-[77vh] xl:min-h-[55vh] 2xl:min-h-[78vh] flex items-center justify-center px-4">
+                <div className="xl:w-[420px] lg:w-[420px] md:w-[400px] w-[350px] max-w-md p-8 space-y-6 rounded-2xl bg-[#2A2A2A] shadow-2xl border border-slate-700/50 lg:my-4">
                     <div className="space-y-2 text-center">
                         <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
                         <p className="text-sm text-slate-400">Please enter your details to login</p>
@@ -50,7 +50,7 @@ const Login = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="name@company.com"
-                                className="flex h-12 w-full rounded-3xl border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
+                                className="flex h-12 w-full rounded-3xl border border-slate-700 bg-[#3A3A3A] px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
                         </div>
 
@@ -64,7 +64,7 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="*****"
-                                className="flex h-12 w-full rounded-3xl border border-slate-700 bg-slate-800/50 px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
+                                className="flex h-12 w-full rounded-3xl border border-slate-700 bg-[#3A3A3A] px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-red-600 transition-all"
                             />
                             <div className="absolute xl:top-[38px] lg:top-[36px] md:top-[36px] top-[36px] right-4 xl:right-4 text-[20px] text-white cursor-pointer" onClick={() => handleShowPass()}>
                                 {showPass ? <BsEyeSlash /> : <BsEye />}
