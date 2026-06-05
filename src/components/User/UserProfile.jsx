@@ -12,6 +12,9 @@ import { BASE_URL } from "../../Constants";
 import { Link, useSearchParams } from "react-router-dom";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { TbCreditCardPay } from "react-icons/tb";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { MdVerified } from "react-icons/md";
+import { FaUserEdit } from "react-icons/fa";
 
 const UserProfile = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,6 +32,7 @@ const UserProfile = ({ user }) => {
   const [closeModel, setCloseModel] = useState(false);
   const [userProfile, setUserProfile] = useState();
   const [requiredUser, setRequiredUser] = useState();
+  const [editProfile, setEditProfile] = useState(false);
 
   const [searParams] = useSearchParams();
   const currentUserId = searParams.get("id");
@@ -131,16 +135,18 @@ const UserProfile = ({ user }) => {
                     <img
                       src={userProfile?.profilePic}
                       alt="profile"
-                      className="3xl:w-28 3xl:h-28 w-24 h-24 rounded-full object-cover border-[3px] border-gray-600"
+                      className="3xl:w-28 3xl:h-28 w-24 h-24 rounded-full object-cover border-[3px] border-[#2563eb]"
                     />
-
-                    <button
+                    <div className="absolute top-0 right-0 w-8 h-8 bg-[#2563eb] p-1 rounded-full">
+                      <MdVerified className=" text-white font-bold text-[22px]" />
+                    </div>
+                    {/* <button
                       onClick={() => setIsEditing(true)}
                       className="absolute bottom-0.5 right-0.5 w-6 h-6 bg-red-500 rounded-full border-2 border-gray-700 flex items-center justify-center text-gray-300 text-xs hover:bg-red-600 transition"
                       aria-label="Change profile picture"
                     >
                       <ImCamera />
-                    </button>
+                    </button> */}
                   </div>
 
                   {/* <button
@@ -205,16 +211,20 @@ const UserProfile = ({ user }) => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between px-36 py-2 ">
-                  <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-red-600 hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
-                    <LiaUserEditSolid className="text-[20px] text-red-600"/>
-                    <p className="text-red-600">Edit Profile</p>
+                  <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl font-bold hover:bg-red-600/80 cursor-pointer transition-all duration-200 ease" onClick={() => setEditProfile(true)}>
+                    <FaUserEdit className="text-[20px]" />
+                    <p className="">Edit Profile</p>
                   </div>
-                  <Link to={"/payment"}>
-                  <div className="flex items-center justify-center gap-4 bg-[#3A3A3A] py-3 px-8 rounded-xl border border-[#5A5A5A] hover:bg-[#4A4A4A] cursor-pointer transition-all duration-200 ease">
-                    <TbCreditCardPay className="text-[20px]"/>
-                    <p className="text-gray-300">Subscribe</p>
-                  </div>
-                  </Link>
+                  {userProfile?.isSubscribed ?
+                    <div className="flex items-center justify-center gap-4 text-white bg-[#0078d4] font-bold py-3 px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
+                      <MdVerified className="text-[20px]" />
+                      <p className="">Subscribed</p>
+                    </div> : <Link to={"/payment"}>
+                      <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl hover:bg-red-600/80 cursor-pointer font-semibold transition-all duration-200 ease">
+                        <TbCreditCardPay className="text-[20px]" />
+                        <p className="text-gray-300">Subscribe</p>
+                      </div>
+                    </Link>}
                 </div>
               </div>
             </div>
@@ -236,7 +246,7 @@ const UserProfile = ({ user }) => {
                 },
                 { icon: <SlCalender />, text: "Joined March 2023" },
                 {
-                  icon: <FaRegSquareCheck className="text-green-600 " />,
+                  icon: <RiVerifiedBadgeFill className="text-green-600 " />,
                   text: "Email verified",
                 },
               ].map(({ icon, text }) => (
@@ -349,6 +359,43 @@ const UserProfile = ({ user }) => {
           close={setOpenModel}
           userId={handleReqUserPro}
         />
+      )}
+      {editProfile && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl w-full max-w-md shadow-lg">
+
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b">
+              <h2 className="text-sm font-semibold">Edit profile</h2>
+              <button onClick={() => setShowEditModal(false)}>✕</button>
+            </div>
+
+            {/* Avatar */}
+            <div className="flex flex-col items-center gap-3 pt-5">
+              <div className="relative">
+                <img src={userProfile?.profilePic} className="w-20 h-20 rounded-full object-cover" />
+                <label className="absolute bottom-0 right-0 bg-white border rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
+                  📷
+                  <input type="file" className="hidden" onChange={handleImageChange} />
+                </label>
+              </div>
+            </div>
+
+            {/* Fields */}
+            <div className="p-5 flex flex-col gap-4">
+              <input value={userProfile?.userName} onChange={e => setUserName(e.target.value)} placeholder="Username" className="w-full border rounded-lg px-3 h-10 text-sm" />
+              <input value={userProfile?.designation} onChange={e => setDesignation(e.target.value)} placeholder="Designation" className="w-full border rounded-lg px-3 h-10 text-sm" />
+              <textarea value={userProfile?.bio} onChange={e => setBio(e.target.value)} rows={3} placeholder="Bio" className="w-full border rounded-lg px-3 py-2 text-sm resize-none" />
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-3 p-4 border-t">
+              <button onClick={() => setShowEditModal(false)} className="px-4 h-9 rounded-lg border text-sm">Cancel</button>
+              <button  className="px-4 h-9 rounded-lg bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-sm font-medium">Save changes</button>
+            </div>
+
+          </div>
+        </div>
       )}
     </>
   );
