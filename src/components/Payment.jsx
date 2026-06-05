@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../Constants";
+import { useDispatch } from "react-redux";
+import { addUserProfile } from "./Redux/userSlices/userSlice";
 
 const features = [
   {
@@ -124,6 +126,8 @@ export default function Payment() {
   const [loading, setLoading] = useState(false);
   const [paid, setPaid] = useState(false);
 
+  const dispatch = useDispatch();
+
   // const plan = plans.find((p) => p.id === selected);
 
   const handlePay = () => {
@@ -144,7 +148,7 @@ export default function Payment() {
       console.log("pay", res);
       if (res?.data?.success) {
 
-        const {amount, currency, orderId, reciept, status, userId, notes} = res?.data?.paymentData
+        const { amount, currency, orderId, reciept, status, userId, notes } = res?.data?.paymentData
 
         const options = {
           key: res?.data?.key,
@@ -163,9 +167,25 @@ export default function Payment() {
           theme: {
             color: "#cc334d",
           },
+          handler: async function (responce) {
+            
+            const res = await axios.post(BASE_URL+"/payment/verify", {
+              rzp_order_id: responce?.razorpay_order_id,
+              rzp_payment_id: responce?.razorpay_payment_id,
+              rzp_signature: responce?.razorpay_signature
+            }, {withCredentials: true})
+
+            if(res?.data?.success){
+              dispatch(addUserProfile(res?.data?.data));
+              setPaid(true);
+            }
+
+          }
         };
+
         var rzp1 = new window.Razorpay(options);
-        rzp1.open();
+        const ret = rzp1.open();
+
       }
     } catch (error) {
       console.log("Error :", error);
@@ -174,7 +194,7 @@ export default function Payment() {
 
   if (paid) {
     return (
-      <div className="bg-[#2a2a2a] rounded-xl overflow-hidden font-sans text-slate-200 max-w-[620px] mx-auto border border-white/5">
+      <div className="3xl:h-[85vh] bg-[#2a2a2a] rounded-xl overflow-hidden font-sans text-slate-200 max-w-[620px] mx-auto border border-white/5">
         <div className="py-13 px-8 text-center">
           <div className="w-16 h-16 rounded-full bg-[#22c55e]/10 flex items-center justify-center mx-auto mb-4.5">
             <svg
@@ -215,7 +235,7 @@ export default function Payment() {
   }
 
   return (
-    <div className="bg-[#4a4a4a] rounded-xl overflow-hidden font-sans text-slate-200 max-w-full mx-auto border border-white/5 shadow-2xl sm:px-44 sm:mt-6">
+    <div className="sm:h-[84vh] bg-[#4a4a4a] rounded-xl overflow-hidden font-sans text-slate-200 max-w-full mx-auto border border-white/5 shadow-2xl sm:px-44 3xl:px-76 sm:mt-6">
       {/* ── Hero ── */}
       <div className="py-7 px-6">
         <p className="text-[14px] font-semibold tracking-widest text-[#e53e3e] mb-1.5 uppercase">
@@ -227,7 +247,7 @@ export default function Payment() {
         <p className="text-[14px] text-white/45 leading-relaxed">
           Join{" "}
           <strong className="text-slate-200 font-semibold">
-            2.4M+ subscribers
+            50+ subscribers
           </strong>{" "}
           and unlock the full Nexchat experience.
         </p>
@@ -266,7 +286,6 @@ export default function Payment() {
             // onClick={() => setSelected(p.id)}
             className={`flex-1 bg-[#333333] border rounded-xl py-3.5 px-4 cursor-pointer text-left relative transition-all duration-150`}
           >
-            <span className="absolute -top-2.5 right-3 text-[9px] font-bold bg-[#22c55e] text-emerald-950 rounded-full py-0.5 px-2 tracking-wide"></span>
 
             <p className="text-[11px] text-white/40 mb-1 font-medium"></p>
             <div className="flex items-baseline gap-1">
@@ -317,9 +336,8 @@ export default function Payment() {
         <button
           onClick={handlePayment}
           disabled={loading}
-          className={`flex items-center gap-2 py-[11px] px-[22px] rounded-lg bg-[#e53e3e] hover:bg-[#c53030] active:scale-[0.98] text-white text-sm font-semibold border-none cursor-pointer tracking-tight transition-all whitespace-nowrap ${
-            loading ? "opacity-60 cursor-not-allowed" : ""
-          }`}
+          className={`flex items-center gap-2 py-[11px] px-[22px] rounded-lg bg-[#e53e3e] hover:bg-[#c53030] active:scale-[0.98] text-white text-sm font-semibold border-none cursor-pointer tracking-tight transition-all whitespace-nowrap ${loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
         >
           {loading ? (
             <span className="w-4 h-4 border-2 border-white/30 border-top-white rounded-full inline-block animate-spin" />
