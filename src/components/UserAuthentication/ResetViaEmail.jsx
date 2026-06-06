@@ -31,8 +31,8 @@ const ForgotPassword = () => {
 
 
     return (
-        <div className="xl:h-[86vh] lg:h-[85vh] md:h-[85vh] h-[75vh] bg-gray-700 flex items-center justify-center p-8 font-sans">
-            <div className="bg-[#161d2e] rounded-2xl p-10 w-full max-w-sm">
+        <div className="xl:h-[86vh] lg:h-[85vh] md:h-[85vh] h-[75vh] bg-[#4a4a4a] flex items-center justify-center p-8 font-sans">
+            <div className="bg-[#2A2A2A] rounded-2xl p-10 w-full max-w-sm">
 
                 <div className="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-3">
                     <MdLockOpen size={28} className="text-[#e8344a]" />

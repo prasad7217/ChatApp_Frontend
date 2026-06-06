@@ -3,7 +3,7 @@ import { ImCamera } from "react-icons/im";
 import { TbMailFilled } from "react-icons/tb";
 import { GrLocationPin } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
-import { FaRegSquareCheck } from "react-icons/fa6";
+import { FaCheck, FaRegSquareCheck } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { BiSolidMapPin } from "react-icons/bi";
 import FollowersModal from "../utils/FollowersModal";
@@ -16,6 +16,7 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { MdVerified } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import EditUserProfile from "./EditUserProfile";
+import { features } from "../utils/rawData";
 
 const UserProfile = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,6 +35,8 @@ const UserProfile = ({ user }) => {
   const [userProfile, setUserProfile] = useState();
   const [requiredUser, setRequiredUser] = useState();
   const [editProfile, setEditProfile] = useState(false);
+
+  const [openModel1, setOpenModel1] = useState(false);
 
   const [searParams] = useSearchParams();
   const currentUserId = searParams.get("id");
@@ -217,13 +220,39 @@ const UserProfile = ({ user }) => {
                     <p className="">Edit Profile</p>
                   </div>
                   {userProfile?.isSubscribed ?
-                    <div className="flex items-center justify-center gap-4 text-white bg-[#0078d4] font-bold py-3 px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
-                      <MdVerified className="text-[20px]" />
-                      <p className="">Subscribed</p>
+                    <div className="relative" onMouseOver={() => setOpenModel1(true)} onMouseLeave={() => setOpenModel1(false)}>
+                      <div className="flex items-center justify-center gap-4 text-white bg-[#185FA5] font-bold py-3 px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
+                        <MdVerified className="text-[20px]" />
+                        <p className="">Nexchat Member</p>
+                      </div>
+                      {openModel1 && <ul className="absolute w-[250px] h-[220px] flex flex-col items-start gap-2 px-3 py-4 bg-[#4a4a4a] rounded-2xl mt-3">
+                        {features.map((each) => {
+                          return (
+                            <li className="flex items-center gap-4">
+                              <FaCheck className="text-green-600" />
+                              <p className="text-[15px] text-gray-300">{each?.title}</p>
+                            </li>
+                          )
+                        })}
+                        <div className="absolute -top-2 left-10 w-4 h-4 bg-[#4a4a4a] rotate-45"></div>
+                      </ul>}
                     </div> : <Link to={"/payment"}>
-                      <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl hover:bg-red-600/80 cursor-pointer font-semibold transition-all duration-200 ease">
-                        <TbCreditCardPay className="text-[20px]" />
-                        <p className="text-gray-300">Subscribe</p>
+                      <div className="relative" onMouseOver={() => setOpenModel1(true)} onMouseLeave={() => setOpenModel1(false)}>
+                        <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl hover:bg-red-600/80 cursor-pointer font-semibold transition-all duration-200 ease">
+                          <TbCreditCardPay className="text-[20px]" />
+                          <p className="text-gray-300">Subscribe</p>
+                        </div>
+                        {openModel1 && <ul className="absolute w-[250px] h-[220px] flex flex-col items-start gap-2 px-3 py-4 bg-[#4a4a4a] rounded-2xl mt-3">
+                        {features.map((each) => {
+                          return (
+                            <li className="flex items-center gap-4">
+                              <FaCheck className="text-green-600" />
+                              <p className="text-[15px] text-gray-300">{each?.title}</p>
+                            </li>
+                          )
+                        })}
+                        <div className="absolute -top-2 left-10 w-4 h-4 bg-[#4a4a4a] rotate-45"></div>
+                      </ul>}
                       </div>
                     </Link>}
                 </div>
@@ -362,8 +391,8 @@ const UserProfile = ({ user }) => {
         />
       )}
       {editProfile && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <EditUserProfile userProfile={userProfile} setEditProfile={setEditProfile}/>
+        <div className="fixed inset-0 bg-[#2A2A2A]/75 flex items-center justify-center z-50 p-4">
+          <EditUserProfile userProfile={userProfile} setEditProfile={setEditProfile} />
         </div>
       )}
     </>

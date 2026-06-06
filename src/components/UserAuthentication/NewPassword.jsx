@@ -46,9 +46,9 @@ const ResetPassword = () => {
 
     return (
 
-        <div className="xl:h-[86vh] lg:h-[85vh] md:h-[85vh] h-[80vh] bg-gray-700 flex items-center justify-center p-6 font-sans">
+        <div className="xl:h-[86vh] lg:h-[85vh] md:h-[85vh] h-[80vh] bg-[#4a4a4a] flex items-center justify-center p-6 font-sans">
 
-            <div className="w-full max-w-md bg-gray-800 backdrop-blur-xl border border-[#2b3548] rounded-[32px] p-6 shadow-2xl z-0">
+            <div className="w-full max-w-md bg-[#2a2a2a] backdrop-blur-xl border border-[#2b3548] rounded-[32px] p-6 shadow-2xl z-0">
 
                 {/* Top Icon */}
                 <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-3">
@@ -93,7 +93,7 @@ const ResetPassword = () => {
                             placeholder="Enter new password"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
-                            className="w-full bg-gray-800 border border-[#263041] rounded-2xl px-4 py-2.5 pr-14 text-white placeholder-[#475569] outline-none focus:border-red-600 transition-all duration-200"
+                            className="w-full bg-[#3a3a3a]/50 border border-[#263041] rounded-2xl px-4 py-2.5 pr-14 text-white placeholder-[#475569] outline-none focus:border-red-600 transition-all duration-200"
                         />
 
                         <button
@@ -151,7 +151,7 @@ const ResetPassword = () => {
                             placeholder="Confirm new password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="w-full bg-gray-800 border border-[#263041] rounded-2xl px-4 py-2.5 pr-14 text-white placeholder-[#475569] outline-none focus:border-red-600 transition-all duration-200"
+                            className="w-full bg-[#3a3a3a]/50 border border-[#263041] rounded-2xl px-4 py-2.5 pr-14 text-white placeholder-[#475569] outline-none focus:border-red-600 transition-all duration-200"
                         />
 
                         <button

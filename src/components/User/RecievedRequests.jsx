@@ -4,6 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { BASE_URL } from "../../Constants";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
+import { MdVerified } from "react-icons/md";
 
 const RecievedRequests = () => {
   const [buttonText, setButtonText] = useState("Accept");
@@ -47,9 +48,9 @@ const RecievedRequests = () => {
     }
   };
 
-  const handleRemoveRequest = async (id, status) =>{
+  const handleRemoveRequest = async (id, status) => {
     try {
-      const res = await axios.post(BASE_URL + "/request/response/" + id, {status}, {withCredentials: true});
+      const res = await axios.post(BASE_URL + "/request/response/" + id, { status }, { withCredentials: true });
       console.log("Reject :", res)
     } catch (error) {
       console.log("Error :", error)
@@ -77,18 +78,27 @@ const RecievedRequests = () => {
             {/* Top Section */}
             <div className="flex items-center gap-4">
               {/* Profile Image */}
-              <img
-                src={user?.profilePic}
-                alt={user?.userName}
-                className="w-16 h-16 rounded-full object-cover border-2 border-red-500"
-              />
-
+              <div className="relative">
+                <img
+                  src={user?.profilePic}
+                  alt={user?.userName}
+                  className={`w-16 h-16 rounded-full object-cover ${user?.isSubscribed && "border border-2 border-[#185FA5]"}`}
+                />
+                {user?.isSubscribed && <div className="absolute -top-0 -right-1 w-7 h-7 flex items-center justify-center bg-[#185FA5] p-0.5 rounded-full">
+                  <MdVerified className=" text-white font-bold text-[18px]" />
+                </div>}
+              </div>
               {/* User Details */}
               <div className="flex flex-col">
-                <h2 className="text-white text-lg font-semibold">
-                  {user?.userName}
-                </h2>
-
+                <div className="flex items-center justify-center gap-4">
+                  <h2 className="text-white text-lg font-semibold">
+                    {user?.userName}
+                  </h2>
+                  {user?.isSubscribed && <div className="inline-flex items-center gap-1.5 bg-[#185FA5] text-[#B5D4F4] text-xs font-medium px-4 py-1.5 rounded-full">
+                    <MdVerified className="text-sm" />
+                    <p className="m-0">Nexchat Member</p>
+                  </div>}
+                </div>
                 <p className="text-xs text-gray-500 mt-1">
                   {user?.designation}
                 </p>
@@ -96,7 +106,7 @@ const RecievedRequests = () => {
             </div>
             {/* Buttons */}
             <div className="flex flex-col items-center gap-5 mt-">
-              <RxCross2 className="text-gray-400 text-[16px] font-semibold ml-10 hover:text-gray-400/50 transition-all duration-200 ease cursor-pointer" onClick={() => handleRemoveRequest(user?._id, "rejected")}/>
+              <RxCross2 className="text-gray-400 text-[16px] font-semibold ml-10 hover:text-gray-400/50 transition-all duration-200 ease cursor-pointer" onClick={() => handleRemoveRequest(user?._id, "rejected")} />
               {/* Accept Button */}
               <button
                 onClick={() => {
