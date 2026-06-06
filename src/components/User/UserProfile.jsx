@@ -221,7 +221,7 @@ const UserProfile = ({ user }) => {
                   </div>
                   {userProfile?.isSubscribed ?
                     <div className="relative" onMouseOver={() => setOpenModel1(true)} onMouseLeave={() => setOpenModel1(false)}>
-                      <div className="flex items-center justify-center gap-4 text-white bg-[#185FA5] font-bold py-3 px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
+                      <div className="flex items-center justify-center gap-4 text-white bg-gradient-to-r from-[#2563eb] via-[#2563eb] to-gray-400 font-bold py-3 px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
                         <MdVerified className="text-[20px]" />
                         <p className="">Nexchat Member</p>
                       </div>

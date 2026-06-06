@@ -177,7 +177,7 @@ export default function FollowersModal({ user, state, close }) {
                     <p className="text-sm font-medium text-white flex items-center gap-2">
                       {user1.userName}
                       {"  "}
-                      {user1?.isSubscribed && <p className="flex items-center justify-center gap-1 bg-[#2563eb] py-0.5 px-2 rounded-full">
+                      {user1?.isSubscribed && <p className="flex items-center justify-center gap-1 bg-gradient-to-r from-[#2563eb] via-[#2563eb] to-gray-400 py-0.5 px-2 rounded-full">
                         <MdVerified className="text-[12px] text-white" />
                         <span className="text-[12px] text-white font-normal">Nextchat Member</span>
                       </p>}
@@ -225,7 +225,7 @@ export default function FollowersModal({ user, state, close }) {
                     <p className="text-sm font-medium text-white flex items-center gap-2">
                       {user1.userName}
                       {"  "}
-                      {user1?.isSubscribed && <span className="flex items-center justify-center gap-1 bg-[#2563eb] py-0.5 px-2 rounded-full">
+                      {user1?.isSubscribed && <span className="flex items-center justify-center gap-1 bg-gradient-to-r from-[#2563eb] via-[#2563eb] to-gray-400 py-0.5 px-2 rounded-full">
                         <MdVerified className="text-[12px] text-white" />
                         <span className="text-[12px] text-white font-normal">Nextchat Member</span>
                       </span>}
