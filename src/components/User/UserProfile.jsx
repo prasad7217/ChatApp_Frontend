@@ -15,6 +15,7 @@ import { TbCreditCardPay } from "react-icons/tb";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { MdVerified } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
+import EditUserProfile from "./EditUserProfile";
 
 const UserProfile = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -135,11 +136,11 @@ const UserProfile = ({ user }) => {
                     <img
                       src={userProfile?.profilePic}
                       alt="profile"
-                      className="3xl:w-28 3xl:h-28 w-24 h-24 rounded-full object-cover border-[3px] border-[#2563eb]"
+                      className={`3xl:w-28 3xl:h-28 w-24 h-24 rounded-full object-cover ${userProfile?.isSubscribed ? "border-[4px] border-[#2563eb]" : "border-[3px] border-gray-600"}`}
                     />
-                    <div className="absolute top-0 right-0 w-8 h-8 bg-[#2563eb] p-1 rounded-full">
+                    {userProfile?.isSubscribed && <div className="absolute top-0 right-0 w-8 h-8 bg-[#2563eb] p-1 rounded-full">
                       <MdVerified className=" text-white font-bold text-[22px]" />
-                    </div>
+                    </div>}
                     {/* <button
                       onClick={() => setIsEditing(true)}
                       className="absolute bottom-0.5 right-0.5 w-6 h-6 bg-red-500 rounded-full border-2 border-gray-700 flex items-center justify-center text-gray-300 text-xs hover:bg-red-600 transition"
@@ -362,39 +363,7 @@ const UserProfile = ({ user }) => {
       )}
       {editProfile && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl w-full max-w-md shadow-lg">
-
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-sm font-semibold">Edit profile</h2>
-              <button onClick={() => setShowEditModal(false)}>✕</button>
-            </div>
-
-            {/* Avatar */}
-            <div className="flex flex-col items-center gap-3 pt-5">
-              <div className="relative">
-                <img src={userProfile?.profilePic} className="w-20 h-20 rounded-full object-cover" />
-                <label className="absolute bottom-0 right-0 bg-white border rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
-                  📷
-                  <input type="file" className="hidden" onChange={handleImageChange} />
-                </label>
-              </div>
-            </div>
-
-            {/* Fields */}
-            <div className="p-5 flex flex-col gap-4">
-              <input value={userProfile?.userName} onChange={e => setUserName(e.target.value)} placeholder="Username" className="w-full border rounded-lg px-3 h-10 text-sm" />
-              <input value={userProfile?.designation} onChange={e => setDesignation(e.target.value)} placeholder="Designation" className="w-full border rounded-lg px-3 h-10 text-sm" />
-              <textarea value={userProfile?.bio} onChange={e => setBio(e.target.value)} rows={3} placeholder="Bio" className="w-full border rounded-lg px-3 py-2 text-sm resize-none" />
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-end gap-3 p-4 border-t">
-              <button onClick={() => setShowEditModal(false)} className="px-4 h-9 rounded-lg border text-sm">Cancel</button>
-              <button  className="px-4 h-9 rounded-lg bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-sm font-medium">Save changes</button>
-            </div>
-
-          </div>
+          <EditUserProfile userProfile={userProfile} setEditProfile={setEditProfile}/>
         </div>
       )}
     </>

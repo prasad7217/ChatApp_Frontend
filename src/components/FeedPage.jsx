@@ -34,7 +34,7 @@ const dispatch = useDispatch();
 
         const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
 
-        dispatch(addAllUsers(allRes?.data?.suggestions))
+        // dispatch(addAllUsers(allRes?.data?.suggestions))
 
       }
     } catch (error) {
