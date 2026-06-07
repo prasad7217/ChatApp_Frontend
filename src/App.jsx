@@ -21,6 +21,8 @@ import FeedPage from './components/FeedPage'
 import PendingRequests from './components/User/PendingRequests'
 import RecievedRequests from './components/User/RecievedRequests'
 import Payment from './components/Payment'
+import ChatPage from './components/User/ChatPaga'
+import ChatArea from './components/User/ChatArea'
 
 function App() {
 
@@ -43,6 +45,8 @@ function App() {
             <Route path='/pending/requests' element={<PendingRequests />} />
             <Route path='/recieved/requests' element={<RecievedRequests/>} />
             <Route path='/payment' element={<Payment/>}></Route>
+            <Route path='/chat/:targetUserId' element={<ChatPage/>}></Route>
+            <Route path='/chatarea' element={<ChatArea/>}></Route>
             {/* </Route> */}
           </Route>
 

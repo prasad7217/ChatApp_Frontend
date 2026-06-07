@@ -214,7 +214,7 @@ const UserProfile = ({ user }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between px-36 py-2 ">
+                <div className="flex items-center justify-between sm:px-28 3xl:px-36 py-2 ">
                   <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl font-bold hover:bg-red-600/80 cursor-pointer transition-all duration-200 ease" onClick={() => setEditProfile(true)}>
                     <FaUserEdit className="text-[20px]" />
                     <p className="">Edit Profile</p>

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { MdVerified } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function FollowersModal({ user, state, close }) {
   // const [activeTab, setActiveTab] = useState("followers");
@@ -192,9 +193,9 @@ export default function FollowersModal({ user, state, close }) {
                       {user1.designation}
                     </p>
                   </div>
-                  {fil?.length > 0 && user1?.isSubscribed === true ? <button className="px-4 py-1.5 rounded-lg bg-[#e53e3e] text-white text-xs font-semibold hover:bg-[#c53030] transition cursor-pointer">
+                  {fil?.length > 0 && user1?.isSubscribed === true ? <Link to={'/chat/'+user1._id}><button className="px-4 py-1.5 rounded-lg bg-[#e53e3e] text-white text-xs font-semibold hover:bg-[#c53030] transition cursor-pointer">
                     Message
-                  </button> :
+                  </button></Link> :
                     <button className="px-4 py-1.5 rounded-lg border border-white/20 text-white/70 text-xs font-medium hover:border-red-500/50 hover:text-red-400 transition cursor-not-allowed">
                       Following
                     </button>}
