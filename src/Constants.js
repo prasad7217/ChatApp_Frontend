@@ -7,8 +7,10 @@ import io from "socket.io-client";
 //In localhost 
 export const BASE_URL = window.location.hostname === "localhost" ? "http://localhost:7217" : "/api";
 
+// let socketInstance = null;
+
 export const getSocket = () =>{
 
-    return io(BASE_URL);
-
+     return io(BASE_URL);
+    
 }
