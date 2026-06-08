@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 
 const ChatPage = () => {
   const [message, setMessage] = useState();
+  const [recieveMsg, setRecieveMsg] = useState([]);
 
   const user = useSelector((store) => store.user.profile);
   const { targetUserId } = useParams();
@@ -19,8 +20,6 @@ const ChatPage = () => {
 
     const socket = getSocket();
 
-    console.log(socket)
-
     if (userId) {
       socket.emit("joinChat", {
         userName: user?.userName,
@@ -30,8 +29,12 @@ const ChatPage = () => {
     }
 
     socket.on("recieveMessage", (data) => {
-      console.log("recieveMessage", data);
+      setRecieveMsg(pre => [...pre, data])
     });
+
+    socket.on("error", (data) => {
+      console.log("error", data)
+    })
 
     return () => {
       socket.disconnect();
@@ -59,7 +62,9 @@ const ChatPage = () => {
         <div className="h-[15%] bg-[#3a3a3a]">
           <p className="text-white">{targetUserId}</p>
         </div>
-        <div className="h-[78%] "></div>
+        <div className="h-[78%] text-white">
+          {recieveMsg?.map(each => <p>{each?.message}</p>)}
+        </div>
         <div className="flex items-center justify-center gap-2 px-4">
           <input
             type="text"
