@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const ChatPage = () => {
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
   const user = useSelector((store) => store.user.profile);
@@ -29,7 +29,7 @@ const ChatPage = () => {
     }
 
     socket.on("recieveMessage", (data) => {
-      setRecieveMsg(pre => [...pre, data])
+      console.log("recieveMessage", data)
     });
 
     socket.on("error", (data) => {
@@ -37,13 +37,13 @@ const ChatPage = () => {
     })
 
     return () => {
-      socket.disconnect();
+      socket.off("recieveMessage"); // ✅ only remove listeners
+      socket.off("error");
     }
 
-  }, [user]);
+  }, [userId, targetUserId]);
 
   const sendMessage = () => {
-    console.log(message);
     const socket = getSocket();
 
     if (!message.trim()) return;
@@ -63,7 +63,7 @@ const ChatPage = () => {
           <p className="text-white">{targetUserId}</p>
         </div>
         <div className="h-[78%] text-white">
-          {recieveMsg?.map(each => <p>{each?.message}</p>)}
+          {recieveMsg?.map((each, id) => {<p key={id}>{each?.message}</p>})}
         </div>
         <div className="flex items-center justify-center gap-2 px-4">
           <input
