@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getSocket } from "../../Constants";
+import { BASE_URL, getSocket } from "../../Constants";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const ChatPage = () => {
   const [message, setMessage] = useState("");
@@ -12,11 +13,32 @@ const ChatPage = () => {
 
   const userId = user?._id;
 
+  const fetchMessages = async (id) => {
+
+    try {
+
+      const res = await axios.post(BASE_URL + "/chat/" + id, {}, { withCredentials: true })
+
+      if (res?.data?.success) {
+
+        const newMsgArr = res?.data?.data?.message;
+
+        setRecieveMsg(newMsgArr)
+
+      }
+    } catch (error) {
+      console.log("Error:", error)
+    }
+
+  }
+
   useEffect(() => {
 
     if (!userId || !targetUserId) {
       return;
     }
+
+    fetchMessages(targetUserId);
 
     const socket = getSocket();
 
@@ -29,7 +51,7 @@ const ChatPage = () => {
     }
 
     socket.on("recieveMessage", (data) => {
-      console.log("recieveMessage", data)
+      setRecieveMsg(data?.message)
     });
 
     socket.on("error", (data) => {
@@ -63,7 +85,13 @@ const ChatPage = () => {
           <p className="text-white">{targetUserId}</p>
         </div>
         <div className="h-[78%] text-white">
-          {recieveMsg?.map((each, id) => {<p key={id}>{each?.message}</p>})}
+          {recieveMsg?.map((each, id) => {
+            // console.log("each", each)
+            return (
+              <p key={id}>{each?.text}</p>
+            )})
+            
+            }
         </div>
         <div className="flex items-center justify-center gap-2 px-4">
           <input
