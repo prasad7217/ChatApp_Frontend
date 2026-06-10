@@ -84,11 +84,11 @@ const ChatPage = () => {
         <div className="h-[15%] bg-[#3a3a3a]">
           <p className="text-white">{targetUserId}</p>
         </div>
-        <div className="h-[78%] text-white">
+        <div className="h-[78%] text-white flex flex-col gap-4 overflow-y-auto chatArea px-4 py-3">
           {recieveMsg?.map((each, id) => {
             // console.log("each", each)
             return (
-              <p key={id}>{each?.text}</p>
+              <p key={id} className={`${each?.senderId === userId ? "text-end" : ""}`}>{each?.text}</p>
             )})
             
             }
