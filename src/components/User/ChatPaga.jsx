@@ -7,28 +7,36 @@ import { PiPaperclipFill, PiVideoCameraFill } from "react-icons/pi";
 import { IoMdCall } from "react-icons/io";
 import { MdEmojiEmotions } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
+import WelcomeChat from "../utils/WelcomeChat";
 
-const ChatPage = () => {
+const ChatPage = (value) => {
   const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
   const user = useSelector((store) => store.user.profile);
-  const { targetUserId } = useParams();
+  const idParam = useParams();
+
+  let targetUserId;
+
+  if (idParam?.targetUserId !== ":") {
+    targetUserId = idParam?.targetUserId;
+  } else {
+    targetUserId = value?.chatUserId;
+  }
 
   const userId = user?._id;
 
   const fetchMessages = async (id) => {
-
+    console.log("to :", id)
     try {
 
       const res = await axios.post(BASE_URL + "/chat/" + id, {}, { withCredentials: true })
-
+// console.log("to :", res)
       if (res?.data?.success) {
-
         const newMsgArr = res?.data?.data?.message;
-
         setRecieveMsg(newMsgArr)
-
+      }else{
+        setRecieveMsg([])
       }
     } catch (error) {
       console.log("Error:", error)
@@ -68,7 +76,7 @@ const ChatPage = () => {
     }
 
   }, [userId, targetUserId]);
-
+  console.log("init :", targetUserId)
   const sendMessage = () => {
     const socket = getSocket();
 
@@ -119,10 +127,8 @@ const ChatPage = () => {
         </div>
       </div>
       <div className="3xl:h-[80%] sm:h-[90%] w-full">
-        <div className=" bg-[#3a3a3a]">
-          <p className="text-white">{targetUserId}</p>
-        </div>
-        <div className="h-[78%] text-white flex flex-col gap-4 overflow-y-auto chatArea px-4 py-3">
+        
+        { recieveMsg.length > 0 ? <div className="h-[78%] text-white flex flex-col gap-4 overflow-y-auto chatArea px-4 py-3">
           {recieveMsg?.map((each, id) => {
             // console.log("each", each)
             return (
@@ -131,7 +137,7 @@ const ChatPage = () => {
           })
 
           }
-        </div>
+        </div> : <WelcomeChat/>}
 
       </div>
       <div className="flex items-center justify-center gap-2 px-4 py-3 bg-[#2e2e2e] border-t border-white/5">

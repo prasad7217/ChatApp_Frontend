@@ -193,7 +193,7 @@ export default function FollowersModal({ user, state, close }) {
                       {user1.designation}
                     </p>
                   </div>
-                  {fil?.length > 0 && user1?.isSubscribed === true ? <Link to={'/chat/'+user1._id}><button className="px-4 py-1.5 rounded-lg bg-[#e53e3e] text-white text-xs font-semibold hover:bg-[#c53030] transition cursor-pointer">
+                  {fil?.length > 0 && user1?.isSubscribed === true ? <Link to={'/chatarea/'+user1._id}><button className="px-4 py-1.5 rounded-lg bg-[#e53e3e] text-white text-xs font-semibold hover:bg-[#c53030] transition cursor-pointer">
                     Message
                   </button></Link> :
                     <button className="px-4 py-1.5 rounded-lg border border-white/20 text-white/70 text-xs font-medium hover:border-red-500/50 hover:text-red-400 transition cursor-not-allowed">

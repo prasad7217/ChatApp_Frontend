@@ -45,8 +45,8 @@ function App() {
             <Route path='/pending/requests' element={<PendingRequests />} />
             <Route path='/recieved/requests' element={<RecievedRequests/>} />
             <Route path='/payment' element={<Payment/>}></Route>
-            <Route path='/chat/:targetUserId' element={<ChatPage/>}></Route>
-            <Route path='/chatarea' element={<ChatArea/>}></Route>
+            {/* <Route path='/chat/:targetUserId' element={<ChatPage/>}></Route> */}
+            <Route path='/chatarea/:targetUserId' element={<ChatArea/>}></Route>
             {/* </Route> */}
           </Route>
 

@@ -108,7 +108,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center justify-center 3xl:gap-16 2xl:gap-16 xl:gap-16 lg:gap-16 md:gap-14 gap-8">
-        {user && <><Link to={'/chatarea'}><div className="relative">
+        {user && <><Link to={'/chatarea/:'}><div className="relative">
           <BsMessenger className="text-[22px] text-gray-300" />
           <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-1 rounded-full bg-red-600">9+</span>
         </div></Link>

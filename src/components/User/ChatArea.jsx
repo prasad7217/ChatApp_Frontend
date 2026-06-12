@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsChatRightTextFill } from "react-icons/bs";
 import { LuSearch } from "react-icons/lu";
 import { useSelector } from "react-redux";
@@ -6,6 +6,7 @@ import ChatPage from "./ChatPaga";
 
 const ChatArea = () => {
 
+  const [userId, setUserId] = useState(null);
   const user = useSelector(store => store.user.profile);
 
   return (
@@ -34,8 +35,9 @@ const ChatArea = () => {
         <div className="flex flex-col gap-0.5 px-2 py-2 overflow-y-auto max-h-[420px]">
           {user?.mutualfrds?.map((each) => (
             <div
-              key={each._id}
+              key={each?._id}
               className="flex items-center gap-5 px-3 py-2.5 hover:bg-[#4a4a4a] dark:hover:bg-neutral-800 transition-colors duration-150"
+              onClick={() => setUserId(each?._id)}
             >
               {/* Avatar with online indicator */}
               <div className="relative flex-shrink-0">
@@ -65,8 +67,8 @@ const ChatArea = () => {
           ))}
         </div>
       </div>
-      <div className="sm:w-[71%] sm:min-h-full 3xl:min-h-full bg-[#5a5a5a]">
-        <ChatPage />
+      <div className="sm:w-[71%] 3xl:w-[71%] sm:min-h-full 3xl:min-h-full bg-[#5a5a5a]">
+        <ChatPage chatUserId={userId}/>
       </div>
     </div>
   )
