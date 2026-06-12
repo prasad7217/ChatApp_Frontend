@@ -13,7 +13,7 @@ import { welcomeCards } from "./defaults";
    Welcome screen shown when no chat is open
 ───────────────────────────────────────── */
 const WelcomeChat = () => (
-  <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 py-10 text-center">
+  <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 py-10 text-center">
 
     {/* Pulsing icon */}
     <div className="w-20 h-20 rounded-full bg-red-600/15 border-2 border-red-500/40 flex items-center justify-center animate-pulse">
@@ -51,7 +51,7 @@ const WelcomeChat = () => (
     </div> */}
 
     {/* Tip bar */}
-    <div className="flex items-start gap-2.5 bg-[#484848] border border-white/[0.07] rounded-xl px-4 py-3 max-w-sm w-full text-left">
+    <div className="flex items-start gap-2.5 bg-[#484848] border border-white/[0.07] rounded-xl px-4 py-3 max-w-sm w-full text-left mt-10">
       <svg className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round"
           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

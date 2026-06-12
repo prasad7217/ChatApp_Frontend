@@ -8,8 +8,10 @@ import { IoMdCall } from "react-icons/io";
 import { MdEmojiEmotions } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import WelcomeChat from "../utils/WelcomeChat";
+import EmptyChatState from "../utils/EmptyChatState";
 
-const ChatPage = (value) => {
+const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
+
   const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
@@ -21,7 +23,7 @@ const ChatPage = (value) => {
   if (idParam?.targetUserId !== ":") {
     targetUserId = idParam?.targetUserId;
   } else {
-    targetUserId = value?.chatUserId;
+    targetUserId = chatUserId;
   }
 
   const userId = user?._id;
@@ -31,25 +33,26 @@ const ChatPage = (value) => {
     try {
 
       const res = await axios.post(BASE_URL + "/chat/" + id, {}, { withCredentials: true })
-// console.log("to :", res)
+      // console.log("to :", res)
       if (res?.data?.success) {
         const newMsgArr = res?.data?.data?.message;
         setRecieveMsg(newMsgArr)
-      }else{
-        setRecieveMsg([])
       }
     } catch (error) {
-      console.log("Error:", error)
+      if (!error?.response?.data?.success) {
+        setRecieveMsg("")
+      }
+
     }
 
   }
-  console.log(recieveMsg)
+  // console.log(recieveMsg)
   useEffect(() => {
-
+    console.log("efeet before", targetUserId)
     if (!userId || !targetUserId) {
       return;
     }
-
+    console.log("efeet after", targetUserId)
     fetchMessages(targetUserId);
 
     const socket = getSocket();
@@ -63,6 +66,7 @@ const ChatPage = (value) => {
     }
 
     socket.on("recieveMessage", (data) => {
+      console.log("recieveMessage", data)
       setRecieveMsg(data?.message)
     });
 
@@ -76,7 +80,7 @@ const ChatPage = (value) => {
     }
 
   }, [userId, targetUserId]);
-  console.log("init :", targetUserId)
+  // console.log("init :", targetUserId)
   const sendMessage = () => {
     const socket = getSocket();
 
@@ -88,6 +92,7 @@ const ChatPage = (value) => {
       userId,
       targetUserId,
     });
+    setMessage("")
   };
 
   return (
@@ -127,17 +132,52 @@ const ChatPage = (value) => {
         </div>
       </div>
       <div className="3xl:h-[80%] sm:h-[90%] w-full">
-        
-        { recieveMsg.length > 0 ? <div className="h-[78%] text-white flex flex-col gap-4 overflow-y-auto chatArea px-4 py-3">
+
+        {recieveMsg.length > 0 ? <div className="h-[78%] text-white flex flex-col gap-4 overflow-y-auto chatArea px-4 py-3">
           {recieveMsg?.map((each, id) => {
-            // console.log("each", each)
+            console.log("each", each?.senderId?._id.toString() === userId.toString())
             return (
-              <p key={id} className={`${each?.senderId === userId ? "text-end" : ""}`}>{each?.text}</p>
+              <div
+                key={each?.id}
+                className={`flex items-end gap-2 ${each?.senderId?._id.toString() === userId.toString() ? "flex-row-reverse" : "flex-row"}`}
+              >
+                {/* Avatar */}
+                <div className="shrink-0">
+                  <img
+                    alt="Tailwind CSS chat bubble component"
+                    src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                    className="w-9 h-9 rounded-full object-cover"
+                  />
+                </div>
+
+                <div className={`flex flex-col gap-1 max-w-[65%] ${each?.senderId?._id.toString() === userId.toString() ? "items-end" : "items-start"}`}>
+
+                  {/* Header */}
+                  <div className="flex items-center gap-1.5 px-1">
+                    <span className="text-xs font-medium text-neutral-300">Obi-Wan Kenobi</span>
+                    <time className="text-[10px] text-neutral-500">12:45</time>
+                  </div>
+
+                  {/* Bubble */}
+                  <div className={`px-4 py-2 rounded-2xl text-sm leading-relaxed break-words
+      ${each?.senderId?._id.toString() === userId.toString()
+                      ? "bg-red-600 text-white rounded-br-sm"
+                      : "bg-[#484848] text-neutral-200 rounded-bl-sm border border-white/[0.07]"
+                    }`}
+                  >
+                    {each?.text}
+                  </div>
+
+                  {/* Footer */}
+                  <div className="text-[10px] text-neutral-500 px-1">Delivered</div>
+
+                </div>
+              </div>
             )
           })
 
           }
-        </div> : <WelcomeChat/>}
+        </div> : <WelcomeChat />}
 
       </div>
       <div className="flex items-center justify-center gap-2 px-4 py-3 bg-[#2e2e2e] border-t border-white/5">
@@ -155,7 +195,9 @@ const ChatPage = (value) => {
           <input
             type="text"
             placeholder="Type a message…"
+            value={message}
             className="flex-1 bg-transparent text-sm text-neutral-200 placeholder:text-neutral-500 outline-none px-1"
+            onChange={(e) => setMessage(e.target.value)}
           />
 
           {/* Emoji button */}
@@ -170,6 +212,7 @@ const ChatPage = (value) => {
           <button
             aria-label="Send"
             className="flex items-center justify-center w-9 h-9 rounded-full bg-red-600 hover:bg-red-500 active:scale-95 transition-all duration-150 flex-shrink-0"
+            onClick={sendMessage}
           >
             <IoSend className="text-[16px] text-white" />
           </button>
