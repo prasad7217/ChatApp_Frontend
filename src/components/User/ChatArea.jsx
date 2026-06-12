@@ -12,11 +12,11 @@ const ChatArea = () => {
   const user = useSelector(store => store.user.profile);
 
   return (
-    <div className="sm:h-[84vh] 3xl:h-[86vh] w-full bg-[#4a4a4a] pt-6 flex">
-      <div className="3xl:w-[4%] 3xl:min-h-full bg-[#3a3a3a] flex justify-center py-10">
+    <div className="sm:h-[79vh] 3xl:h-[86vh] w-full bg-[#4a4a4a] overflow-hidden flex mt-6">
+      <div className="3xl:w-[4%] sm:w-[4%] 3xl:min-h-full bg-[#3a3a3a] flex justify-center py-10">
         <BsChatRightTextFill className="text-center text-gray-300" />
       </div>
-      <div className="3xl:w-[25%] bg-[#3a3a3a]/45 3xl:min-h-full">
+      <div className="3xl:w-[25%] sm:w-[25%] bg-[#3a3a3a]/45 3xl:min-h-0 sm:min-h-auto">
         <div className="w-full flex items-center justify-center py-10 px-4">
           <div className="relative w-full max-w-lg">
 
@@ -25,7 +25,7 @@ const ChatArea = () => {
             <input
               type="text"
               placeholder="Search anything…"
-              className="w-full h-12 pl-11 pr-16 text-sm rounded-full border border-neutral-200 dark:border-neutral-700 bg-[#4a4a4a] dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 placeholder:text-neutral-400 outline-none focus:border-neutral-400 dark:focus:border-neutral-500 focus:ring-2 focus:ring-violet-400/20 transition-all duration-150"
+              className="w-full h-12 pl-11 pr-16 text-sm rounded-full border border-neutral-200 dark:border-neutral-700 bg-[#4a4a4a] text-neutral-800 dark:text-neutral-100 placeholder:text-neutral-400 outline-none focus:border-neutral-400 dark:focus:border-neutral-500 focus:ring-2 focus:ring-violet-400/20 transition-all duration-150"
             />
 
             <kbd className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] text-neutral-400 font-mono bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded px-1.5 py-0.5 pointer-events-none">
@@ -34,11 +34,11 @@ const ChatArea = () => {
 
           </div>
         </div>
-        <div className="flex flex-col gap-0.5 px-2 py-2 overflow-y-auto max-h-[420px]">
+        <div className="flex flex-col gap-0.5 px-2 py-2 overflow-auto max-h-[420px]">
           {user?.mutualfrds?.map((each) => (
             <div
               key={each?._id}
-              className="flex items-center gap-5 px-3 py-2.5 hover:bg-[#4a4a4a] dark:hover:bg-neutral-800 transition-colors duration-150"
+              className="flex items-center gap-5 px-3 py-2.5 hover:bg-[#4a4a4a] transition-colors duration-150"
               onClick={() => {
                 setUserId(each?._id)
                 // setNewChat(false)
