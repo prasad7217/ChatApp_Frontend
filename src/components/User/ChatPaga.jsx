@@ -107,8 +107,8 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
           <div className="relative flex-shrink-0">
             <img
               src={
-                user?.profilePic
-                  ? user?.profilePic
+                recieveMsg[0]?.targetUserId?.profilePic
+                  ? recieveMsg[0]?.targetUserId?.profilePic
                   : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
               }
               alt="profilePic"
@@ -118,7 +118,7 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-md font-medium text-gray-200 truncate">
-              {user?.userName}
+              {recieveMsg[0]?.targetUserId?.userName}
             </p>
             <p className="text-xs text-neutral-400 truncate">designation</p>
           </div>
