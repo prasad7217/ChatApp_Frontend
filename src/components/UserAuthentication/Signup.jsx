@@ -59,7 +59,6 @@ const SignUp = () => {
             setProfilePic(file);
             setProfilePicPreview(URL.createObjectURL(file))
         }
-
     }
 
     return (

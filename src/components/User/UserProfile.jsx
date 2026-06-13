@@ -112,7 +112,7 @@ const UserProfile = ({ user }) => {
 
   return (
     <>
-      <div className="3xl:min-h-[86vh] 2xl:min-h-[83vh] xl:min-h-[78vh] lg:min-h-[78vh] md:min-h-[78vh] bg-[#3A3A3A] text-white flex items-start 2xl:px-48 3xl:px-84">
+      <div className="min-h-screen bg-[#3A3A3A] text-white flex items-start px-3 sm:px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-72">
         {/* ── Main content ── */}
         <div className="w-full px-4 py-10 mt-10">
           {/* Cover */}
@@ -131,15 +131,15 @@ const UserProfile = ({ user }) => {
 
           {/* Profile card */}
           <div className="px-6 pb-6">
-            <div className="flex items-center gap-20">
-              <div>
+            <div className="flex flex-col xl:flex-row items-center xl:items-start gap-8 xl:gap-16">
+              <div className="w-full xl:w-auto text-center xl:text-left">
                 {/* Avatar row */}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex justify-center xl:justify-start mb-6">
                   <div className="relative">
                     <img
                       src={userProfile?.profilePic}
                       alt="profile"
-                      className={`3xl:w-28 3xl:h-28 w-24 h-24 rounded-full object-cover ${userProfile?.isSubscribed ? "border-[4px] border-[#2563eb]" : "border-[3px] border-gray-600"}`}
+                      className={`w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-full object-cover ${userProfile?.isSubscribed ? "border-[4px] border-[#2563eb]" : "border-[3px] border-gray-600"}`}
                     />
                     {userProfile?.isSubscribed && <div className="absolute top-0 right-0 w-8 h-8 bg-[#2563eb] p-1 rounded-full">
                       <MdVerified className=" text-white font-bold text-[22px]" />
@@ -161,7 +161,7 @@ const UserProfile = ({ user }) => {
                                 </button> */}
                 </div>
 
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex flex-wrap justify-center xl:justify-start items-center gap-2 mb-1">
                   <h1 className="text-xl font-medium text-white/90">
                     {userProfile?.userName}
                   </h1>
@@ -174,23 +174,23 @@ const UserProfile = ({ user }) => {
                   {userProfile?.designation}
                 </p>
 
-                <p className="text-sm text-white/55 leading-relaxed mb-5">
+                <p className="text-sm text-white/55 leading-relaxed mb-5 max-w-xl mx-auto xl:mx-0">
                   {userProfile?.bio}
                 </p>
               </div>
               <div className="w-full flex flex-col ">
                 <div
-                  className="w-full grid grid-cols-3 rounded-lg overflow-hidden mb-5 bg-[#4A4A4A]"
+                  className="w-full grid grid-cols-1 sm:grid-cols-3 rounded-lg overflow-hidden mb-5 bg-[#4A4A4A]"
                   style={{ gap: "1px" }}
                 >
                   <div
                     onClick={() => handleFollowersModel("followers")}
                     className=" py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600 py-4"
                   >
-                    <div className="text-[18px] text-gray-300 mt-1">
+                    <div className="text-sm sm:text-base lg:text-lg text-gray-300 mt-1">
                       Followers
                     </div>
-                    <div className="text-xl font-medium text-white/90">
+                    <div className="text-lg sm:text-xl lg:text-2xl font-medium text-white/90">
                       {followers}
                     </div>
                   </div>
@@ -198,30 +198,30 @@ const UserProfile = ({ user }) => {
                     onClick={() => handleFollowersModel("following")}
                     className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer border-r border-gray-600"
                   >
-                    <div className="text-[18px] text-gray-300 mt-1">
+                    <div className="text-sm sm:text-base lg:text-lg text-gray-300 mt-1">
                       Following
                     </div>
-                    <div className="text-xl font-medium text-white/90">
+                    <div className="text-lg sm:text-xl lg:text-2xl font-medium text-white/90">
                       {following}
                     </div>
                   </div>
                   <div className="py-3.5 text-center hover:bg-white/[0.04] transition cursor-pointer">
-                    <div className="text-[18px] text-gray-300 mt-1">
+                    <div className="text-sm sm:text-base lg:text-lg text-gray-300 mt-1">
                       Connections
                     </div>
-                    <div className="text-xl font-medium text-white/90">
+                    <div className="text-lg sm:text-xl lg:text-2xl font-medium text-white/90">
                       {connections}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between sm:px-28 3xl:px-36 py-2 ">
-                  <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl font-bold hover:bg-red-600/80 cursor-pointer transition-all duration-200 ease" onClick={() => setEditProfile(true)}>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-2">
+                  <div className="w-full sm:w-auto flex items-center justify-center gap-3 bg-red-600 py-3 px-6 lg:px-8 rounded-xl font-bold hover:bg-red-600/80 cursor-pointer transition-all duration-200 ease" onClick={() => setEditProfile(true)}>
                     <FaUserEdit className="text-[20px]" />
                     <p className="">Edit Profile</p>
                   </div>
                   {userProfile?.isSubscribed ?
                     <div className="relative" onMouseOver={() => setOpenModel1(true)} onMouseLeave={() => setOpenModel1(false)}>
-                      <div className="flex items-center justify-center gap-4 text-white bg-gradient-to-r from-[#2563eb] via-[#2563eb] to-gray-400 font-bold py-3 px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
+                      <div className="w-full sm:w-auto flex items-center justify-center gap-3 text-white bg-gradient-to-r from-[#2563eb] via-[#2563eb] to-gray-400 py-3 px-6 lg:px-8 rounded-xl cursor-pointer font-semibold transition-all duration-200 ease">
                         <MdVerified className="text-[20px]" />
                         <p className="">Nexchat Member</p>
                       </div>
@@ -238,11 +238,11 @@ const UserProfile = ({ user }) => {
                       </ul>}
                     </div> : <Link to={"/payment"}>
                       <div className="relative" onMouseOver={() => setOpenModel1(true)} onMouseLeave={() => setOpenModel1(false)}>
-                        <div className="flex items-center justify-center gap-4 bg-red-600 py-3 px-8 rounded-xl hover:bg-red-600/80 cursor-pointer font-semibold transition-all duration-200 ease">
+                        <div className="w-full sm:w-auto flex items-center justify-center gap-3 bg-red-600 py-3 px-6 lg:px-8 rounded-xl hover:bg-red-600/80 cursor-pointer font-semibold transition-all duration-200 ease">
                           <TbCreditCardPay className="text-[20px]" />
                           <p className="text-gray-300">Subscribe</p>
                         </div>
-                        {openModel1 && <ul className="absolute w-[250px] h-[220px] flex flex-col items-start gap-2 px-3 py-4 bg-[#4a4a4a] rounded-2xl mt-3">
+                        {openModel1 && <ul className="absolute left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 w-[260px] min-h-[220px] flex flex-col items-start gap-2 px-3 py-4 bg-[#4a4a4a] rounded-2xl mt-3">
                         {features.map((each) => {
                           return (
                             <li className="flex items-center gap-4">
@@ -264,7 +264,7 @@ const UserProfile = ({ user }) => {
             <p className="text-[11px] text-white/30 uppercase tracking-widest mb-3">
               Profile info
             </p>
-            <div className="grid grid-cols-4 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {[
                 {
                   icon: <TbMailFilled />,
@@ -282,7 +282,7 @@ const UserProfile = ({ user }) => {
               ].map(({ icon, text }) => (
                 <div
                   key={text}
-                  className="flex items-center gap-2 text-sm text-white/50"
+                  className="flex items-center justify-center lg:justify-start gap-2 text-sm text-white/50"
                 >
                   <span className="text-base">{icon}</span>
                   {text}

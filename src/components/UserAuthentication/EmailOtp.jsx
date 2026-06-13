@@ -144,7 +144,7 @@ const EmailOtp = () => {
   if (!isReady) return null;
 
   return (
-    <div className="xl:min-h-[86vh] min-h-[85vh] lg:min-h-[85vh] w-full flex items-center justify-center px-6 bg-[#4a4a4a]">
+    <div className="xl:min-h-[86vh] min-h-[86vh] lg:min-h-[85vh] w-full flex items-center justify-center px-6 bg-[#4a4a4a]">
 
       <div className="w-full max-w-md bg-[#2a2a2a] shadow-2xl rounded-2xl p-6 sm:p-8 space-y-4">
 

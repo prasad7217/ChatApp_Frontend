@@ -64,16 +64,16 @@ const Navbar = () => {
   }, [hasFetched]);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-[#2A2A2A] navShadow z-50 px-4 sm:px-6 md:px-20 lg:px-16 xl:px-32 2xl:px-44 3xl:px-80 py-4 2xl:py-10 xl:py-8 lg:py-8 md:py-8 flex items-center justify-between h-16">
+    <div className="fixed top-0 left-0 w-full bg-[#2A2A2A] navShadow z-50 px-3 sm:px-5 md:px-8 lg:px-12 xl:px-20 2xl:px-32 py-3 flex items-center justify-between min-h-[64px]">
       <div
         className="relative cursor-pointer"
         onMouseEnter={() => seticonHover(true)}
         onMouseLeave={() => seticonHover(false)}
         onClick={() => navigate("/feed")}
       >
-        <div className="flex items-center gap-[10px] px-[18px] pl-[10px] py-[10px]">
+        <div className="flex items-center gap-2 sm:gap-3 px-1 sm:px-3 py-2">
           {/* Icon */}
-          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-red-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path
                 d="M3 6.5C3 5.12 4.12 4 5.5 4h11C17.88 4 19 5.12 19 6.5v8c0 1.38-1.12 2.5-2.5 2.5H13l-3 3.5L7 17H5.5C4.12 17 3 15.88 3 14.5v-8z"
@@ -89,32 +89,32 @@ const Navbar = () => {
           {/* Text */}
           <div className="flex flex-col leading-none">
             <span
-              className="font-extrabold text:-[12px] sm:text-[22px] tracking-tight text-white"
+              className="font-extrabold text-[18px] sm:text-[20px] lg:text-[22px] tracking-tight text-white"
               style={{ fontFamily: "'Syne', sans-serif" }}
             >
               Nex<span className="text-red-600">chat</span>
             </span>
-            <span className="text-[8px] sm:text-[10px] tracking-[1.5px] uppercase text-white/30 mt-[3px]">
+            <span className="hidden sm:block text-[9px] lg:text-[10px] tracking-[1.5px] uppercase text-white/30 mt-[2px]">
               Real-time messaging
             </span>
           </div>
         </div>
 
         {iconHover && (
-          <p className="absolute -top-4 -left-2.5 text-[14px] bg-gray-400 text-gray-100 px-1 py-0.5 font-semibold rounded-[5px]">
+          <p className="hidden sm:block absolute -top-5 left-0 text-xs bg-gray-400 text-gray-100 px-2 py-0.5 font-semibold rounded-md whitespace-nowrap">
             Home
           </p>
         )}
       </div>
 
-      <div className="flex items-center justify-center 3xl:gap-16 2xl:gap-16 xl:gap-16 lg:gap-16 md:gap-14 gap-8">
+      <div className="flex items-center justify-center gap-4 sm:gap-5 md:gap-7 lg:gap-10">
         {user && <><Link to={'/chatarea/:'}><div className="relative">
-          <BsMessenger className="text-[22px] text-gray-300" />
+          <BsMessenger className="text-[20px] sm:text-[22px] text-gray-300" />
           <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-1 rounded-full bg-red-600">9+</span>
         </div></Link>
           <div className="relative" onClick={() => navigate("/recieved/requests")}>
-            <FaUserGroup className="text-[22px] text-gray-300" />
-            {user?.recievedRequests?.length > 0 && <span className="absolute top-[-10px] right-[-10px] text-white text-[10px] font-semibold py-0.5 px-2 rounded-full bg-red-600">{user?.recievedRequests?.length}</span>}
+            <FaUserGroup className="text-[20px] sm:text-[22px] text-gray-300" />
+            {user?.recievedRequests?.length > 0 && <span className="absolute -top-2 -right-2 text-white text-[9px] sm:text-[10px] font-semibold py-0.5 px-1.5 rounded-full bg-red-600">{user?.recievedRequests?.length}</span>}
           </div></>}
         <div
           className="relative cursor-pointer"
@@ -122,27 +122,27 @@ const Navbar = () => {
           onMouseLeave={() => setLoginHover(false)}
         >
           {user?.profilePic ? (
-            <div className="relative w-10 h-10 2xl:w-14 2xl:h-14 3xl:w-10 3xl:h-10">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11">
               <img
                 src={user?.profilePic}
                 alt={user?.userName || "User"}
                 className="w-full h-full rounded-full object-cover"
               />
               {/* Online indicator */}
-              <span className="absolute bottom-0 right-0 w-3.5 h-3.5 2xl:w-4 2xl:h-4 bg-green-400 border-2 border-gray-800 rounded-full"></span>
+              <span className="absolute bottom-0 right-0 w-3 h-3 sm:w-3.5 sm:h-3.5 bg-green-400 border-2 border-gray-800 rounded-full"></span>
             </div>
           ) : (
             <div className="flex items-center gap-3">
               <button
                 onClick={() => navigate("/login")}
-                className="flex items-center gap-2 border border-red-500 text-red-400 hover:bg-red-500 hover:text-white active:scale-95 transition-all text-sm font-semibold sm:px-4 sm:py-2 px-3 py-1.5 rounded-xl cursor-pointer"
+                className="flex items-center gap-1.5 sm:gap-2 border border-red-500 text-red-400 hover:bg-red-500 hover:text-white active:scale-95 transition-all text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl cursor-pointer"
               >
                 <AiOutlineLogin className="text-[18px]" />
                 Login
               </button>
 
               <Link to={"/signup"}><button
-                className="hidden sm:flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
+                className="hidden md:flex items-center gap-2 bg-red-600 hover:bg-red-500 active:scale-95 transition-all text-white text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer"
               >
                 <FaUserAlt className="text-[14px]" />
                 SignUp
@@ -151,12 +151,12 @@ const Navbar = () => {
             </div>
           )}
           {!user && loginHover && (
-            <p className="absolute -top-5 -left-3 text-[14px] bg-gray-600 text-gray-100 px-1 py-0.5 font-semibold rounded-[5px]">
+            <p className="hidden sm:block absolute -top-6 left-0 text-xs bg-gray-600 text-gray-100 px-2 py-1 font-semibold rounded-md whitespace-nowrap">
               Login
             </p>
           )}
           {user && loginHover && (
-            <div className="absolute top-10 -left-20 sm:top-10 sm:left-0 w-32 bg-[#3A3A3A] rounded-xl shadow-lg py-1 text-gray-100 font-medium">
+            <div className="absolute top-10 right-0 sm:left-auto w-40 bg-[#3A3A3A] rounded-xl shadow-lg py-1 text-gray-100 font-medium border border-gray-700">
               {/* Menu List */}
               <ul className="py-1">
                 <Link to={"/feed"}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
@@ -169,7 +169,7 @@ const Navbar = () => {
                   <span className="text-sm">Requested</span>
                 </li>
                 </Link>
-                <Link to={`/profile?id=${user._id}`}><li className="px-2 py-1 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
+                <Link to={`/profile?id=${user._id}`}><li className="px-3 py-2 flex items-center gap-3 hover:bg-[#4A4A4A] cursor-pointer transition-colors">
                   <IoMdPerson className="text-gray-100 text-lg" />
                   <span className="text-sm">Profile</span>
                 </li>

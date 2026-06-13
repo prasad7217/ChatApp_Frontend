@@ -100,10 +100,10 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
   };
 
   return (
-    <div className="w-full sm:h-full flex flex-col">
+    <div className="w-full h-full flex flex-col min-h-0">
       {/* Header — fixed, doesn't grow */}
-      <div className="w-full bg-[#3a3a3a] px-10 flex items-center justify-between flex-shrink-0">
-        <div className="flex items-center gap-5 px-3 py-3.5 transition-colors duration-150">
+      <div className="w-full bg-[#3a3a3a] px-3 sm:px-5 md:px-8 py-2 flex items-center justify-between flex-shrink-0 border-b border-white/5">
+        <div className="flex items-center gap-3 sm:gap-4 py-2 transition-colors duration-150 min-w-0">
           <div className="relative flex-shrink-0">
             <img
               src={
@@ -112,20 +112,20 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
                   : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
               }
               alt="profilePic"
-              className="w-11 h-11 rounded-full object-cover object-center"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover object-center"
             />
             <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-md font-medium text-gray-200 truncate">
+            <p className="text-sm sm:text-base font-medium text-gray-200 truncate">
               {recieveMsg[0]?.targetUserId?.userName}
             </p>
-            <p className="text-xs text-neutral-400 truncate">designation</p>
+            <p className="text-[11px] sm:text-xs text-neutral-400 truncate">designation</p>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-12">
-          <PiVideoCameraFill className="text-[25px] text-gray-300" />
-          <IoMdCall className="text-[25px] text-gray-300" />
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 flex-shrink-0">
+          <PiVideoCameraFill className="text-[20px] sm:text-[24px] text-gray-300 cursor-pointer" />
+          <IoMdCall className="text-[20px] sm:text-[24px] text-gray-300 cursor-pointer" />
         </div>
       </div>
 
@@ -133,12 +133,12 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
       <div className="flex-1 min-h-0 w-full">
         {recieveMsg.length > 0 ? (
           // ✅ h-full + overflow-y-auto works now because parent has real height via flex-1
-          <div className="h-full overflow-y-auto text-white flex flex-col gap-4 chatArea px-16 py-4">
+          <div className="h-full overflow-y-auto text-white flex flex-col gap-3 sm:gap-4 chatArea px-3 sm:px-6 md:px-10 lg:px-16 py-3 sm:py-4">
             <div className="flex-1" />
             {recieveMsg?.map((each) => (
               <div
                 key={each?.id}
-                className={`flex items-end gap-2 ${
+                className={`flex items-end gap-1.5 sm:gap-2 ${
                   each?.senderId?._id.toString() === userId.toString()
                     ? "flex-row-reverse"
                     : "flex-row"
@@ -148,24 +148,24 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
                   <img
                     alt="avatar"
                     src={`${each?.senderId?.profilePic ? each?.senderId?.profilePic : "https://img.daisyui.com/images/profile/demo/kenobee@192.webp"}`}
-                    className="w-9 h-9 rounded-full object-cover"
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
                   />
                 </div>
                 <div
-                  className={`flex flex-col gap-1 max-w-[65%] ${
+                  className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${
                     each?.senderId?._id.toString() === userId.toString()
                       ? "items-end"
                       : "items-start"
                   }`}
                 >
                   <div className="flex items-center gap-1.5 px-1">
-                    <span className="text-xs font-medium text-neutral-300">
+                    <span className="text-[11px] sm:text-xs font-medium text-neutral-300">
                       {each?.senderId?.userName}
                     </span>
-                    <time className="text-[10px] text-neutral-500">12:45</time>
+                    <time className="text-[9px] sm:text-[10px] text-neutral-500">12:45</time>
                   </div>
                   <div
-                    className={`px-4 py-2 rounded-2xl text-sm leading-relaxed break-words ${
+                    className={`px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-sm leading-relaxed break-words ${
                       each?.senderId?._id.toString() === userId.toString()
                         ? "bg-red-600 text-white rounded-br-sm"
                         : "bg-[#484848] text-neutral-200 rounded-bl-sm border border-white/[0.07]"
@@ -173,7 +173,7 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
                   >
                     {each?.text}
                   </div>
-                  <div className="text-[10px] text-neutral-500 px-1">
+                  <div className="text-[9px] sm:text-[10px] text-neutral-500 px-1">
                     Delivered
                   </div>
                 </div>
@@ -188,19 +188,19 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
       </div>
 
       {/* Input bar — fixed, doesn't grow */}
-      <div className="flex-shrink-0 flex items-center justify-center gap-2 px-4 py-2 bg-[#2e2e2e] border-t border-white/5">
-        <div className="flex items-center gap-2 w-full max-w-2xl bg-[#3a3a3a] border border-white/10 rounded-full px-3 py-2">
+      <div className="flex-shrink-0 flex items-center justify-center gap-2 px-2 sm:px-4 py-2 bg-[#2e2e2e] border-t border-white/5">
+        <div className="flex items-center gap-1 sm:gap-2 w-full max-w-4xl bg-[#3a3a3a] border border-white/10 rounded-full px-2 sm:px-3 py-2">
           <button
             aria-label="Attach file"
-            className="flex items-center justify-center w-8 h-8 rounded-full text-neutral-400 hover:bg-white/10 hover:text-neutral-200 transition-all duration-150 flex-shrink-0"
+            className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-neutral-400 hover:bg-white/10 hover:text-neutral-200 transition-all duration-150 flex-shrink-0"
           >
-            <PiPaperclipFill className="text-[25px]" />
+            <PiPaperclipFill className="text-[20px] sm:text-[24px]" />
           </button>
           <input
             type="text"
             placeholder="Type a message…"
             value={message}
-            className="flex-1 bg-transparent text-sm text-neutral-200 placeholder:text-neutral-500 outline-none px-1"
+            className="flex-1 bg-transparent text-xs sm:text-sm text-neutral-200 placeholder:text-neutral-500 outline-none px-1 min-w-0"
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           />
@@ -208,11 +208,11 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
             aria-label="Emoji"
             className="flex items-center justify-center w-8 h-8 rounded-full text-neutral-400 hover:bg-white/10 hover:text-neutral-200 transition-all duration-150 flex-shrink-0"
           >
-            <MdEmojiEmotions className="text-[20px]" />
+            <MdEmojiEmotions className="text-[18px] sm:text-[20px]" />
           </button>
           <button
             aria-label="Send"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-red-600 hover:bg-red-500 active:scale-95 transition-all duration-150 flex-shrink-0"
+            className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-600 hover:bg-red-500 active:scale-95 transition-all duration-150 flex-shrink-0"
             onClick={sendMessage}
           >
             <IoSend className="text-[16px] text-white" />
