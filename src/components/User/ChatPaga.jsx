@@ -51,7 +51,7 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [recieveMsg]);
-  // console.log(recieveMsg)
+  console.log(recieveMsg)
   useEffect(() => {
     console.log("efeet before", targetUserId);
     if (!userId || !targetUserId) {
