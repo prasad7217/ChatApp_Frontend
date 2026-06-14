@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BASE_URL, getSocket } from "../../Constants";
-import { useSelector } from "react-redux";
+import { BASE_URL } from "../../Constants";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { PiPaperclipFill, PiVideoCameraFill } from "react-icons/pi";
@@ -9,12 +9,18 @@ import { MdEmojiEmotions } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import WelcomeChat from "../utils/WelcomeChat";
 import EmptyChatState from "../utils/EmptyChatState";
+import { formateTime12 } from "../utils/helpers";
+import { addUserProfile } from "../Redux/userSlices/userSlice";
+import io from "socket.io-client";
 
-const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
+const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
   const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
+  const dispatch = useDispatch();
+
   const user = useSelector((store) => store.user.profile);
+
   const idParam = useParams();
 
   let targetUserId;
@@ -22,7 +28,7 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
   if (idParam?.targetUserId !== ":") {
     targetUserId = idParam?.targetUserId;
   } else {
-    targetUserId = chatUserId;
+    targetUserId = mutualfrd?._id;
   }
   const bottomRef = useRef(null);
 
@@ -51,16 +57,29 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [recieveMsg]);
-  console.log(recieveMsg)
+
+  //Helper function
+  const getSocket = () => {
+    console.log("selector", user)
+    return io(BASE_URL, {
+      query: {
+        userId: user?._id,
+      },
+    });
+  };
+
   useEffect(() => {
-    console.log("efeet before", targetUserId);
     if (!userId || !targetUserId) {
       return;
     }
-    console.log("efeet after", targetUserId);
+
     fetchMessages(targetUserId);
 
     const socket = getSocket();
+
+    socket.on("success", (data) => {
+      dispatch(addUserProfile(data));
+    });
 
     if (userId) {
       socket.emit("joinChat", {
@@ -79,11 +98,20 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
       console.log("error", data);
     });
 
-    return () => {
+    return async () => {
       socket.off("recieveMessage"); // ✅ only remove listeners
       socket.off("error");
+
+      const res1 = await axios.get(BASE_URL + "/profile", {
+        withCredentials: true,
+      });
+      if (res1?.data?.success) {
+        dispatch(addUserProfile(res1?.data?.data));
+      }
+
     };
   }, [userId, targetUserId]);
+
   // console.log("init :", targetUserId)
   const sendMessage = () => {
     const socket = getSocket();
@@ -107,8 +135,8 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
           <div className="relative flex-shrink-0">
             <img
               src={
-                recieveMsg[0]?.targetUserId?.profilePic
-                  ? recieveMsg[0]?.targetUserId?.profilePic
+                mutualfrd?.profilePic
+                  ? mutualfrd?.profilePic
                   : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
               }
               alt="profilePic"
@@ -118,9 +146,11 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm sm:text-base font-medium text-gray-200 truncate">
-              {recieveMsg[0]?.targetUserId?.userName}
+              {mutualfrd?.userName}
             </p>
-            <p className="text-[11px] sm:text-xs text-neutral-400 truncate">designation</p>
+            <p className="text-[11px] sm:text-xs text-neutral-400 truncate">
+              {mutualfrd?.isOnline === true ? "online" : "offline"}
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 flex-shrink-0">
@@ -135,50 +165,54 @@ const ChatPage = ({ chatUserId, newChat, setNewChat }) => {
           // ✅ h-full + overflow-y-auto works now because parent has real height via flex-1
           <div className="h-full overflow-y-auto text-white flex flex-col gap-3 sm:gap-4 chatArea px-3 sm:px-6 md:px-10 lg:px-16 py-3 sm:py-4">
             <div className="flex-1" />
-            {recieveMsg?.map((each) => (
-              <div
-                key={each?.id}
-                className={`flex items-end gap-1.5 sm:gap-2 ${
-                  each?.senderId?._id.toString() === userId.toString()
-                    ? "flex-row-reverse"
-                    : "flex-row"
-                }`}
-              >
-                <div className="shrink-0">
-                  <img
-                    alt="avatar"
-                    src={`${each?.senderId?.profilePic ? each?.senderId?.profilePic : "https://img.daisyui.com/images/profile/demo/kenobee@192.webp"}`}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
-                  />
-                </div>
+            {recieveMsg?.map((each) => {
+              return (
                 <div
-                  className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${
+                  key={each?.id}
+                  className={`flex items-end gap-1.5 sm:gap-2 ${
                     each?.senderId?._id.toString() === userId.toString()
-                      ? "items-end"
-                      : "items-start"
+                      ? "flex-row-reverse"
+                      : "flex-row"
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 px-1">
-                    <span className="text-[11px] sm:text-xs font-medium text-neutral-300">
-                      {each?.senderId?.userName}
-                    </span>
-                    <time className="text-[9px] sm:text-[10px] text-neutral-500">12:45</time>
+                  <div className="shrink-0">
+                    <img
+                      alt="avatar"
+                      src={`${each?.senderId?.profilePic ? each?.senderId?.profilePic : "https://img.daisyui.com/images/profile/demo/kenobee@192.webp"}`}
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
+                    />
                   </div>
                   <div
-                    className={`px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-sm leading-relaxed break-words ${
+                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${
                       each?.senderId?._id.toString() === userId.toString()
-                        ? "bg-red-600 text-white rounded-br-sm"
-                        : "bg-[#484848] text-neutral-200 rounded-bl-sm border border-white/[0.07]"
+                        ? "items-end"
+                        : "items-start"
                     }`}
                   >
-                    {each?.text}
-                  </div>
-                  <div className="text-[9px] sm:text-[10px] text-neutral-500 px-1">
-                    Delivered
+                    <div className="flex items-center gap-1.5 px-1">
+                      <span className="text-[11px] sm:text-xs font-medium text-neutral-300">
+                        {each?.senderId?.userName}
+                      </span>
+                    </div>
+                    <div
+                      className={`px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${
+                        each?.senderId?._id.toString() === userId.toString()
+                          ? "bg-red-600 text-white rounded-br-none"
+                          : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
+                      }`}
+                    >
+                      <p className="">{each?.text}</p>
+                      <time className="text-[11px] sm:text-[12px] text-gray-300 flex items-end justify-end pt-3">
+                        {formateTime12(each?.createdAt)}
+                      </time>
+                    </div>
+                    <div className="text-[9px] sm:text-[10px] text-neutral-500 px-1">
+                      Delivered
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {/* ✅ Auto-scroll anchor */}
             <div ref={bottomRef} />
           </div>

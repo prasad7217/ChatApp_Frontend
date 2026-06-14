@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BASE_URL, getSocket } from "../../Constants";
+import { BASE_URL } from "../../Constants";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";

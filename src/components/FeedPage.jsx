@@ -29,6 +29,7 @@ const dispatch = useDispatch();
         withCredentials: true,
       });
       if (res1?.data?.success) {
+        console.log("feed", res1)
         dispatch(addUserProfile(res1?.data?.data))
         // setUserProfile(res1?.data?.data)
 
