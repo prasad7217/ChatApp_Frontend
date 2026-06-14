@@ -11,6 +11,7 @@ import { addUserProfile } from "../Redux/userSlices/userSlice";
 const ChatArea = () => {
   const [userId, setUserId] = useState(null);
   const [newChat, setNewChat] = useState(false);
+  const [targetUserLastSeenStatus, setTargetUserLastSeenStatus] = useState();
 
   const dispatch = useDispatch();
 
@@ -25,6 +26,10 @@ const ChatArea = () => {
     socket.on("success", (data) => {
       dispatch(addUserProfile(data));
     });
+
+    socket.on("lastSeenStatus", (data) =>{
+      setTargetUserLastSeenStatus(data)
+    })
 
     return async () => {
       socket.disconnect();
@@ -113,6 +118,7 @@ const ChatArea = () => {
       <div className="flex-1 min-h-0 bg-[#5a5a5a]">
         <ChatPage
           mutualfrd={userId}
+          targetUserLastSeenStatus={targetUserLastSeenStatus}
           newChat={newChat}
           setNewChat={setNewChat}
           getSocket={getSocket}

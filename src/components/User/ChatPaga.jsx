@@ -13,7 +13,7 @@ import { formateTime12 } from "../utils/helpers";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
 import io from "socket.io-client";
 
-const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
+const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) => {
   const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
@@ -60,7 +60,7 @@ const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
 
   //Helper function
   const getSocket = () => {
-    console.log("selector", user)
+    console.log("selector", user);
     return io(BASE_URL, {
       query: {
         userId: user?._id,
@@ -108,7 +108,6 @@ const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
       if (res1?.data?.success) {
         dispatch(addUserProfile(res1?.data?.data));
       }
-
     };
   }, [userId, targetUserId]);
 
@@ -149,7 +148,10 @@ const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
               {mutualfrd?.userName}
             </p>
             <p className="text-[11px] sm:text-xs text-neutral-400 truncate">
-              {mutualfrd?.isOnline === true ? "online" : "offline"}
+              {mutualfrd?._id === targetUserLastSeenStatus?.userId && mutualfrd?.isOnline === true
+                ? "online"
+                : "Lastseen today at " +
+                  formateTime12(new Date(mutualfrd?.lastseen))}
             </p>
           </div>
         </div>
@@ -195,7 +197,7 @@ const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
                       </span>
                     </div>
                     <div
-                      className={`px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${
+                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${
                         each?.senderId?._id.toString() === userId.toString()
                           ? "bg-red-600 text-white rounded-br-none"
                           : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
@@ -203,7 +205,7 @@ const ChatPage = ({ mutualfrd, newChat, setNewChat }) => {
                     >
                       <p className="">{each?.text}</p>
                       <time className="text-[11px] sm:text-[12px] text-gray-300 flex items-end justify-end pt-3">
-                        {formateTime12(each?.createdAt)}
+                        {formateTime12(new Date(each?.createdAt))}
                       </time>
                     </div>
                     <div className="text-[9px] sm:text-[10px] text-neutral-500 px-1">

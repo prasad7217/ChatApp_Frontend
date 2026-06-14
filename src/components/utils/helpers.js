@@ -22,12 +22,10 @@ export const formateTime12 = (time) => {
 
   if(!time) return;
 
-  const times = new Date(time);
-
-  const hour24 = times.getHours();
+  const hour24 = time.getHours();
   const isAmorPm = hour24 >= 12 ? "pm" : "am";
   const hour12 = hour24 % 12;
-  let min = String(times.getMinutes());
+  let min = String(time.getMinutes());
 
   if(min.length < 2){
     min = "0" + min;
