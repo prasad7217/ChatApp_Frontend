@@ -68,6 +68,8 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
     });
   };
 
+  const socketRef = useRef(null);
+
   useEffect(() => {
     if (!userId || !targetUserId) {
       return;
@@ -75,32 +77,32 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
 
     fetchMessages(targetUserId);
 
-    const socket = getSocket();
+    socketRef.current = getSocket();
 
-    socket.on("success", (data) => {
+    socketRef.current.on("success", (data) => {
       dispatch(addUserProfile(data));
     });
 
     if (userId) {
-      socket.emit("joinChat", {
+      socketRef.current.emit("joinChat", {
         userName: user?.userName,
         userId,
         targetUserId,
       });
     }
 
-    socket.on("recieveMessage", (data) => {
+    socketRef.current.on("recieveMessage", (data) => {
       console.log("recieveMessage", data);
       setRecieveMsg(data?.message);
     });
 
-    socket.on("error", (data) => {
+    socketRef.current.on("error", (data) => {
       console.log("error", data);
     });
 
     return async () => {
-      socket.off("recieveMessage"); // ✅ only remove listeners
-      socket.off("error");
+      socketRef.current.off("recieveMessage"); // ✅ only remove listeners
+      socketRef.current.off("error");
 
       const res1 = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
@@ -113,11 +115,11 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
 
   // console.log("init :", targetUserId)
   const sendMessage = () => {
-    const socket = getSocket();
-
+    // socketRef.current = getSocket();
+   
     if (!message.trim()) return;
-
-    socket.emit("sendMessages", {
+    
+    socketRef.current.emit("sendMessages", {
       message,
       userName: user?.userName,
       userId,
@@ -151,7 +153,7 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
               {mutualfrd?._id === targetUserLastSeenStatus?.userId && mutualfrd?.isOnline === true
                 ? "online"
                 : "Lastseen today at " +
-                  formateTime12(new Date(mutualfrd?.lastseen))}
+                formateTime12(new Date(mutualfrd?.lastseen))}
             </p>
           </div>
         </div>
@@ -171,11 +173,10 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
               return (
                 <div
                   key={each?.id}
-                  className={`flex items-end gap-1.5 sm:gap-2 ${
-                    each?.senderId?._id.toString() === userId.toString()
+                  className={`flex items-end gap-1.5 sm:gap-2 ${each?.senderId?._id.toString() === userId.toString()
                       ? "flex-row-reverse"
                       : "flex-row"
-                  }`}
+                    }`}
                 >
                   <div className="shrink-0">
                     <img
@@ -185,11 +186,10 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
                     />
                   </div>
                   <div
-                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${
-                      each?.senderId?._id.toString() === userId.toString()
+                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${each?.senderId?._id.toString() === userId.toString()
                         ? "items-end"
                         : "items-start"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-1.5 px-1">
                       <span className="text-[11px] sm:text-xs font-medium text-neutral-300">
@@ -197,11 +197,10 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
                       </span>
                     </div>
                     <div
-                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${
-                        each?.senderId?._id.toString() === userId.toString()
+                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${each?.senderId?._id.toString() === userId.toString()
                           ? "bg-red-600 text-white rounded-br-none"
                           : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
-                      }`}
+                        }`}
                     >
                       <p className="">{each?.text}</p>
                       <time className="text-[11px] sm:text-[12px] text-gray-300 flex items-end justify-end pt-3">
