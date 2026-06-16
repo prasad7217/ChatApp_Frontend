@@ -3,7 +3,7 @@ import { BsChatRightTextFill } from "react-icons/bs";
 import { LuSearch } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import ChatPage from "./ChatPaga";
-import { BASE_URL } from "../../Constants";
+import { BASE_URL, disconnectSocket, getSocket } from "../../Constants";
 import io from "socket.io-client";
 import axios from "axios";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
@@ -12,6 +12,7 @@ const ChatArea = () => {
   const [userId, setUserId] = useState(null);
   const [newChat, setNewChat] = useState(false);
   const [targetUserLastSeenStatus, setTargetUserLastSeenStatus] = useState();
+  const [userData, setUserData] = useState();
 
   const dispatch = useDispatch();
 
@@ -19,36 +20,42 @@ const ChatArea = () => {
 
   useEffect(() => {
 
-    if(!user?._id) return; 
+    if (!user?._id) return;
 
-    const socket = getSocket();
+    const socket = getSocket(user);
 
     socket.on("success", (data) => {
-      dispatch(addUserProfile(data));
+      console.log("success :", data)
+      // dispatch(addUserProfile(data));
+      setTargetUserLastSeenStatus(data)
     });
 
-    socket.on("lastSeenStatus", (data) =>{
-      setTargetUserLastSeenStatus(data)
-    })
+    socket.on("lastSeenStatus", (data) => {
+      console.log("lastSeenStatus received:", data);
+      dispatch(addUserProfile(data));
+      setTargetUserLastSeenStatus(data);  // ✅ now this actually works
+    });
 
     return async () => {
-      socket.disconnect();
+
       const res1 = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
       });
       if (res1?.data?.success) {
         dispatch(addUserProfile(res1?.data?.data));
       }
+      console.log("disconnect")
+      disconnectSocket();
     };
   }, [user?._id]);
 
-  const getSocket = () => {
-    return io(BASE_URL, {
-      query: {
-        userId: user?._id,
-      },
-    });
-  };
+  // const getSocket = () => {
+  //   return io(BASE_URL, {
+  //     query: {
+  //       userId: user?._id,
+  //     },
+  //   });
+  // };
 
   return (
     <div className="h-[calc(100vh-90px)] w-full bg-[#4a4a4a] overflow-hidden flex flex-col md:flex-row mt-4 md:mt-6">
@@ -121,7 +128,7 @@ const ChatArea = () => {
           targetUserLastSeenStatus={targetUserLastSeenStatus}
           newChat={newChat}
           setNewChat={setNewChat}
-          getSocket={getSocket}
+          userData={userData}
         />
       </div>
     </div>

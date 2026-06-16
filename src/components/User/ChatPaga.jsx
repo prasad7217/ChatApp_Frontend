@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BASE_URL } from "../../Constants";
+import { BASE_URL, getSocket } from "../../Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -13,7 +13,7 @@ import { formateTime12 } from "../utils/helpers";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
 import io from "socket.io-client";
 
-const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) => {
+const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, socket, userData }) => {
   const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
@@ -24,7 +24,7 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
   const idParam = useParams();
 
   let targetUserId;
-
+  // console.log("targetUserLastSeenStatus", targetUserLastSeenStatus?._id === mutualfrd?._id)
   if (idParam?.targetUserId !== ":") {
     targetUserId = idParam?.targetUserId;
   } else {
@@ -35,7 +35,7 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
   const userId = user?._id;
 
   const fetchMessages = async (id) => {
-    console.log("to :", id);
+
     try {
       const res = await axios.post(
         BASE_URL + "/chat/" + id,
@@ -56,19 +56,8 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [recieveMsg]);
+  }, [recieveMsg, targetUserLastSeenStatus, mutualfrd]);
 
-  //Helper function
-  const getSocket = () => {
-    console.log("selector", user);
-    return io(BASE_URL, {
-      query: {
-        userId: user?._id,
-      },
-    });
-  };
-
-  const socketRef = useRef(null);
 
   useEffect(() => {
     if (!userId || !targetUserId) {
@@ -77,32 +66,33 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
 
     fetchMessages(targetUserId);
 
-    socketRef.current = getSocket();
+    const socket1 = getSocket(user);
 
-    socketRef.current.on("success", (data) => {
-      dispatch(addUserProfile(data));
-    });
+    // socket1.on("success", (data) => {
+    //   console.log("success :", data)
+    //   dispatch(addUserProfile(data));
+    // });
 
     if (userId) {
-      socketRef.current.emit("joinChat", {
+      socket1.emit("joinChat", {
         userName: user?.userName,
         userId,
         targetUserId,
       });
     }
 
-    socketRef.current.on("recieveMessage", (data) => {
-      console.log("recieveMessage", data);
+    socket1.on("recieveMessage", (data) => {
+      console.log("recieveMessage2", data);
       setRecieveMsg(data?.message);
     });
 
-    socketRef.current.on("error", (data) => {
+    socket1.on("error", (data) => {
       console.log("error", data);
     });
 
     return async () => {
-      socketRef.current.off("recieveMessage"); // ✅ only remove listeners
-      socketRef.current.off("error");
+      socket1.off("recieveMessage"); // ✅ only remove listeners
+      socket1.off("error");
 
       const res1 = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
@@ -113,13 +103,13 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
     };
   }, [userId, targetUserId]);
 
-  // console.log("init :", targetUserId)
+
   const sendMessage = () => {
-    // socketRef.current = getSocket();
-   
+    const socket = getSocket(user);
+
     if (!message.trim()) return;
-    
-    socketRef.current.emit("sendMessages", {
+
+    socket.emit("sendMessages", {
       message,
       userName: user?.userName,
       userId,
@@ -128,6 +118,12 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
     setMessage("");
   };
 
+  const isAboutOnline = targetUserLastSeenStatus?._id.toString() === mutualfrd?._id.toString();
+  console.log("isAboutOnline :", isAboutOnline)
+  const isOnline = isAboutOnline ? targetUserLastSeenStatus?.isOnline : mutualfrd?.isOnline;
+  console.log("isOnline :", isOnline)
+  const lastseen = isAboutOnline ? targetUserLastSeenStatus?.lastseen : mutualfrd?.lastseen;
+  console.log("lastseen :", mutualfrd)
   return (
     <div className="w-full h-full flex flex-col min-h-0">
       {/* Header — fixed, doesn't grow */}
@@ -150,7 +146,7 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
               {mutualfrd?.userName}
             </p>
             <p className="text-[11px] sm:text-xs text-neutral-400 truncate">
-              {mutualfrd?._id === targetUserLastSeenStatus?.userId && mutualfrd?.isOnline === true
+              {isOnline
                 ? "online"
                 : "Lastseen today at " +
                 formateTime12(new Date(mutualfrd?.lastseen))}
@@ -174,8 +170,8 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
                 <div
                   key={each?.id}
                   className={`flex items-end gap-1.5 sm:gap-2 ${each?.senderId?._id.toString() === userId.toString()
-                      ? "flex-row-reverse"
-                      : "flex-row"
+                    ? "flex-row-reverse"
+                    : "flex-row"
                     }`}
                 >
                   <div className="shrink-0">
@@ -187,8 +183,8 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
                   </div>
                   <div
                     className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${each?.senderId?._id.toString() === userId.toString()
-                        ? "items-end"
-                        : "items-start"
+                      ? "items-end"
+                      : "items-start"
                       }`}
                   >
                     <div className="flex items-center gap-1.5 px-1">
@@ -198,8 +194,8 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat }) 
                     </div>
                     <div
                       className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${each?.senderId?._id.toString() === userId.toString()
-                          ? "bg-red-600 text-white rounded-br-none"
-                          : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
+                        ? "bg-red-600 text-white rounded-br-none"
+                        : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
                         }`}
                     >
                       <p className="">{each?.text}</p>

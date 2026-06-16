@@ -4,12 +4,30 @@ import io from "socket.io-client";
 export const BASE_URL =
   window.location.hostname === "localhost" ? "http://localhost:7217" : "/api";
 
-// export const getSocket = () => {
-//   const user = useSelector((store) => store.user.profile);
-//   console.log("constance", user);
-//   return io(BASE_URL, {
-//     query: {
-//       userId: "",
-//     },
-//   });
-// };
+let socket = null;
+
+export const getSocket = (user) => {
+
+  if (!user?._id) return;
+
+  if (!socket || socket.disconneted) {
+    socket = io(BASE_URL, {
+      query: {
+        userId: user?._id
+      }
+    })
+  }
+
+  return socket;
+
+}
+
+
+export const disconnectSocket = () => {
+
+  if (socket) {
+    socket.disconnect();
+    socket = null;
+  }
+
+}

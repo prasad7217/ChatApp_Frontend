@@ -95,7 +95,7 @@ const Body = () => {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+            {/* <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
               <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 active:scale-95 text-white text-sm sm:text-base font-semibold px-8 py-3 rounded-full transition-all cursor-pointer shadow-lg shadow-red-900/20">
                 <span>Get started free</span>
                 <IoArrowForward size={18} />
@@ -104,7 +104,7 @@ const Body = () => {
                 <span>Learn more</span>
                 <IoPlayCircleOutline size={20} />
               </button>
-            </div>
+            </div> */}
 
             {/* Stats */}
             <div className="flex items-center gap-8 pt-4">
@@ -210,7 +210,7 @@ const Body = () => {
               key={idx}
               ref={(rf) => (refElement.current[idx] = rf)}
               style={{ transitionDelay: `${idx * 0.2}s` }}
-              className="group p-8 bg-[#2A2A2A] border border-gray-700/50 rounded-3xl hover:bg-[#3A3A3A] hover:border-gray-500 transition-all duration-300 cursor-pointer fadeUp"
+              className="group p-8 bg-[#2A2A2A] border border-gray-700/50 rounded-3xl hover:bg-[#3A3A3A] hover:border-gray-500 transition-all duration-100 cursor-pointer animate__animated animate__fadeInUp"
             >
               <div
                 className={`w-12 h-12 flex items-center justify-center rounded-2xl mb-6 bg-${feature.color}-900 text-${feature.color}-400 group-hover:scale-110 transition-transform`}
