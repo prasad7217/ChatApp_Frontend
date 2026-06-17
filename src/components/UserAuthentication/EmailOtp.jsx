@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
 import { formateTime, maskedEmail } from "../utils/helpers";
 import { FaRegClock } from "react-icons/fa6";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 import { BASE_URL } from "../../Constants";
 import { addAllUsers } from "../Redux/userSlices/allUserSlice";
+import Toast from "../utils/toast";
 
 const EmailOtp = () => {
 
@@ -16,7 +17,12 @@ const EmailOtp = () => {
   const [inputArr, setInputArr] = useState(new Array(OTP_DIGITCOUNT).fill(""));
   const [isReady, setIsReady] = useState();
   const [timer, setTimer] = useState();
+  const [errorMsg, setErrorMsg] = useState("");
+  const [spin, setSpin] = useState(false);
 
+  const [toast, setToast] = useState(true);
+
+  const location = useLocation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,6 +74,10 @@ const EmailOtp = () => {
 
     }, 1000)
 
+    setTimeout(() => {
+      setToast(false)
+    }, 5000)
+
     return () => clearInterval(timerId);
 
   }, [otpRes?.data?.otpExpiry])
@@ -104,7 +114,7 @@ const EmailOtp = () => {
     } else {
 
       try {
-
+        setSpin(true)
         const res = await axios.post(BASE_URL + "/otp_verify", {
           email: otpRes?.data?.email,
           otp: otpString
@@ -113,19 +123,30 @@ const EmailOtp = () => {
         if (res?.data?.success) {
 
           const res1 = await axios.get(BASE_URL + "/profile", { withCredentials: true });
+
           if (res1?.data?.success) {
             dispatch(addUserProfile(res1?.data?.data))
 
             const allRes = await axios.get(BASE_URL + "/allusers", { withCredentials: true });
 
             dispatch(addAllUsers(allRes?.data?.suggestions))
-
-            navigate(`/feed`)
+            setSpin(false)
+            navigate(`/feed`, {
+              state: {
+                message: res1?.data?.message
+              }
+            })
           }
         }
 
       } catch (error) {
-        console.log("Email :", error)
+        if (!error?.response?.data?.success) {
+          setSpin(false)
+          setErrorMsg(error?.response?.data?.message);
+          setTimeout(() => {
+            setErrorMsg("");
+          }, 5000)
+        }
       }
 
     }
@@ -144,61 +165,74 @@ const EmailOtp = () => {
   if (!isReady) return null;
 
   return (
-    <div className="xl:min-h-[86vh] min-h-[86vh] lg:min-h-[85vh] w-full flex items-center justify-center px-6 bg-[#4a4a4a]">
+    <>
+      <Toast message={location?.state?.message} show={toast} onClose={() => setToast(false)} />
+      <div className="xl:min-h-[86vh] min-h-[86vh] lg:min-h-[85vh] w-full flex items-center justify-center px-6 bg-[#4a4a4a]">
 
-      <div className="w-full max-w-md bg-[#2a2a2a] shadow-2xl rounded-2xl p-6 sm:p-8 space-y-4">
+        <div className="w-full max-w-md bg-[#2a2a2a] shadow-2xl rounded-2xl p-6 sm:p-8 space-y-4">
 
-        {/* Header */}
-        <div className="flex flex-col items-center justify-center text-center mb-8">
-          <h1 className="text-xl sm:text-2xl font-semibold text-white">
-            OTP Validation
-          </h1>
-          <p className="text-gray-400 text-sm mt-1">
-            OTP has been sent to : <span className="text-red-400 text-[16px] font-semibold">{maskedEmail(otpRes?.data?.email)}</span>
-          </p>
-        </div>
-
-        {/* OTP Inputs */}
-        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8">
-          {inputArr.map((value, index) => {
-            return (
-              <input
-                key={index}
-                type="text"
-                value={value}
-                ref={(value) => inputRef.current[index] = value}
-                onChange={(e) => handleInput(e.target.value, index)}
-                onKeyDown={(e) => handleBackspace(e, index)}
-                className=" w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-center text-lg sm:text-xl text-white md:text-2xl font-semibold border border-gray-300 rounded-lg shadow-sm outline-none transition-all duration-200 focus:border-red-600 focus:ring-2 focus:ring-red-600"
-              />
-            );
-          })}
-        </div>
-
-        {/* Resend Section */}
-        <div className="flex items-center justify-center gap-2 text-center">
-          <p className="text-xs sm:text-sm text-gray-400">
-            Didn’t receive the OTP?
-          </p>
-
-          <button
-            onClick={handleResendOtp}
-            disabled={timer > 0}
-            className="
-          text-red-400 font-medium text-xs sm:text-sm hover:text-red-400/90 hover:underline transition duration-200 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
-          >
-            Resend OTP
-          </button>
-        </div>
-        {timer > 0 && <div className="w-full flex items-center justify-center text-gray-400 text-[14px] gap-2">
-          <FaRegClock />
-          <div>
-            <span>Resend OTP in : </span><span className="text-[16px] text-red-400 font-semibold">{formateTime(timer)}</span>
+          {/* Header */}
+          <div className="flex flex-col items-center justify-center text-center mb-8">
+            <h1 className="text-xl sm:text-2xl font-semibold text-white">
+              OTP Validation
+            </h1>
+            <p className="text-gray-400 text-sm mt-1">
+              OTP has been sent to : <span className="text-red-400 text-[16px] font-semibold">{maskedEmail(otpRes?.data?.email)}</span>
+            </p>
           </div>
-        </div>}
-        <button onClick={sentOtp} className="w-full py-2 rounded-xl font-semibold cursor-pointer text-center bg-red-600 text-white text-[16px] hover:bg-red-600/80 transition-all duration-500 ease">Verify</button>
+
+          {/*showing error messages */}
+          {errorMsg && (
+            <div className="flex items-start gap-2.5 mb-4 px-3.5 py-2.5 rounded-lg border border-red-500/40 bg-red-500/10">
+              <svg className="w-[18px] h-[18px] text-red-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              </svg>
+              <p className="text-sm text-red-400 leading-snug">{errorMsg}</p>
+            </div>
+          )}
+          {/* OTP Inputs */}
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8">
+            {inputArr.map((value, index) => {
+              return (
+                <input
+                  key={index}
+                  type="text"
+                  value={value}
+                  ref={(value) => inputRef.current[index] = value}
+                  onChange={(e) => handleInput(e.target.value, index)}
+                  onKeyDown={(e) => handleBackspace(e, index)}
+                  className=" w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-center text-lg sm:text-xl text-white md:text-2xl font-semibold border border-gray-300 rounded-lg shadow-sm outline-none transition-all duration-200 focus:border-red-600 focus:ring-2 focus:ring-red-600"
+                />
+              );
+            })}
+          </div>
+
+          {/* Resend Section */}
+          <div className="flex items-center justify-center gap-2 text-center">
+            <p className="text-xs sm:text-sm text-gray-400">
+              Didn’t receive the OTP?
+            </p>
+
+            <button
+              onClick={handleResendOtp}
+              disabled={timer > 0}
+              className="
+          text-red-400 font-medium text-xs sm:text-sm hover:text-red-400/90 hover:underline transition duration-200 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
+            >
+              Resend OTP
+            </button>
+          </div>
+          {timer > 0 && <div className="w-full flex items-center justify-center text-gray-400 text-[14px] gap-2">
+            <FaRegClock />
+            <div>
+              <span>Resend OTP in : </span><span className="text-[16px] text-red-400 font-semibold">{formateTime(timer)}</span>
+            </div>
+          </div>}
+          <button onClick={sentOtp} className="w-full py-2 rounded-xl font-semibold cursor-pointer text-center bg-red-600 text-white text-[16px] hover:bg-red-600/80 transition-all duration-500 ease">{spin ? <span className="animate-spin rounded-full border-4 border-gray-400 border-t-white"
+            style={{ width: '22px', height: '22px', display: 'inline-block' }}></span> : "Verify"}</button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default EmailOtp;

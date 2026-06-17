@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 import { BASE_URL } from "../../Constants";
 import { formateTime, formateTime12 } from "../utils/helpers";
+import toast from "../utils/toast";
+// import toast from "../utils/toast";
 
 const Login = () => {
 
@@ -13,7 +15,9 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
-    const [spin, setSpin] = useState(false)
+    const [spin, setSpin] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -26,11 +30,17 @@ const Login = () => {
                 email,
                 password
             }, { withCredentials: true });
-
+            console.log("login :", res)
             if (res?.data?.success) {
                 dispatch(addUserOtp(res?.data));
                 setSpin(false);
-                navigate("/otp");
+                setShowToast(true);
+                // toast(showToast, )
+                navigate("/otp", {
+                    state: {
+                        message: res?.data?.message
+                    }
+                });
             }
 
         } catch (error) {
@@ -117,7 +127,7 @@ const Login = () => {
                         </div>
 
                         <button className="w-full h-12 rounded-3xl bg-red-600 px-4 py-2 text-[16px] font-semibold text-white shadow transition-all hover:bg-red-600/80 active:scale-[0.98] cursor-pointer" onClick={() => reqLogin()}>
-                            {spin ? <span className="animate-spin rounded-full border-2 border-gray-400 border-t-white"
+                            {spin ? <span className="animate-spin rounded-full border-4 border-gray-400 border-t-white"
                                 style={{ width: '20px', height: '20px', display: 'inline-block' }}></span> : "Login"}
                         </button>
                     </div>
