@@ -161,15 +161,15 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
 
       {/* ✅ Messages area — flex-1 fills all remaining space */}
       <div className="flex-1 min-h-0 w-full">
-        {recieveMsg.length > 0 ? (
+        {recieveMsg?.length > 0 ? (
           // ✅ h-full + overflow-y-auto works now because parent has real height via flex-1
           <div className="h-full overflow-y-auto text-white flex flex-col gap-3 sm:gap-4 chatArea px-3 sm:px-6 md:px-10 lg:px-16 py-3 sm:py-4">
             <div className="flex-1" />
             {recieveMsg?.map((each) => {
               return (
                 <div
-                  key={each?.id}
-                  className={`flex items-end gap-1.5 sm:gap-2 ${each?.senderId?._id.toString() === userId.toString()
+                  key={each?._id}
+                  className={`flex items-end gap-1.5 sm:gap-2 ${each?.senderId?._id?.toString() === userId?.toString()
                     ? "flex-row-reverse"
                     : "flex-row"
                     }`}

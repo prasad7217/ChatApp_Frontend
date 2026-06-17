@@ -1,33 +1,71 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { addUserOtp } from "../Redux/userSlices/userOtpSlice";
 import { BASE_URL } from "../../Constants";
+import { formateTime, formateTime12 } from "../utils/helpers";
 
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+    const [spin, setSpin] = useState(false)
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const reqLogin = async () => {
+        setSpin(true)
+        try {
 
-        const res = await axios.post(BASE_URL + "/login", {
-            email,
-            password
-        }, { withCredentials: true });
-        
-        if (res?.data?.success) {
-            dispatch(addUserOtp(res?.data));
-            navigate("/otp");
+            const res = await axios.post(BASE_URL + "/login", {
+                email,
+                password
+            }, { withCredentials: true });
+
+            if (res?.data?.success) {
+                dispatch(addUserOtp(res?.data));
+                setSpin(false);
+                navigate("/otp");
+            }
+
+        } catch (error) {
+            // console.log("errorr :", error.response)
+            if (error.response.data.message.split(",")[0] === "Too many requests") {
+                const timestamp = error.response.data.message.split(",")[1].split(".")[1];
+                const remainingTime = Date.now() - new Date(timestamp).getTime();
+
+                if (remainingTime >= 0) return;
+
+                const hoursLeft = Math.ceil(Math.abs(remainingTime) / 3600000);
+                const errorTime = error.response.data.message.split(".")[0] + ". " + String(hoursLeft) + " " + "Hours";
+
+                setErrorMsg(errorTime);
+                setSpin(false)
+
+                setTimeout(() => {
+                    setErrorMsg("");
+                }, 5000)
+                return
+            };
+            setSpin(false)
+            setErrorMsg(error.response.data.message)
         }
-
     }
+
+    // useEffect(() => {
+
+
+
+    //     return () => {
+    //         clearTimeout(timerId)
+    //     }
+
+    // }, [])
 
     const handleShowPass = () => {
         setShowPass(!showPass);
@@ -41,7 +79,14 @@ const Login = () => {
                         <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
                         <p className="text-sm text-slate-400">Please enter your details to login</p>
                     </div>
-
+                    {errorMsg && (
+                        <div className="flex items-start gap-2.5 mb-4 px-3.5 py-2.5 rounded-lg border border-red-500/40 bg-red-500/10">
+                            <svg className="w-[18px] h-[18px] text-red-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                            </svg>
+                            <p className="text-sm text-red-400 leading-snug">{errorMsg}</p>
+                        </div>
+                    )}
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-sm font-medium leading-none text-slate-200">Email Address</label>
@@ -72,7 +117,8 @@ const Login = () => {
                         </div>
 
                         <button className="w-full h-12 rounded-3xl bg-red-600 px-4 py-2 text-[16px] font-semibold text-white shadow transition-all hover:bg-red-600/80 active:scale-[0.98] cursor-pointer" onClick={() => reqLogin()}>
-                            Login
+                            {spin ? <span className="animate-spin rounded-full border-2 border-gray-400 border-t-white"
+                                style={{ width: '20px', height: '20px', display: 'inline-block' }}></span> : "Login"}
                         </button>
                     </div>
 
