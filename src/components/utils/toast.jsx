@@ -6,7 +6,7 @@ export default function Toast({ message, show, onClose}) {
         if (show) {
             const timer = setTimeout(() => {
                 onClose();
-            }, 3000);
+            }, 10000);
             return () => clearTimeout(timer);
         }
     }, [show, onClose]);
@@ -14,7 +14,7 @@ export default function Toast({ message, show, onClose}) {
     if (!show) return null;
 
     return (
-        <div className="fixed top-24 right-20 z-50 animate__animated animate__fadeInRightBig">
+        <div className="fixed top-24 right-20 z-50 class">
             <div
                 className={`flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-sm bg-green-500/10 border-green-500/40`}
             >

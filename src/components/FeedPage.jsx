@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 const FeedPage = () => {
   const [filteredUser, searchFilteredUser] = useState("");
   const [users, setUsers] = useState([]);
+  const [profile, setProfile] = useState();
 
   const [showToast, setShowToast] = useState(true);
   const location = useLocation();
@@ -34,8 +35,10 @@ const FeedPage = () => {
       const res1 = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
       });
+      setProfile(res1?.data?.data)
       if (res1?.data?.success) {
         console.log("feed", res1)
+        
         dispatch(addUserProfile(res1?.data?.data))
         // setUserProfile(res1?.data?.data)
 
@@ -56,7 +59,7 @@ const FeedPage = () => {
 
   return (
     <>
-    <Toast message={location?.state?.message} show={showToast} onClose={}/>
+    {!profile && <Toast message={location?.state?.message} show={showToast} onClose={() => setShowToast(false)}/>}
       <div className="2xl:h-[86vh] bg-[#3A3A3A] 2xl:pt-12 2xl:px-44 3xl:px-84 h-[86vh]">
         <div className="flex items-center justify-between h-[10%] py-10 3xl:py-4">
           <div className="flex flex-col gap-1 pl-4 mt-8">
