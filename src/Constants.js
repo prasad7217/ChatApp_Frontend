@@ -10,7 +10,7 @@ export const getSocket = (user) => {
 
   if (!user?._id) return;
 
-  if (!socket || socket.disconneted) {
+  if (!socket || socket.disconnected) {
     socket = io(BASE_URL, {
       query: {
         userId: user?._id

@@ -13,7 +13,14 @@ import { formateTime12 } from "../utils/helpers";
 import { addUserProfile } from "../Redux/userSlices/userSlice";
 import io from "socket.io-client";
 
-const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, socket, userData }) => {
+const ChatPage = ({
+  mutualfrd,
+  targetUserLastSeenStatus,
+  newChat,
+  setNewChat,
+  socket,
+  userData,
+}) => {
   const [message, setMessage] = useState("");
   const [recieveMsg, setRecieveMsg] = useState([]);
 
@@ -27,15 +34,16 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
   // console.log("targetUserLastSeenStatus", targetUserLastSeenStatus?._id === mutualfrd?._id)
   if (idParam?.targetUserId !== ":") {
     targetUserId = idParam?.targetUserId;
+    console.log("targetUse", targetUserId);
   } else {
     targetUserId = mutualfrd?._id;
+    console.log("targetUserLastSeenStatus", targetUserId);
   }
   const bottomRef = useRef(null);
 
   const userId = user?._id;
 
   const fetchMessages = async (id) => {
-
     try {
       const res = await axios.post(
         BASE_URL + "/chat/" + id,
@@ -57,7 +65,6 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [recieveMsg, targetUserLastSeenStatus, mutualfrd]);
-
 
   useEffect(() => {
     if (!userId || !targetUserId) {
@@ -100,15 +107,20 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
       if (res1?.data?.success) {
         dispatch(addUserProfile(res1?.data?.data));
       }
+
+      // socket1.emit("leaveRoom", {
+      //   userId,
+      //   targetUserId,
+      // });
     };
   }, [userId, targetUserId]);
 
-
+  //send message function****************
   const sendMessage = () => {
     const socket = getSocket(user);
 
     if (!message.trim()) return;
-
+    console.log("targetUserLastSeenStatus", message);
     socket.emit("sendMessages", {
       message,
       userName: user?.userName,
@@ -118,12 +130,17 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
     setMessage("");
   };
 
-  const isAboutOnline = targetUserLastSeenStatus?._id.toString() === mutualfrd?._id.toString();
-  console.log("isAboutOnline :", isAboutOnline)
-  const isOnline = isAboutOnline ? targetUserLastSeenStatus?.isOnline : mutualfrd?.isOnline;
-  console.log("isOnline :", isOnline)
-  const lastseen = isAboutOnline ? targetUserLastSeenStatus?.lastseen : mutualfrd?.lastseen;
-  console.log("lastseen :", mutualfrd)
+  const isAboutOnline =
+    targetUserLastSeenStatus?._id.toString() === mutualfrd?._id.toString();
+  // console.log("isAboutOnline :", isAboutOnline);
+  const isOnline = isAboutOnline
+    ? targetUserLastSeenStatus?.isOnline
+    : mutualfrd?.isOnline;
+  // console.log("isOnline :", isOnline);
+  const lastseen = isAboutOnline
+    ? targetUserLastSeenStatus?.lastseen
+    : mutualfrd?.lastseen;
+  // console.log("lastseen :", mutualfrd);
   return (
     <div className="w-full h-full flex flex-col min-h-0">
       {/* Header — fixed, doesn't grow */}
@@ -149,7 +166,7 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
               {isOnline
                 ? "online"
                 : "Lastseen today at " +
-                formateTime12(new Date(mutualfrd?.lastseen))}
+                  formateTime12(new Date(mutualfrd?.lastseen))}
             </p>
           </div>
         </div>
@@ -169,10 +186,11 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
               return (
                 <div
                   key={each?._id}
-                  className={`flex items-end gap-1.5 sm:gap-2 ${each?.senderId?._id?.toString() === userId?.toString()
-                    ? "flex-row-reverse"
-                    : "flex-row"
-                    }`}
+                  className={`flex items-end gap-1.5 sm:gap-2 ${
+                    each?.senderId?._id?.toString() === userId?.toString()
+                      ? "flex-row-reverse"
+                      : "flex-row"
+                  }`}
                 >
                   <div className="shrink-0">
                     <img
@@ -182,10 +200,11 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
                     />
                   </div>
                   <div
-                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${each?.senderId?._id.toString() === userId.toString()
-                      ? "items-end"
-                      : "items-start"
-                      }`}
+                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${
+                      each?.senderId?._id.toString() === userId.toString()
+                        ? "items-end"
+                        : "items-start"
+                    }`}
                   >
                     <div className="flex items-center gap-1.5 px-1">
                       <span className="text-[11px] sm:text-xs font-medium text-neutral-300">
@@ -193,10 +212,11 @@ const ChatPage = ({ mutualfrd, targetUserLastSeenStatus, newChat, setNewChat, so
                       </span>
                     </div>
                     <div
-                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${each?.senderId?._id.toString() === userId.toString()
-                        ? "bg-red-600 text-white rounded-br-none"
-                        : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
-                        }`}
+                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${
+                        each?.senderId?._id.toString() === userId.toString()
+                          ? "bg-red-600 text-white rounded-br-none"
+                          : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
+                      }`}
                     >
                       <p className="">{each?.text}</p>
                       <time className="text-[11px] sm:text-[12px] text-gray-300 flex items-end justify-end pt-3">
