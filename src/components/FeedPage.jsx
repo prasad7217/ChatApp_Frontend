@@ -19,7 +19,6 @@ const FeedPage = () => {
 
   const allUsers = useSelector((store) => store.allUsers);
 
-  // console.log(allUsers);
   const dispatch = useDispatch();
 
   const handleUserSearch = (e) => {
