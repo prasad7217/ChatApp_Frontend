@@ -36,7 +36,7 @@ const FeedPage = () => {
       });
       setProfile(res1?.data?.data)
       if (res1?.data?.success) {
-        console.log("feed", res1)
+        // console.log("feed", res1)
         
         dispatch(addUserProfile(res1?.data?.data))
         // setUserProfile(res1?.data?.data)

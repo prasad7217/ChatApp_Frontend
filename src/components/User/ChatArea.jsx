@@ -25,27 +25,28 @@ const ChatArea = () => {
     const socket = getSocket(user);
 
     socket.on("success", (data) => {
-      console.log("success :", data)
+      // console.log("success :", data)
       // dispatch(addUserProfile(data));
       setTargetUserLastSeenStatus(data)
     });
 
     socket.on("lastSeenStatus", (data) => {
-      console.log("lastSeenStatus received:", data);
+      // console.log("lastSeenStatus received:", data);
       dispatch(addUserProfile(data));
       setTargetUserLastSeenStatus(data);  // ✅ now this actually works
     });
 
-    return async () => {
+    return () => {
 
-      const res1 = await axios.get(BASE_URL + "/profile", {
-        withCredentials: true,
-      });
-      if (res1?.data?.success) {
-        dispatch(addUserProfile(res1?.data?.data));
-      }
-      console.log("disconnect")
+      // const res1 = await axios.get(BASE_URL + "/profile", {
+      //   withCredentials: true,
+      // });
+      // if (res1?.data?.success) {
+      //   dispatch(addUserProfile(res1?.data?.data));
+      // }
+      console.log("disconnect1")
       disconnectSocket();
+      console.log("disconnect2")
     };
   }, [user?._id]);
 
