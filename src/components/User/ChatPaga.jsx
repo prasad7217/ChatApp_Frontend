@@ -98,20 +98,19 @@ const ChatPage = ({
     });
 
     return async () => {
+      socket1.emit("leaveRoom", {
+        userId,
+        targetUserId,
+      });
       socket1.off("recieveMessage"); // ✅ only remove listeners
       socket1.off("error");
-
+      socket
       const res1 = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
       });
       if (res1?.data?.success) {
         dispatch(addUserProfile(res1?.data?.data));
       }
-
-      // socket1.emit("leaveRoom", {
-      //   userId,
-      //   targetUserId,
-      // });
     };
   }, [userId, targetUserId]);
 
@@ -166,7 +165,7 @@ const ChatPage = ({
               {isOnline
                 ? "online"
                 : "Lastseen today at " +
-                  formateTime12(new Date(mutualfrd?.lastseen))}
+                formateTime12(new Date(mutualfrd?.lastseen))}
             </p>
           </div>
         </div>
@@ -186,11 +185,10 @@ const ChatPage = ({
               return (
                 <div
                   key={each?._id}
-                  className={`flex items-end gap-1.5 sm:gap-2 ${
-                    each?.senderId?._id?.toString() === userId?.toString()
+                  className={`flex items-end gap-1.5 sm:gap-2 ${each?.senderId?._id?.toString() === userId?.toString()
                       ? "flex-row-reverse"
                       : "flex-row"
-                  }`}
+                    }`}
                 >
                   <div className="shrink-0">
                     <img
@@ -200,11 +198,10 @@ const ChatPage = ({
                     />
                   </div>
                   <div
-                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${
-                      each?.senderId?._id.toString() === userId.toString()
+                    className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%] ${each?.senderId?._id.toString() === userId.toString()
                         ? "items-end"
                         : "items-start"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-1.5 px-1">
                       <span className="text-[11px] sm:text-xs font-medium text-neutral-300">
@@ -212,11 +209,10 @@ const ChatPage = ({
                       </span>
                     </div>
                     <div
-                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${
-                        each?.senderId?._id.toString() === userId.toString()
+                      className={`px-3 sm:px-2 py-1 rounded-2xl text-xs sm:text-[16px] leading-relaxed break-words flex gap-2 ${each?.senderId?._id.toString() === userId.toString()
                           ? "bg-red-600 text-white rounded-br-none"
                           : "bg-[#484848] text-neutral-200 rounded-bl-none border border-white/[0.07]"
-                      }`}
+                        }`}
                     >
                       <p className="">{each?.text}</p>
                       <time className="text-[11px] sm:text-[12px] text-gray-300 flex items-end justify-end pt-3">
